@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "9'oclock",
-    "slug": "9oclock",
+    "name": "firebase",
+    "slug": "firebase_test",
     "privacy": "public",
     "sdkVersion": "35.0.0",
     "platforms": [

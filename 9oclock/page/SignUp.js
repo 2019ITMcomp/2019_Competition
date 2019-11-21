@@ -1,11 +1,11 @@
 import React, { Component } from "react";
 
-//import styles from "./style.js";
-import {Keyboard, Text, View, TextInput, Image,TouchableWithoutFeedback, Alert, KeyboardAvoidingView,Dimensions, StyleSheet, Picker, PickerItem, ScrollView,TouchableOpacity} from 'react-native';
+
+import {Keyboard, Text, View, TextInput, Image,TouchableWithoutFeedback, Alert, KeyboardAvoidingView,Dimensions, StyleSheet,  ScrollView,TouchableOpacity} from 'react-native';
 import { Button, CheckBox } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
-//import ModalDropdown from 'react-native-modal-dropdown';
-import RNPickerSelect from 'react-native-picker-select';
+
+
 
 const { height, width } = Dimensions.get("window");
 
@@ -55,7 +55,7 @@ export default class SignUpPage extends Component {
                 </View>
                 <Text style={styles.subTitle}>계좌번호</Text>
                 <View style={styles.inputContainer}>
-                  {/* <Dropdown label='은행명' dropdownOffset={{top:22, left:0}} data={data} containerStyle={{height:43, width:70,marginRight:10}}  /> */}
+                  
                   <View style={{marginVertical:8, marginRight:15,  borderRadius:5, borderWidth:1, borderColor:'#eaeaea', paddingVertical:10, paddingHorizontal:10}}>
                     <RNPickerSelect onValueChange={(value) => console.log(value)} items={data} placeholder={placeholder} textInputProps={{color:"#333333", fontSize:16}} />
                   </View>

@@ -1,10 +1,9 @@
 import React, { Component } from "react";
 
-import {Keyboard, Text, View, TextInput, Image,TouchableWithoutFeedback, Alert, KeyboardAvoidingView,Dimensions, StyleSheet, Picker, PickerItem, ScrollView,TouchableOpacity} from 'react-native';
+import {Keyboard, Text, View, TextInput, Image,TouchableWithoutFeedback, Alert, KeyboardAvoidingView,Dimensions, StyleSheet, ScrollView,TouchableOpacity} from 'react-native';
 import { Button, CheckBox } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 
-import RNPickerSelect from 'react-native-picker-select';
 
 const { height, width } = Dimensions.get("window");
 
