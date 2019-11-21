@@ -1,33 +1,42 @@
 import React, {Component} from "react";
-import {View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image} from "react-native";
-import Hr from 'react-native-hr-component'
+import {View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
 import { Rating, AirbnbRating } from 'react-native-ratings';
+import ToggleSwitch from 'toggle-switch-react-native'
+
 
 const{height,width} = Dimensions.get("window");
 const { rating } = 3.5;
 export default class Mainpage extends Component{
     state = {
       trial : true,
+      isOntf : true,
     };
+    onToggle(isOn) {
+      console.log("Changed to " + isOn);
+    }
     render(){
+      const { isOntf } = this.state;
         return(
+          
         <View style={styles.container}>        
-          <View style = {styles.input} >
-           <Text style = {styles.info}>  회원 정보                                 </Text>
-           <TouchableOpacity onPress={this.xbutton}>
+        <View style={styles.container}>
+          
+           <View style={styles.titlecontainer}>
+                <Text style={styles.title}>회원정보</Text>
+           <TouchableOpacity onPress={this.xbutton}  >
           <Image source = {require('./x_button.png')} style = {styles.image}/>
        </TouchableOpacity>
-           
-          </View>
+       </View>
           
-         
-         <View style = {styles.title}>
+          
+       <ScrollView>
+         <View style = {{alignItems:"center" , marginTop: 30 }}>
             <View style = {styles.circlename}>
                 <Text style = {styles.username}>희진</Text>
             </View>
             <Rating
               type="custom"
-              fractions={1} // 점수에 따른 
+              fractions={1} // 소수 점에 맞춰
               startingValue={4.6}
               showReadOnlyText = {false}
               readonly
@@ -37,48 +46,60 @@ export default class Mainpage extends Component{
               onFinishRating={this.ratingCompleted} 
               style={{ paddingVertical: 10 }}
             />
-
+            
             </View>
-            <View style={styles.otherpages}>
-            <Text>                                                                                                          </Text>
+            
+            <View style={styles.subcontainer}>
+            <Text>                               </Text>
               </View>
-        <View style={styles.otherpages}>
+        <View style={styles.subcontainer}>
         <TouchableOpacity onPress={this.appinfo}>
-          <Text style={styles.otherlink}>앱 정보                                                                          </Text>
+          <Text style={styles.otherlink}>앱 정보</Text>
        </TouchableOpacity>
        </View>
 
-       <View style={styles.otherpages}>
+       <View style={styles.subcontainer}>
        <TouchableOpacity onPress={this.pwchange}>
-          <Text style={styles.otherlink}>비밀번호 변경                                                                 </Text>
+          <Text style={styles.otherlink}>비밀번호 변경</Text>
        </TouchableOpacity>
        </View>
 
-       <View style={styles.otherpages}>
+       <View style={styles.subcontainer}>
        <TouchableOpacity onPress={this.accountchange}>
-          <Text style={styles.otherlink}>계좌번호 변경                                                                 </Text>
+          <Text style={styles.otherlink}>계좌번호 변경</Text>
        </TouchableOpacity>
        </View>
 
-       <View style={styles.otherpages}>
+       <View style={styles.subcontainer}>
        <TouchableOpacity onPress={this.logout}>
-          <Text style={styles.otherlink}>로그아웃                                                                      </Text>
+          <Text style={styles.otherlink}>로그아웃</Text>
        </TouchableOpacity>
        </View>
 
-       <View style={styles.otherpages}>
+       <View style={styles.subcontainer}>
        <TouchableOpacity onPress={this.accountdrop}>
-          <Text style={styles.otherlink}>회원 탈퇴                                                                      </Text>
+          <Text style={styles.otherlink}>회원 탈퇴</Text>
        </TouchableOpacity>
        </View>
       
-       <View style={styles.otherpages}>
+       <View style={styles.subcontainer}>
        <TouchableOpacity onPress={this.appnoti}>
-          <Text style={styles.otherlink}>앱 알림                                                                      </Text>
+          <Text style={styles.otherlink}>앱 알림</Text>
        </TouchableOpacity>
-       </View>
+       <ToggleSwitch
+        style={styles.togglebtn}
+        isOn={isOntf}
+        onColor="green"
+        offColor="#a9a9a9"
+        size="large"
+        onToggle={isOntf => {this.setState({isOntf}); this.onToggle(isOntf)}}
+
+      />
         </View>
-       
+       </ScrollView>
+        </View>
+        </View>
+        
         );
 
     }
@@ -98,7 +119,7 @@ export default class Mainpage extends Component{
       }); 
     }
     accontchange = () =>{
-      this.setState(prevState =>{ 
+      this.setState(prevState =>{   
         return{
           trial : false,
         }
@@ -140,54 +161,74 @@ const styles = StyleSheet.create({
     
     container: {
         flex: 1,
-        backgroundColor: 'white',
-        alignItems: 'center',
       },
       info : {
         color : "black",
-        fontSize : 30,
+        fontSize : 20,
         fontWeight : "900",     
         alignSelf : "center"
       },
       otherpages : {
         alignSelf : "flex-start",
-        marginHorizontal : 10,
+        marginHorizontal : 20,
         padding: 5,
         borderBottomColor:"#bbb",
-        borderBottomWidth: 2,
+        borderBottomWidth: StyleSheet.hairlineWidth,
         alignSelf : "flex-start",
-        justifyContent:"space-between"
+        justifyContent:"space-between",
+        
+      },
+      subcontainer:{
+        borderBottomColor:'#A9A9A9', 
+        borderBottomWidth: 1,
+        marginBottom:10, 
+        marginHorizontal:10,
+        paddingBottom:7,
+        flexDirection:"row",
+        flex: 1
+        // borderWidth:1,
+        // borderColor: "black"
       },
       otherlink : {
-        fontSize : 20,
+        fontSize : 15,
         marginLeft : 5,
         marginTop : 10,
-        marginBottom : 10
-
-      },
-      input:{
-        marginTop: 50,
-        marginHorizontal : 10,
-        padding: 5,
-        borderBottomColor:"#bbb",
-        borderBottomWidth: 2,
-        alignSelf : "flex-start",
+        marginBottom : 10,
+        flex : 1,
         flexDirection:"row",
-        justifyContent:"space-between"
-    
+        alignSelf:"flex-start"
+      },      
+
+      titlecontainer:{
+        borderBottomColor:'#A9A9A9', 
+        borderBottomWidth: 2,
+        marginBottom:10, 
+        marginHorizontal:10,
+        paddingBottom:7,
+        flexDirection:"row",
+        // borderWidth:1,
+        // borderColor: "black"
       },
-      image : {
-        alignContent : "flex-end",
+
+      image : {        
+        flex:1,
+        alignSelf:"center",
+        marginTop: 28,
         width : 60,
         height : 60,
+        marginBottom: -10,
       },
+
       title : {
         color : "black",
         fontSize : 30,
-        marginTop : 30,
-        fontWeight : "200",
-        marginBottom : 30,
-        alignItems : "center"
+        marginTop : 45,
+        fontWeight : "900",
+        marginBottom : 7,
+        marginLeft:15,
+        alignSelf : "flex-start",
+        flex:1,
+        marginBottom: 0
       },
       circlename:{
         alignItems : "center",
@@ -199,5 +240,11 @@ const styles = StyleSheet.create({
       },
       username : {
         fontSize : 30,        
+      },
+      togglebtn:{
+        flex:1,
+        flexDirection:"row",
+        alignSelf:"center",
+        
       }
 });

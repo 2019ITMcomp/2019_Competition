@@ -3,10 +3,14 @@ import { StyleSheet, Text, View } from 'react-native';
 
 import SignUpPage from './page/SignUp.js'
 import Mainpage from "./mypage/Mypagemain";
+import Appinfo from "./mypage/Appinfo";
+import Changepw from "./mypage/Changepw";
 export default class App extends React.Component {
   render() {
     return (
-      <Mainpage />
+      <Changepw/>
+      //<Appinfo/>
+      //<Mainpage />
       // <SignUpPage />
       
     );
