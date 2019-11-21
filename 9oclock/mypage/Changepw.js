@@ -11,9 +11,7 @@ export default class Mainpage extends Component{
     state = {
       userpw : "default",
     };
-    onToggle(isOn) {
-      console.log("Changed to " + isOn);
-    }
+    
     render(){
       const { isOntf } = this.state;
       
@@ -22,9 +20,9 @@ export default class Mainpage extends Component{
         <View style={styles.container}>        
         <View style={styles.container}>
           
-           <View style={styles.titlecontainer}>
+          <View style={styles.titlecontainer}>
                 <Text style={styles.title}>비밀번호 변경</Text>
-           <TouchableOpacity onPress={this.xbutton}  >
+          <TouchableOpacity onPress={this.xbutton}  >
           <Image source = {require('./x_button.png')} style = {styles.image}/>
        </TouchableOpacity>
        </View>

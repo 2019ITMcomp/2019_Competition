@@ -50,7 +50,6 @@ export default class Mainpage extends Component{
             </View>
             
             <View style={styles.subcontainer}>
-
             <Text> </Text>
               </View>
         <View style={styles.subcontainer}>
@@ -63,7 +62,6 @@ export default class Mainpage extends Component{
        <View style={styles.subcontainer}>
        <TouchableOpacity 
        onPress = {() => this.props.navigation.navigate("ChangePw")}>
-
           <Text style={styles.otherlink}>비밀번호 변경</Text>
        </TouchableOpacity>
        </View>

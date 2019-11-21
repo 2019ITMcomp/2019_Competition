@@ -12,9 +12,7 @@ export default class Mainpage extends Component{
       trial : true,
       isOntf : true,
     };
-    onToggle(isOn) {
-      console.log("Changed to " + isOn);
-    }
+    
     render(){
       const { isOntf } = this.state;
       
