@@ -66,10 +66,6 @@ export default class Test extends Component{
 
     render(){
 
-        console.log({item});
-        
-        
-
         return(
             <View>
                 <FlatList
