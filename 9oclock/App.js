@@ -7,16 +7,22 @@ import LoginSuccessPage from './page/LoginSuccess'
 import IdFindPage from './page/IdFind'
 import PwFindPage from './page/PwFind'
 import Mainpage from "./mypage/Mypagemain";
+import Appinfo from "./mypage/Appinfo";
+import Changepw from "./mypage/Changepw";
+
 
 export default class App extends React.Component {
   render() {
     return (
       //<SignUpPage />
       <LoginPage/>
+      //<Changepw/>
+      //<Appinfo/>
       //<Mainpage />
       //<LoginSuccessPage/>
       //<IdFindPage/>
       //<PwFindPage/>
+
     );
 
   }
