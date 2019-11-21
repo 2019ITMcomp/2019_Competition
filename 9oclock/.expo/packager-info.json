@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19002,
+  "devToolsPort": 19003,
   "expoServerPort": 19000,
-  "packagerPort": 19004,
-  "packagerPid": 95276,
-  "expoServerNgrokUrl": null,
-  "packagerNgrokUrl": null,
-  "ngrokPid": null
+  "packagerPort": 19001,
+  "packagerPid": 4635,
+  "expoServerNgrokUrl": "https://2w-4ve.anonymous.9oclock.exp.direct",
+  "packagerNgrokUrl": "https://packager.2w-4ve.anonymous.9oclock.exp.direct",
+  "ngrokPid": 4645
 }
