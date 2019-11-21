@@ -22,12 +22,17 @@ import LoginSuccessPage from './page/LoginSuccess'
 import IdFindPage from './page/IdFind'
 import PwFindPage from './page/PwFind'
 import Mainpage from "./mypage/Mypagemain";
+import Appinfo from "./mypage/Appinfo";
+import Changepw from "./mypage/Changepw";
+
+
 
 import Mypagemain from "./mypage/Mypagemain";
 import ChangePw from "./mypage/ChangePw";
 import AppInfo from "./mypage/AppInfo";
 
 import Test from './src/screens/Test';
+
 
 const AppNavigator = createStackNavigator(
   {
