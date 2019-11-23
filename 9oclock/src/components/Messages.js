@@ -12,7 +12,7 @@ export default class Messages extends Component{
     constructor(props){
         super(props);
         var roomKey = this.props.navigation.state.params.roomKey;
-        this.messagesRef = db.ref('messages/${roomKey}');
+        this.messagesRef = db.ref(`messages/${roomKey}`);
         this.state ={
             user : '',
             messages : []

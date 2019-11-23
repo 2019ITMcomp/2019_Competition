@@ -67,8 +67,7 @@ export default class SignIn extends Component{
             <Text style={styles.authInputLabel}>Email</Text>
             <TextInput
             style={styles.authTextInput}
-            autoCapitalize={'none'}
-            keyboardType={'email-address'}
+            autoCapitalize={'none'}            
             placeholder={'example@email.com'}
             placeholderTextColor={'#fff'}
             onChangeText={(text) => this.setState({ userEmail: text })}
@@ -76,7 +75,7 @@ export default class SignIn extends Component{
             <Text style={styles.authInputLabel}>Password</Text>
             <TextInput
             secureTextEntry={true}
-            style={styles.authTextInput}
+            style={styles.authTextInput}            
             placeholder={'password'}
             placeholderTextColor={'#fff'}
             onChangeText={(text) => this.setState({ userPassword: text })}

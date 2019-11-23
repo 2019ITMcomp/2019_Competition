@@ -11,6 +11,7 @@ import List from './src/screens/List';
 import Chat from './src/components/Chat';
 import Login from './src/components/Login';
 import Signup from './src/components/Signup';
+import SignIn from './src/components/SignIn';
 
 import Rooms from './src/screens/Rooms';
 // import Messages from './src/components/Messages';
@@ -37,6 +38,7 @@ const AppNavigator = createStackNavigator(
     Chat,
     Login,
     Signup,
+    SignIn,
     Rooms,
     // Messages,
     Test,
