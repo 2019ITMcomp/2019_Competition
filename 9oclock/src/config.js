@@ -121,6 +121,7 @@ export default class FirebaseSDK {
 
 
 //위에 코드는 로그인을 위해서 만들어 놓은 것이고, 아래는 db만을 따로 사용하기 위해서 만들어 놓은 코드...? 
-let app = Firebase.initializeApp(config);
+export let app = Firebase.initializeApp(config);
 export const db = app.database();
+
 

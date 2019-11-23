@@ -1,9 +1,9 @@
 {
-  "devToolsPort": 19003,
+  "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
-  "packagerPid": 9545,
-  "expoServerNgrokUrl": "https://fn-izd.anonymous.9oclock.exp.direct",
-  "packagerNgrokUrl": "https://packager.fn-izd.anonymous.9oclock.exp.direct",
-  "ngrokPid": 9555
+  "packagerPid": 42289,
+  "expoServerNgrokUrl": null,
+  "packagerNgrokUrl": null,
+  "ngrokPid": null
 }
