@@ -12,25 +12,14 @@ export default class Home extends Component{
                 <Text>
                     Home Screen
                 </Text>
-                <Button 
-                title = "Add an Item"
-                onPress ={() => this.props.navigation.navigate('AddItem')}>                    
-                </Button>
-                <Button title = "List of Items"
-                color = "green"
-                onPress = {() => this.props.navigation.navigate("List")}>
-                </Button>
+                
                 <Button title = "Sign In"
                 color = "green"
                 onPress = {() => this.props.navigation.navigate("SignIn")}>
                 </Button>
-                <Button title = "Login"
-                color = "black"
-                onPress = {() => this.props.navigation.navigate("Login")}>
-                </Button>
-                <Button title = "TestButton"
+                <Button title = "Sign Up"
                 color = "red"
-                onPress = {() => this.props.navigation.navigate("Test")}>
+                onPress = {() => this.props.navigation.navigate("SignUp")}>
                 </Button>
                 <Button title = "희진"
                 color = "black"

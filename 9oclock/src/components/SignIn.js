@@ -27,7 +27,7 @@ export default class SignIn extends Component{
 
         }
     }
-
+    
     async signIn() {
         if (this.state.userEmail != '' && this.state.userPassword != '') {
             try {
