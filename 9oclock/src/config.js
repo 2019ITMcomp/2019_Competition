@@ -1,5 +1,6 @@
 import Firebase from 'firebase';
 import * as c from './constant';
+import { supportsOrientationLockAsync } from 'expo/build/ScreenOrientation/ScreenOrientation';
 
 let config = {
     apiKey : c.FIREBASE_API_KEY,
@@ -13,13 +14,16 @@ let config = {
 };
 
 
-export default class FirebaseSDK {
+export default class FirebaseSDK{
     constructor(){
         if(!Firebase.apps.length){
             // for avoiding re-initializing
             Firebase.initializeApp(config); 
         }
+        
+        this.roomKey = '';
     }
+
 
     login = async (user, success_callback, failed_callback) => {
 		await Firebase
@@ -63,12 +67,16 @@ export default class FirebaseSDK {
         );
     };
 
-    get ref(){
-        return Firebase.database().ref('Messages');
+    get refMessages(){
+        return Firebase.database().ref('Rooms/' + this.roomKey + '/messages');
     }
 
     get refUid(){
         return (Firebase.auth().currentUser || {}).uid; 
+    }
+
+    get refUserName(){
+        return Firebase.auth().currentUser.displayName;
     }
 
     // refOn = callback =>{ // 지금 안쓰는 상태임.
@@ -76,8 +84,12 @@ export default class FirebaseSDK {
     //     .limitToLast(20)
     // }
 
+    setRoomKey = key => {
+        this.roomKey = key;
+    }
+
     refOff(){
-        this.ref.off();
+        this.refMessages.off();
     }
 
     parse = message =>{
@@ -94,9 +106,10 @@ export default class FirebaseSDK {
         };
     };
 
-    // 여기서 message의 정보를 얻어오는 것인데, 애초에 등록이 안되는데요...?
-    get = callback =>{
-        this.ref.on("child_added", snapshot => callback(this.parse(snapshot)));
+    get = callback =>{ //아 ... 말 그대로 콜백 값이 callback에 담기는거야...? 바인딩 플러스에???
+        // console.log("Roomkey is this : " + roomkey);
+        // Firebase.database().ref("rooms/" + roomkey).on("child_added", snapshot => callback(this.parse(snapshot)));
+        this.refMessages.on("child_added", snapshot => callback(this.parse(snapshot)));
     };
 
     send = messages => {
@@ -108,7 +121,7 @@ export default class FirebaseSDK {
                 //여기에 item.user._id가 없다는 것...? 
             };
 
-            this.ref.push(message);
+            this.refMessages.push(message);
         });
     };
     

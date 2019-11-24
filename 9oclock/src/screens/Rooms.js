@@ -17,7 +17,7 @@ export default class Rooms extends Component{
 
     constructor(props){
         super(props);
-        this.roomsRef = db.ref('rooms');
+        this.roomsRef = db.ref('Rooms');
         this.state = {
             rooms : [],
             newRoom : ''
@@ -51,8 +51,13 @@ export default class Rooms extends Component{
 
     openMessages(room){        
         console.log("Test working");
-        // this.props.navigation.navigate('Messages', {roomKey : room.key, roomName : room.name});
-        this.props.navigation.navigate('ChatScreen', {name : app.auth().currentUser });
+        
+        this.props.navigation.navigate('ChatScreen', {
+            name : app.auth().currentUser,
+            roomKey : room.key,
+            roomName : room.name,
+
+        });
     }
 
     renderRow(item) {
