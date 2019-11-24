@@ -63,59 +63,57 @@ export default class FirebaseSDK {
         );
     };
 
-    uploadImage = async uri =>{
-        console.log('Got image to upload. uri :' + uri);
-        try{
-            const response = await fetch(uri);
-            const blob = await response.blob();
-            const ref = Firebase
-            .storage()
-            .ref('avatar')
-            .child(uuid.v4());
-            const task = ref.put(blob);
-
-            return new Promise((resolve, reject) => {
-                task.on(
-                    'state_changed',
-                    () => {
-
-                    },
-                    reject, // 여기에 원래 쉼표가 없는데 내가 추가해놓음...
-                    () => resolve(task.snapshot.downloadURL)
-                );
-            });
-        }catch(err){
-            console.log('uploadImage try/catch error : ' + err.message);
-        }
-    };
-
-    updateAvatar = url =>{
-        var userf = Firebase.auth().currentUser;
-        if(userf != null){
-            userf.updateProfile({ avatar : url }).then(
-                function(){
-                    console.log('Updated avatar successfully. url : ' + url);
-                    alert('Avatar image is saved successfully.');
-                },
-                function(error){
-                    console.warn('Error update avatar.');
-                    alert('Error update avatar. Error : ' + error.message);
-                }
-            );
-        }else{
-            console.log("Can't update avatar, user is not login.");
-            alert('Unable to update avatar. You must login first.');
-        }
-    };
-
     get ref(){
         return Firebase.database().ref('Messages');
     }
 
-    refOn = callback =>{
-        this.ref
-        .limitToLast(20)
+    get refUid(){
+        return (Firebase.auth().currentUser || {}).uid; 
     }
+
+    // refOn = callback =>{ // 지금 안쓰는 상태임.
+    //     this.ref
+    //     .limitToLast(20)
+    // }
+
+    refOff(){
+        this.ref.off();
+    }
+
+    parse = message =>{
+        const {user,text,timestamp} = message.val(); 
+        //여기에 들어가는 user가 문제인듯
+        const {key: _id}=message;
+        const createdAt = new Date(timestamp);
+
+        return{
+            _id,
+            createdAt,
+            text,
+            user
+        };
+    };
+
+    // 여기서 message의 정보를 얻어오는 것인데, 애초에 등록이 안되는데요...?
+    get = callback =>{
+        this.ref.on("child_added", snapshot => callback(this.parse(snapshot)));
+    };
+
+    send = messages => {
+        messages.forEach(item => {
+            const message ={
+                text: item.text,                
+                timestamp : Firebase.database.ServerValue.TIMESTAMP,
+                user: item.user
+                //여기에 item.user._id가 없다는 것...? 
+            };
+
+            this.ref.push(message);
+        });
+    };
+    
+    
+    
 }
 
 

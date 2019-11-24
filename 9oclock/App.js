@@ -13,6 +13,8 @@ import Login from './src/components/Login';
 import Signup from './src/components/Signup';
 import SignIn from './src/components/SignIn';
 
+
+import ChatScreen from './src/components/ChatScreen';
 import Rooms from './src/screens/Rooms';
 // import Messages from './src/components/Messages';
 
@@ -40,6 +42,7 @@ const AppNavigator = createStackNavigator(
     Signup,
     SignIn,
     Rooms,
+    ChatScreen,
     // Messages,
     Test,
 

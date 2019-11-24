@@ -10,7 +10,7 @@ import {
     FlatList,
     View
 }from 'react-native';
-import {db} from '../config'; 
+import {db, app} from '../config'; 
 import styles from '../components/styles';
 
 export default class Rooms extends Component{
@@ -49,9 +49,10 @@ export default class Rooms extends Component{
         this.setState({ newRoom : ''});
     }
 
-    openMessages(room){
-        console.log("it is working now");
-        this.props.navigation.navigate('Messages', {roomKey : room.key, roomName : room.name});
+    openMessages(room){        
+        console.log("Test working");
+        // this.props.navigation.navigate('Messages', {roomKey : room.key, roomName : room.name});
+        this.props.navigation.navigate('ChatScreen', {name : app.auth().currentUser });
     }
 
     renderRow(item) {
