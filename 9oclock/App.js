@@ -10,7 +10,7 @@ import SignUp from './src/components/Signup';
 import SignIn from './src/components/SignIn';
 import ChatScreen from './src/components/ChatScreen';
 import Rooms from './src/screens/Rooms';
-
+import SelectRoom from './src/screens/SelectRoom';
 
 // 아래 import는 소현 & 희진 작품
 import SignUpPage from './page/SignUp.js'
@@ -32,6 +32,7 @@ const AppNavigator = createStackNavigator(
     SignIn,
     Rooms,
     ChatScreen,
+    SelectRoom,
 
     //아래 희진
     SignUpPage,

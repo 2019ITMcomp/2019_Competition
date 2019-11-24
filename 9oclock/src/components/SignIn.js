@@ -33,7 +33,7 @@ export default class SignIn extends Component{
             try {
                 await app.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword);
                 console.log(this.state.userEmail + ' signed in');
-                this.props.navigation.navigate('Rooms');
+                this.props.navigation.navigate('SelectRoom');
             } catch(error) {
                 console.log(error.toString());
                 Alert.alert(error.toString());

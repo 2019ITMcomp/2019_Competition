@@ -8,17 +8,20 @@ import {
     StatusBar,
     FlatList,
 } from 'react-native';
-import {db, app} from '../config';
+import FirebaseSDK, {db, app} from '../config';
 import styles from '../components/styles';
 
 //TODO
-//유저의 정보를 받아와서 그 유저의 방들을 목록화 시켜주는 것을 해야함.
+//유저의 정보를 받아와서 그 유저의 방들을 목록화 시켜주는 것을 해야함. -- 완료 
+const firebase = new FirebaseSDK();
 
 export default class SelectRoom extends Component{
 
     constructor(props){
         super(props);
-        this.roomsRef = db.ref('Rooms');
+        this.user_id = firebase.refUid; // id를 기반으로 찾기. 
+        this.userRef = db.ref('Users/' + this.user_id);
+                
         this.state = {
             rooms : [],
             newRoom : ''
@@ -26,32 +29,30 @@ export default class SelectRoom extends Component{
     }
 
     componentDidMount(){
-        this.listenForRooms(this.roomsRef);
+        this.listenForRooms(this.userRef);
+        
     }
 
-    listenForRooms(roomsRef){
-        roomsRef.on('value', (dataSnapshot) => {
+    listenForRooms(userRef){
+        userRef.on('value', (dataSnapshot) => {
             var roomsFB = [];
-            dataSnapshot.forEach((child) => {
-                roomsFB.push({
-                    name : child.val().name,
-                    key : child.key
-                });
-            });
-            this.setState({ rooms : roomsFB});
+            dataSnapshot.forEach( (child) => {
+                var roomKey = child.val().roomKey;
+                
+                db.ref('Rooms/' + roomKey).once('value', (data) => {
+                    roomsFB.push({
+                        name : data.val().name,
+                        key : roomKey,
+                    });
+                    this.setState({ rooms : roomsFB});
+                })                
+
+            });            
+            // this.setState({ rooms : roomsFB});
         });
     }
 
-    addRoom(){
-        if(this.state.newRoom === ''){
-            return;
-        }
-        this.roomsRef.push( { name : this.state.newRoom });
-        this.setState({ newRoom : ''});
-    }
-
-    openMessages(room){        
-        console.log("Test working");
+    openChat(room){                
         
         this.props.navigation.navigate('ChatScreen', {
             name : app.auth().currentUser,
@@ -61,11 +62,12 @@ export default class SelectRoom extends Component{
         });
     }
 
-    renderRow(item) {
+    renderRow(item) {        
+
         return (
             <TouchableHighlight style={styles.roomLi}
             underlayColor="#fff"
-            onPress={() => this.openMessages(item)}
+            onPress={() => this.openChat(item)}
             >
                 <Text style={styles.roomLiText}>{item.name}</Text>
             </TouchableHighlight>
@@ -84,18 +86,7 @@ export default class SelectRoom extends Component{
                 <StatusBar barStyle="light-content"/>
                 <Text style={styles.roomsHeader}>Chatypus</Text>
                 <View style={styles.roomsInputContainer}>
-                    <TextInput
-                    style={styles.roomsInput}
-                    placeholder={"New Room Name"}
-                    onChangeText={(text) => this.setState({newRoom: text})}
-                    value={this.state.newRoom}
-                    />
-                    <TouchableHighlight style={styles.roomsNewButton}
-                    underlayColor="#fff"
-                    onPress={() => this.addRoom()}
-                    >
-                        <Text style={styles.roomsNewButtonText}>Create</Text>
-                    </TouchableHighlight>
+                    <Text style={styles.roomsInput}>Your room !</Text>  
                 </View> 
                 <View style={styles.roomsListContainer}>
                     <FlatList

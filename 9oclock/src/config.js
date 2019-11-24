@@ -120,10 +120,14 @@ export default class FirebaseSDK{
                 user: item.user
                 //여기에 item.user._id가 없다는 것...? 
             };
-
             this.refMessages.push(message);
         });
     };
+
+    enter = roomKey =>{
+        var user_ref = Firebase.database().ref('Users/' + this.refUid);
+        user_ref.push( { roomKey : roomKey });
+    }
     
     
     
