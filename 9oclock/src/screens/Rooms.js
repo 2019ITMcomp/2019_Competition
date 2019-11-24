@@ -10,8 +10,11 @@ import {
     FlatList,
     View
 }from 'react-native';
-import {db, app} from '../config'; 
+import FirebaseSDK, {db, app} from '../config'; 
 import styles from '../components/styles';
+
+
+const firebase = new FirebaseSDK();
 
 export default class Rooms extends Component{
 
@@ -20,7 +23,8 @@ export default class Rooms extends Component{
         this.roomsRef = db.ref('Rooms');
         this.state = {
             rooms : [],
-            newRoom : ''
+            newRoom : '',
+            Participated : [], // TODO : 유저가 참여하고 있는 방의 _id를 나타냄.
         }
     }
 
@@ -49,14 +53,16 @@ export default class Rooms extends Component{
         this.setState({ newRoom : ''});
     }
 
-    openMessages(room){        
-        console.log("Test working");
-        
+    openChat(room){        
+        // 아래의 enter 부분을 그 방에 들어가지 않았을 경우로, if문을 넣어야함.
+        db.ref('Users/' + firebase.refUid + )
+
+        firebase.enter(room.key);
+
         this.props.navigation.navigate('ChatScreen', {
             name : app.auth().currentUser,
             roomKey : room.key,
             roomName : room.name,
-
         });
     }
 
@@ -64,7 +70,7 @@ export default class Rooms extends Component{
         return (
             <TouchableHighlight style={styles.roomLi}
             underlayColor="#fff"
-            onPress={() => this.openMessages(item)}
+            onPress={() => this.openChat(item)}
             >
                 <Text style={styles.roomLiText}>{item.name}</Text>
             </TouchableHighlight>
