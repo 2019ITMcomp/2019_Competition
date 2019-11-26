@@ -12,3 +12,9 @@ web-report/
 
 # macOS
 .DS_Store
+
+
+
+#폴더 무시 / 로 끝내기
+
+node_modules

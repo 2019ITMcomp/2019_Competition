@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
+import {Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import ToggleSwitch from 'toggle-switch-react-native'
 
@@ -13,6 +13,10 @@ export default class Mainpage extends Component{
     };
     onToggle(isOn) {
       console.log("Changed to " + isOn);
+    }
+    constructor(props) {
+      super(props);
+      
     }
     render(){
       const { isOntf } = this.state;
@@ -67,7 +71,7 @@ export default class Mainpage extends Component{
        </View>
 
        <View style={styles.subcontainer}>
-       <TouchableOpacity onPress={this.accountchange}>
+       <TouchableOpacity onPress = {() => this.props.navigation.navigate("ChangeAccount")}>
           <Text style={styles.otherlink}>계좌번호 변경</Text>
        </TouchableOpacity>
        </View>
@@ -85,9 +89,7 @@ export default class Mainpage extends Component{
        </View>
       
        <View style={styles.subcontainer}>
-       <TouchableOpacity onPress={this.appnoti}>
-          <Text style={styles.otherlink}>앱 알림</Text>
-       </TouchableOpacity>
+        <Text style={styles.otherlink}>앱 알림</Text>
        <ToggleSwitch
         style={styles.togglebtn}
         isOn={isOntf}
@@ -95,7 +97,6 @@ export default class Mainpage extends Component{
         offColor="#a9a9a9"
         size="large"
         onToggle={isOntf => {this.setState({isOntf}); this.onToggle(isOntf)}}
-
       />
         </View>
        </ScrollView>
@@ -106,47 +107,32 @@ export default class Mainpage extends Component{
 
     }
     
-    appinfo = () =>{
-      this.setState(prevState =>{ 
-        return{
-          trial : false,
-        }
-      }); 
+    logout(){
+      Alert.alert(
+        '로그아웃',
+        '접속중인 기기에서 로그아웃 하시겠습니까?',
+        [{text: '로그아웃', onPress: () => console.log('OK Pressed')},
+          {text: '취소',
+           onPress: () => console.log('Cancel Pressed'),
+           style: 'cancel'},
+        ],
+        {cancelable: false},
+      );
     }
-    pwchange = () =>{
-      this.setState(prevState =>{ 
-        return{
-          trial : false,
-        }
-      }); 
+    accountdrop(){
+      Alert.alert(
+        '회원 탈퇴',
+        '정말로 탈퇴하시겠습니까?',
+        [{text: '탈퇴하기', onPress:() => this.props.navigation.navigate("AppInfo").bind(this)},
+          {text: '취소',
+           onPress: () => console.log('Cancel Pressed'),
+           style: 'cancel'},
+        ],
+        {cancelable: false},
+      );
     }
-    accontchange = () =>{
-      this.setState(prevState =>{   
-        return{
-          trial : false,
-        }
-      }); 
-    }
-    logout = () =>{
-      this.setState(prevState =>{ 
-        return{
-          trial : false,
-        }
-      }); 
-    }
-    accountdrop = () =>{
-      this.setState(prevState =>{ 
-        return{
-          trial : false,
-        }
-      }); 
-    }
-    appnoti = () =>{
-      this.setState(prevState =>{ 
-        return{
-          trial : false,
-        }
-      }); 
+    toAD(){
+      
     }
     xbutton = () => {
       //페이지 이동 , 일단은 누르는 버튼으로 만들어 놨음.

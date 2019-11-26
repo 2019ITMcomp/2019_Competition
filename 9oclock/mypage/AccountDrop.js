@@ -7,7 +7,7 @@ import {View,Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView} 
 
 const{height,width} = Dimensions.get("window");
 
-export default class Appinfo extends Component{
+export default class AccountDrop extends Component{
     state = {
       trial : true,
       isOntf : true,
