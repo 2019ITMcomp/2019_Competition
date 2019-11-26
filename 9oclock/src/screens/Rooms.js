@@ -21,7 +21,9 @@ export default class Rooms extends Component{
     constructor(props){
         super(props);
         this.roomsRef = db.ref('Rooms');
-        this.state = {
+        this.userRef = firebase.refUid;
+        this.duplicated = false; 
+        this.state = {            
             rooms : [],
             newRoom : '',
             Participated : [], // TODO : 유저가 참여하고 있는 방의 _id를 나타냄.
@@ -53,11 +55,30 @@ export default class Rooms extends Component{
         this.setState({ newRoom : ''});
     }
 
-    openChat(room){        
-        // 아래의 enter 부분을 그 방에 들어가지 않았을 경우로, if문을 넣어야함.
-        db.ref('Users/' + firebase.refUid + )
+    checkUserKey(room){ //중복을 확인        
+        db.ref('Users/' + this.userRef).on('value', (dataSnapshot) =>{                                
+            dataSnapshot.forEach( (child) =>{    
+                console.log("Test : ");
+                console.log(room.key === child.val().roomKey);            
+                if(room.key === child.val().roomKey){
+                    this.duplicated = true;
+                }
+            })            
+        })
+        
+    }
 
-        firebase.enter(room.key);
+    openChat(room){        
+        
+        
+        // 이것을 this.duplicated가 아니라 this.setState를 이용해서 하려고했는데
+        // setState 메소드가 불통인지 잘 모르겠으나 안되더라... 나중에 해볼 것
+        // 이미 user가 room에 들어가 있을 경우, 다시 들어가는 처리를 방지.
+        this.duplicated = false;
+        this.checkUserKey(room);        
+        if(!this.duplicated){
+            firebase.enter(room.key);
+        }
 
         this.props.navigation.navigate('ChatScreen', {
             name : app.auth().currentUser,
