@@ -2,8 +2,15 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
+<<<<<<< HEAD
   "packagerPid": 54449,
   "expoServerNgrokUrl": "https://ha-far.anonymous.9oclock.exp.direct",
   "packagerNgrokUrl": "https://packager.ha-far.anonymous.9oclock.exp.direct",
   "ngrokPid": 54481
+=======
+  "packagerPid": 14900,
+  "expoServerNgrokUrl": "https://5c-69n.anonymous.9oclock.exp.direct",
+  "packagerNgrokUrl": "https://packager.5c-69n.anonymous.9oclock.exp.direct",
+  "ngrokPid": 15184
+>>>>>>> 1858de0534b01908e3f6aa0e030f56d29b33d9d3
 }
