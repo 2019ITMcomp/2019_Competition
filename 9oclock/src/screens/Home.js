@@ -12,11 +12,7 @@ export default class Home extends Component{
                 <Text>
                     Home Screen
                 </Text>
-                
-                <Button title = "Sign In"
-                color = "green"
-                onPress = {() => this.props.navigation.navigate("SignIn")}>
-                </Button>                
+                                                
                 <Button title = "희진"
                 color = "black"
                 onPress = {() => this.props.navigation.navigate("LoginPage")}>

@@ -6,7 +6,7 @@ import { createAppContainer } from 'react-navigation';
 
 import Home from './src/screens/Home';
 
-import SignIn from './src/components/SignIn';
+import SignUp from './src/components/Signup';
 import ChatScreen from './src/components/ChatScreen';
 import Rooms from './src/screens/Rooms';
 import SelectRoom from './src/screens/SelectRoom';
@@ -29,7 +29,7 @@ import ChangeAccount from "./mypage/ChangeAccount";
 const AppNavigator = createStackNavigator(
   {
     Home,
-    SignIn,
+    SignUp,
     Rooms,
     ChatScreen,
     SelectRoom,
