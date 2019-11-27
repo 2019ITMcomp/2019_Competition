@@ -51,7 +51,6 @@ export default class SelectRoom extends Component{
                     });
                     this.setState({ rooms : roomsFB});
                 })                
-
             });                        
         });
     }
@@ -62,21 +61,24 @@ export default class SelectRoom extends Component{
             name : app.auth().currentUser,
             roomKey : room.key,
             roomName : room.name,
-
         });
     }
 
     makeRoom =() => { // 새롭게 방을 만들기 위해서 생성.
         // State - destination, hour, minute 중
         // 하나라도 null 값을 갖고 있는 게 있다면, alert하도록
-                
+        
         if(this.state.termination === undefined || this.state.hour === undefined || this.state.minute === undefined){
             alert("빼먹지 말고 모두 입력해라 =ㅅ=");
         }else{
-
-
+            let today = new Date().getDate()
+            let newRoomName = today + this.state.termination + " " + this.state.hour + " " + this.state.minute;
+            // 1. 룸 내임이 중복된 것이 있는지 확인해야함.
+            // 2. 그 방들이 모두 다 찼는지도 확인해야함. isClosed를 통해서
+            // db.ref(newRoomName + '/Rooms)이런식으로 들어가야됨. 최상위가 roomname이 되는 것.
+            console.log(newRoomName);
+            // firebase.refRoom(newRoomName);
         }
-
     }
 
     renderRow(item) {        

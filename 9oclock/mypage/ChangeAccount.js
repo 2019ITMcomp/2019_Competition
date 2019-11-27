@@ -23,7 +23,6 @@ export default class ChangeAccount extends Component{
     };
     
     render(){
-      const { isOntf } = this.state;
       
         return(
           
