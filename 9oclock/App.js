@@ -7,7 +7,6 @@ import { createAppContainer } from 'react-navigation';
 import Home from './src/screens/Home';
 
 import SignUp from './src/components/Signup';
-import SignIn from './src/components/SignIn';
 import ChatScreen from './src/components/ChatScreen';
 import Rooms from './src/screens/Rooms';
 import SelectRoom from './src/screens/SelectRoom';
@@ -31,7 +30,6 @@ const AppNavigator = createStackNavigator(
   {
     Home,
     SignUp,
-    SignIn,
     Rooms,
     ChatScreen,
     SelectRoom,
@@ -52,7 +50,7 @@ const AppNavigator = createStackNavigator(
   {
     initialRouteName: 'Home',
     //headerBackTitleVisible: false,
-    headerMode:"none"
+    // headerMode:"none"
   }
 );
 
