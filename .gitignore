@@ -1,20 +1,21 @@
-node_modules/**/*
-.expo/*
-npm-debug.*
-*.jks
-*.p8
-*.p12
-*.key
-*.mobileprovision
-*.orig.*
-web-build/
-web-report/
+9oclock/node_modules/
+9oclock/.expo/*
+9oclock/npm-debug.*
+9oclock/*.jks
+9oclock/*.p8
+9oclock/*.p12
+9oclock/*.key
+9oclock/*.mobileprovision
+9oclock/*.orig.*
+9oclock/web-build/
+9oclock/web-report/
 
+html/
 # macOS
-.DS_Store
+9oclock/.DS_Store
 
 
 
-#폴더 무시 / 로 끝내기
 
-node_modules
+
+
