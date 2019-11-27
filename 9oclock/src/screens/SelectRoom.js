@@ -84,7 +84,7 @@ export default class SelectRoom extends Component{
         return (
             <TouchableHighlight style={styles.roomLi}
             underlayColor="#fff"
-            onPress={() => this.openMessages(item)}
+            onPress={() => this.openChat(item)}
             >
                 <Text style={styles.roomLiText}>{item.name}</Text>
             </TouchableHighlight>
@@ -138,8 +138,7 @@ export default class SelectRoom extends Component{
                         });
                     }}
                     value = {this.state.hour}
-                    textInputProps={{color:"#333333", fontSize:16}}                
-                    
+                    textInputProps={{color:"#333333", fontSize:16}}                                    
                     />
                     <RNPickerSelect 
                     placeholder={{
@@ -170,15 +169,13 @@ export default class SelectRoom extends Component{
                         });
                     }}           
                     textInputProps={{color:"#333333", fontSize:16}} 
-                    value = {this.state.minute}
-                    
+                    value = {this.state.minute}                    
                     />                    
                     <TouchableHighlight
                     onPress={this.makeRoom}
                     >
                         <Text>Touch Here</Text>
-                    </TouchableHighlight>                    
-                    
+                    </TouchableHighlight>                                        
                 </View>
                 
 
