@@ -64,10 +64,8 @@ export default class SelectRoom extends Component{
         });
     }
 
-    makeRoom =() => { // 새롭게 방을 만들기 위해서 생성.
-        // State - destination, hour, minute 중
-        // 하나라도 null 값을 갖고 있는 게 있다면, alert하도록
-        
+    makeRoom =() => { 
+
         if(this.state.termination === undefined || this.state.hour === undefined || this.state.minute === undefined){
             alert("빼먹지 말고 모두 입력해라 =ㅅ=");
         }else{
@@ -115,8 +113,7 @@ export default class SelectRoom extends Component{
                     onValueChange={(value) => {
                         this.setState({
                             termination : value,
-                        });
-                        console.log(this.state.termination);
+                        });                        
                     }}
                     value = {this.state.termination}
                     textInputProps={{color:"#333333", fontSize:16}}                     
