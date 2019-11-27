@@ -23,10 +23,13 @@ export default class SelectRoom extends Component{
         super(props);
         this.user_id = firebase.refUid; // id를 기반으로 찾기. 
         this.userRef = db.ref('Users/' + this.user_id);
-                
+        
         this.state = {
             rooms : [],
-            newRoom : ''
+            newRoom : '',
+            termination : '',
+            hour :  '',
+            minute : '',
         }
     }
 
@@ -49,8 +52,7 @@ export default class SelectRoom extends Component{
                     this.setState({ rooms : roomsFB});
                 })                
 
-            });            
-            // this.setState({ rooms : roomsFB});
+            });                        
         });
     }
 
@@ -86,8 +88,22 @@ export default class SelectRoom extends Component{
                 </Button>
                 <View>
                     <RNPickerSelect 
+                        onValueChange={(value) => console.log(value)} 
+                        items={[                        
+                            { label : '기숙사행', value : 'dormitory'},
+                            { label : '무궁관행', value : 'mugung'},
+                        ]} 
+                        placeholder={{
+                            label : '어디로?',
+                            value : null,
+                            fontSize : 25,
+                        }} 
+                        textInputProps={{color:"#333333", fontSize:16}}
+                        value = {this.state.hour}
+                    />
+                    <RNPickerSelect 
                     onValueChange={(value) => console.log(value)} 
-                    items={[
+                    items={[                        
                         { label : '8시', value : '8'},
                         { label : '9시', value : '9'},
                         { label : '10시', value : '10'},
@@ -95,11 +111,13 @@ export default class SelectRoom extends Component{
                         { label : '12시', value : '12'},
                     ]} 
                     placeholder={{
-                        label : '8시',
-                        value : '8',
+                        label : '몇 시?',
+                        value : null,
                         fontSize : 25,
                     }} 
-                    textInputProps={{color:"#333333", fontSize:16}} />
+                    textInputProps={{color:"#333333", fontSize:16}}
+                    value = {this.state.hour}
+                    />
                     <RNPickerSelect 
                     onValueChange={(value) => console.log(value)} 
                     items={[
@@ -120,11 +138,13 @@ export default class SelectRoom extends Component{
                         { label : '56분', value : '56'},{ label : '58분', value : '58'},
                     ]} 
                     placeholder={{
-                        label : '8시',
-                        value : '8',
+                        label : '몇 분?',
+                        value : null,
                         fontSize : 25,
                     }} 
-                    textInputProps={{color:"#333333", fontSize:16}} />
+                    textInputProps={{color:"#333333", fontSize:16}} 
+                    value = {this.state.minute}
+                    />
                 </View>
                 
 
