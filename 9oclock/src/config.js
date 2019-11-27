@@ -1,5 +1,6 @@
 import Firebase from 'firebase';
 import * as c from './constant';
+import { supportsOrientationLockAsync } from 'expo/build/ScreenOrientation/ScreenOrientation';
 
 let config = {
     apiKey : c.FIREBASE_API_KEY,
@@ -13,13 +14,16 @@ let config = {
 };
 
 
-export default class FirebaseSDK {
+export default class FirebaseSDK{
     constructor(){
         if(!Firebase.apps.length){
             // for avoiding re-initializing
             Firebase.initializeApp(config); 
         }
+        
+        this.roomKey = '';
     }
+
 
     login = async (user, success_callback, failed_callback) => {
 		await Firebase
@@ -63,64 +67,76 @@ export default class FirebaseSDK {
         );
     };
 
-    uploadImage = async uri =>{
-        console.log('Got image to upload. uri :' + uri);
-        try{
-            const response = await fetch(uri);
-            const blob = await response.blob();
-            const ref = Firebase
-            .storage()
-            .ref('avatar')
-            .child(uuid.v4());
-            const task = ref.put(blob);
-
-            return new Promise((resolve, reject) => {
-                task.on(
-                    'state_changed',
-                    () => {
-
-                    },
-                    reject, // 여기에 원래 쉼표가 없는데 내가 추가해놓음...
-                    () => resolve(task.snapshot.downloadURL)
-                );
-            });
-        }catch(err){
-            console.log('uploadImage try/catch error : ' + err.message);
-        }
-    };
-
-    updateAvatar = url =>{
-        var userf = Firebase.auth().currentUser;
-        if(userf != null){
-            userf.updateProfile({ avatar : url }).then(
-                function(){
-                    console.log('Updated avatar successfully. url : ' + url);
-                    alert('Avatar image is saved successfully.');
-                },
-                function(error){
-                    console.warn('Error update avatar.');
-                    alert('Error update avatar. Error : ' + error.message);
-                }
-            );
-        }else{
-            console.log("Can't update avatar, user is not login.");
-            alert('Unable to update avatar. You must login first.');
-        }
-    };
-
-    get ref(){
-        return Firebase.database().ref('Messages');
+    get refMessages(){
+        return Firebase.database().ref('Rooms/' + this.roomKey + '/messages');
     }
 
-    refOn = callback =>{
-        this.ref
-        .limitToLast(20)
+    get refUid(){
+        return (Firebase.auth().currentUser || {}).uid; 
     }
+
+    get refUserName(){
+        return Firebase.auth().currentUser.displayName;
+    }
+
+    // refOn = callback =>{ // 지금 안쓰는 상태임.
+    //     this.ref
+    //     .limitToLast(20)
+    // }
+
+    setRoomKey = key => {
+        this.roomKey = key;
+    }
+
+    refOff(){
+        this.refMessages.off();
+    }
+
+    parse = message =>{
+        const {user,text,timestamp} = message.val(); 
+        //여기에 들어가는 user가 문제인듯
+        const {key: _id}=message;
+        const createdAt = new Date(timestamp);
+
+        return{
+            _id,
+            createdAt,
+            text,
+            user
+        };
+    };
+
+    get = callback =>{ //아 ... 말 그대로 콜백 값이 callback에 담기는거야...? 바인딩 플러스에???
+        // console.log("Roomkey is this : " + roomkey);
+        // Firebase.database().ref("rooms/" + roomkey).on("child_added", snapshot => callback(this.parse(snapshot)));
+        this.refMessages.on("child_added", snapshot => callback(this.parse(snapshot)));
+    };
+
+    send = messages => {
+        messages.forEach(item => {
+            const message ={
+                text: item.text,                
+                timestamp : Firebase.database.ServerValue.TIMESTAMP,
+                user: item.user
+                //여기에 item.user._id가 없다는 것...? 
+            };
+            this.refMessages.push(message);
+        });
+    };
+
+    enter = roomKey =>{
+        var user_ref = Firebase.database().ref('Users/' + this.refUid);
+        user_ref.push( { roomKey : roomKey });
+    }
+    
+    
+    
 }
 
 
 
 //위에 코드는 로그인을 위해서 만들어 놓은 것이고, 아래는 db만을 따로 사용하기 위해서 만들어 놓은 코드...? 
-let app = Firebase.initializeApp(config);
+export let app = Firebase.initializeApp(config);
 export const db = app.database();
+
 

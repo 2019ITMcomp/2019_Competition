@@ -1,0 +1,15 @@
+9oclock/node_modules/
+9oclock/.expo/*
+9oclock/npm-debug.*
+9oclock/*.jks
+9oclock/*.p8
+9oclock/*.p12
+9oclock/*.key
+9oclock/*.mobileprovision
+9oclock/*.orig.*
+9oclock/web-build/
+9oclock/web-report/
+
+html/
+# macOS
+9oclock/.DS_Store

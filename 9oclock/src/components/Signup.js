@@ -29,6 +29,7 @@ export default class Signup extends React.Component{
                 password : this.state.password
             };
             await firebaseSDK.createAccount(user);
+            
         }catch({message}){
             console.log('Create account failed. catch error : ' + message);
 

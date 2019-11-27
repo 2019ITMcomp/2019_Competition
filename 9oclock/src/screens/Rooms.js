@@ -10,17 +10,23 @@ import {
     FlatList,
     View
 }from 'react-native';
-import {db} from '../config'; 
+import FirebaseSDK, {db, app} from '../config'; 
 import styles from '../components/styles';
+
+
+const firebase = new FirebaseSDK();
 
 export default class Rooms extends Component{
 
     constructor(props){
         super(props);
-        this.roomsRef = db.ref('rooms');
-        this.state = {
+        this.roomsRef = db.ref('Rooms');
+        this.userRef = firebase.refUid;
+        this.duplicated = false; 
+        this.state = {            
             rooms : [],
-            newRoom : ''
+            newRoom : '',
+            Participated : [], // TODO : 유저가 참여하고 있는 방의 _id를 나타냄.
         }
     }
 
@@ -49,16 +55,41 @@ export default class Rooms extends Component{
         this.setState({ newRoom : ''});
     }
 
-    openMessages(room){
-        console.log("it is working now");
-        this.props.navigation.navigate('Messages', {roomKey : room.key, roomName : room.name});
+    checkUserKey(room){ //중복을 확인        
+        db.ref('Users/' + this.userRef).on('value', (dataSnapshot) =>{                                
+            dataSnapshot.forEach( (child) =>{    
+                console.log("Test : ");
+                console.log(room.key === child.val().roomKey);            
+                if(room.key === child.val().roomKey){
+                    this.duplicated = true;
+                }
+            })            
+        })
+        
+    }
+
+    openChat(room){               
+        // 이것을 this.duplicated가 아니라 this.setState를 이용해서 하려고했는데
+        // setState 메소드가 불통인지 잘 모르겠으나 안되더라... 나중에 해볼 것
+        // 이미 user가 room에 들어가 있을 경우, 다시 들어가는 처리를 방지.
+        this.duplicated = false;
+        this.checkUserKey(room);        
+        if(!this.duplicated){
+            firebase.enter(room.key);
+        }
+
+        this.props.navigation.navigate('ChatScreen', {
+            name : app.auth().currentUser,
+            roomKey : room.key,
+            roomName : room.name,
+        });
     }
 
     renderRow(item) {
         return (
             <TouchableHighlight style={styles.roomLi}
             underlayColor="#fff"
-            onPress={() => this.openMessages(item)}
+            onPress={() => this.openChat(item)}
             >
                 <Text style={styles.roomLiText}>{item.name}</Text>
             </TouchableHighlight>
