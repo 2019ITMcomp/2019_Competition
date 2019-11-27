@@ -1,26 +1,19 @@
 import React, {Component} from "react";
-import {View,Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView, TextInput} from "react-native";
+import {View,Text, TouchableOpacity, StyleSheet, Dimensions, TextInput,Image, ScrollView} from "react-native";
 import { Button } from 'react-native-elements';
-import DialogInput from 'react-native-dialog-input';
+
 
 
 
 const{height,width} = Dimensions.get("window");
 
-export default class AccountDrop extends Component{
-
-    constructor(props){
-      super(props);
-      this.state = {
-        isAlertVisible:false,
-        PwInput :"pw"
-      };
-    }  
+export default class ChangePw extends Component{
+    state = {
+      userpw : "default",
+    };
     
-    
-
-
     render(){
+      const { isOntf } = this.state;
       
         return(
           
@@ -28,41 +21,35 @@ export default class AccountDrop extends Component{
         <View style={styles.container}>
           
           <View style={styles.titlecontainer}>
-            <Text style={styles.title}>회원 탈퇴</Text>
+            <Text style={styles.title}>비밀번호 변경</Text>
             <TouchableOpacity onPress = {() => this.props.navigation.navigate("Mypagemain")}>
               <Image source = {require('./x_button.png')} style = {styles.image}/>
             </TouchableOpacity>
           </View>
 
-          <View>
-            <Text style={styles.rules}>회원 탈퇴시, 모든 정보가 삭제되며 복구가 불가능 합니다.</Text>
-
+          <View> 
             <View style={styles.inputContainer}>
-            <Text style={styles.presentpw}>현재 비밀번호 : </Text>
-              
-                      <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "비밀번호 입력" textAlignVertical="center"/> {/*onChangeText={(text) => this.setState({PwInput: text})}/>*/}
-                </View>
-                
+                    <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "기존 비밀번호 입력" textAlignVertical="center"/>
+              </View>
+              <View style={styles.inputContainer}>
+                    <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 입력" textAlignVertical="center"/>
+              </View>
+              <View style={styles.inputContainer}>
+                    <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 확인" textAlignVertical="center"/>
+            </View>
           </View>
 
           <View style={styles.buttoncontainer}>
             <Button
                   buttonStyle={styles.changebutton}
-                  onPress={()=>this.setState({isAlertVisible:true})}
-                  title="탈퇴하기"
+                  onPress={() => this.changepress()}
+                  title="변경"
                 />
-                
-          </View>
-
-          <View>
-            <DialogInput isDialogVisible={this.state.isAlertVisible}
-              title={"아래와 똑같이 입력해주세요."}
-              message={"회원탈퇴에 동의합니다"}
-              hintInput ={""}
-              dialogStyle={"White"}
-              submitInput={ (inputText) => {this.submit(inputText)} }
-              closeDialog={ () => {this.closefunction()}}>
-            </DialogInput>
+                <Button
+                  buttonStyle={styles.cancelbutton}
+                  onPress={() => this.cancelpress()}
+                  title="취소"
+                />
           </View>
 
         </View>
@@ -71,13 +58,15 @@ export default class AccountDrop extends Component{
         );
 
     }
-    closefunction(){
-      this.setState({isAlertVisible:false});
+    
+    changepress(){
+      // db에 입력받은 데이터 전송하는 코드 있어야함. 
+      //기존 비번 일치여부, 새로운 비번 같은지 확인하는 코드 필요.
+      this.props.navigation.navigate("Mypagemain");
     }
 
-    submit(inputText){
-      console.log(inputText);
-      this.setState({isAlertVisible:false});
+    cancelpress(){
+      // 변화 없이 Mypage로 돌아감
       this.props.navigation.navigate("Mypagemain");
     }
     
@@ -96,21 +85,19 @@ const styles = StyleSheet.create({
         marginHorizontal:10,
         paddingBottom:7,
         flexDirection:"row",
-        
+        // borderWidth:1,
+        // borderColor: "black"
       },
       buttoncontainer:{
         alignContent : "center",
         marginTop : 30,
-        borderWidth :1,
+        //borderWidth :1,
         borderColor : "black",
         justifyContent: "center",
         width : width - 20,
         height : 300,
-        alignItems: "center",       
-        flexDirection : "row",
-        alignSelf:"center",
-
-        
+        alignSelf: "center",       
+        flexDirection : "row"
       },
       image : {        
         flex:1,
@@ -138,7 +125,6 @@ const styles = StyleSheet.create({
         alignContent: 'stretch',
         marginLeft:15,
         marginRight:15,
-        //borderWidth:1,
       },
       PwTextinput:{
         height: 43,
@@ -164,16 +150,15 @@ const styles = StyleSheet.create({
         marginRight: 15,
         flexDirection : "row"
       },
-      rules:{
-        fontSize:15,
-        marginLeft: 25,
-        marginRight:10,
-        marginTop:15,
-        marginBottom:15,
+      cancelbutton: {
+        backgroundColor: '#a9a9a9',
+        borderRadius: 5,
+        borderWidth:1,        
+        width : 100,
+        marginTop: 10,
+        marginLeft: 15,
+        marginRight: 15,
+        flexDirection : "row"
       },
-      presentpw:{
-        fontSize:15,
-        marginRight:10,
-        marginTop:30,
-      },
+    
 });
