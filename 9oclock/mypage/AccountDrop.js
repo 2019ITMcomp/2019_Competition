@@ -40,7 +40,7 @@ export default class AccountDrop extends Component{
             <View style={styles.inputContainer}>
             <Text style={styles.presentpw}>현재 비밀번호 : </Text>
               
-                      <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "비밀번호 입력" textAlignVertical="center"/> {/*onChangeText={(text) => this.setState({PwInput: text})}/>*/}
+                      <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "비밀번호 입력" textAlignVertical="center"/> 
                 </View>
                 
           </View>

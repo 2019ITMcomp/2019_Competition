@@ -119,8 +119,6 @@ export default class Mainpage extends Component{
         ],
         {cancelable: false},
       );
-      
-      this.props.navigation.navigate("LoginPage");
     }
     accountdrop(){
       

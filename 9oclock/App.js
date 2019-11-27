@@ -20,7 +20,7 @@ import IdFindPage from './src/page/IdFind';
 import PwFindPage from './src/page/PwFind';
 
 
-import Mypagemain from "./mypage/MyPageMain";
+import Mypagemain from "./mypage/Mypagemain";
 import ChangePw from "./mypage/ChangePw";
 import AppInfo from "./mypage/AppInfo";
 import AccountDrop from "./mypage/AccountDrop";
