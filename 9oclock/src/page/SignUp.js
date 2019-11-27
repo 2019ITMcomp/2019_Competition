@@ -4,12 +4,16 @@ import React, { Component } from "react";
 import {Keyboard, Text, View, TextInput, Image,TouchableWithoutFeedback, Alert, KeyboardAvoidingView,Dimensions, StyleSheet,  ScrollView,TouchableOpacity} from 'react-native';
 import { Button, CheckBox } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
-
+import RNPickerSelect from 'react-native-picker-select';
 
 
 const { height, width } = Dimensions.get("window");
 
 export default class SignUpPage extends Component {
+
+  state={
+    checked: false,
+  };
   render() {
     let data=[{label:'농협', value: '농협'},{label:'하나', value: '하나'},{label:'KB국민', value: 'KB국민'},{label:'신한', value: '신한'},{label:'우리', value:'우리'}, {label:'외환', value:'외환'},{label:'우체국', value:'우체국'},{label:'수협', value:'수협'},{label:'신협', value:'신협'},{label:'카카오뱅크', value:'카카오뱅크'},{label:'저축은행', value:'저축은행'},{label:'기업',value:'기업'}]
     const placeholder = {
@@ -17,9 +21,7 @@ export default class SignUpPage extends Component {
       value: null,
       fontSize:25,
     };
-    this.state={
-      isChecked: false,
-    }
+    
     return (
       <KeyboardAvoidingView style={styles.containerView} behavior="padding">
 
@@ -29,14 +31,14 @@ export default class SignUpPage extends Component {
               <View style={styles.titleContainer}>
                 <View style={styles.inputContainer}>
                   <Text style={styles.title}>회원가입</Text>
-                  <TouchableOpacity onPress={this.xbutton} >
+                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("LoginPage")} >
                     <Image source = {require('./x_button.png')} style={styles.x_button} />
                   </TouchableOpacity>
                 </View>
               </View>
         <ScrollView>
               <View style={{flex:1, flexDirection: "column"}}>
-                <Text style={styles.subTitle}>아이디</Text>
+                <Text style={styles.subTitle}>이름</Text>
                 <TextInput  placeholderColor="#c4c3cb" style={styles.textInput} />
                 <Text style={styles.subTitle}>비밀번호</Text>
                 <TextInput  placeholderColor="#c4c3cb" style={styles.textInput} secureTextEntry={true}/>
@@ -64,19 +66,14 @@ export default class SignUpPage extends Component {
                 <View style={styles.inputContainer2}>
                   <Text style={styles.subTitle2}>이용약관</Text>
                   <Text style={styles.subTitle3}>을 읽고 이에 동의합니다.</Text>
-                  <CheckBox onClick={()=>{
-                    console.log('click')
-                    this.setState({
-                          isChecked:!this.state.isChecked
-                      })
-                    }}
-                    isChecked={this.state.isChecked}  checked={this.state.isChecked} />
+                  <CheckBox checked={this.state.checked}  onPress={() => this.setState({checked: !this.state.checked})} />
                 </View>
                 <Button
                   buttonStyle={styles.signupButton}
-                  onPress={() => this.onSignUpPress()}
+                  onPress = {() => this.props.navigation.navigate("LoginSuccessPage")}
                   title="가입 완료"
                 />
+                <View style={{height:30}}></View>
               </View>
         </ScrollView>
 

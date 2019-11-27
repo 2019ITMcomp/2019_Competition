@@ -16,11 +16,11 @@ export default class LoginScreen extends Component {
         <View style={styles.loginScreenContainer}>
           <View style={styles.loginFormView}>
             <View style ={{justifyContent: 'center', alignItems: 'center'}}>
-              <Image source={require('../assets/icon.png')} style={styles.logo}/>
+              <Image source={require('../../assets/icon.png')} style={styles.logo}/>
             </View>
             <View style={styles.container}>
                 <Text style={styles.text}>가입을 축하합니다 !</Text>
-                <TouchableOpacity onPress={this.onLoginPagePress}>
+                <TouchableOpacity onPress = {() => this.props.navigation.navigate("LoginPage")}>
                     <Text style={styles.text2}>로그인 페이지로</Text>
                 </TouchableOpacity>
             </View>

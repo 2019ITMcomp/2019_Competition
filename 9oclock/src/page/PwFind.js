@@ -5,10 +5,9 @@ import { Button, CheckBox } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 
 
-
 const { height, width } = Dimensions.get("window");
 
-export default class IdFindPage extends Component {
+export default class PwFindPage extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.containerView} behavior="padding">
@@ -18,23 +17,29 @@ export default class IdFindPage extends Component {
             <View style={styles.containerView}>
               <View style={styles.titleContainer}>
                 <View style={styles.inputContainer}>
-                  <Text style={styles.title}>아이디 찾기</Text>
-                  <TouchableOpacity onPress={this.xbutton} >
+                  <Text style={styles.title}>비밀번호 찾기</Text>
+                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("LoginPage")} >
                     <Image source = {require('./x_button.png')} style={styles.x_button} />
                   </TouchableOpacity>
                 </View>
               </View>
-              <View style={{ flexDirection: "column",borderBottomColor:'#A9A9A9', borderBottomWidth: StyleSheet.hairlineWidth, marginHorizontal:10,paddingBottom:20}}>
+              <View style={{ flexDirection: "column", borderBottomColor:'#A9A9A9', borderBottomWidth: StyleSheet.hairlineWidth, marginHorizontal:10,paddingBottom:20}}>
+                <Text style={styles.subTitle}>아이디</Text>
+                <TextInput  placeholderColor="#c4c3cb" style={styles.textInput} />
                 <Text style={styles.subTitle}>가입하신 학교 웹메일 주소를 입력해주세요.</Text>
                 <View style={styles.inputContainer}>
                   <TextInput placeholderColor="#c4c3cb" style={styles.emailInput}/>
                   <Text style={styles.textMail}>@ seoultech.ac.kr</Text>
                   <Button buttonStyle={styles.button} title="확인" fontSize='10'/>
                 </View>
+                <Text style={styles.subTitle}>인증번호</Text>
+                <View style={styles.inputContainer}>
+                  <TextInput placeholderColor="#c4c3cb" style={styles.emailInput}/>
+                  <Button buttonStyle={styles.button} title="확인" fontSize='10'></Button>
+                </View>
               </View>
-                <Text style={styles.text}>ID는 chun****5224 입니다.</Text>
                 <TouchableOpacity onPress={this.onLoginPagePress}>
-                        <Text style={styles.text2}>로그인 페이지로</Text>
+                        <Text style={styles.text2}>비밀번호 변경하기</Text>
                 </TouchableOpacity>
             </View>
           </View>
@@ -81,9 +86,9 @@ const styles = StyleSheet.create({
   },
   subTitle:{
     fontSize:17,
-    marginLeft:10,
-    marginTop:20,
-    marginBottom:15,
+    marginLeft:7,
+    marginTop:10,
+    //marginBottom:5,
     color: '#333333'
 
   },
@@ -100,7 +105,7 @@ const styles = StyleSheet.create({
     backgroundColor: '#fafafa',
     borderWidth: 1,
     borderColor: '#eaeaea',
-    paddingLeft: 10,
+    paddingLeft: 5,
     marginTop: 5,
     marginBottom: 5
   },
@@ -108,7 +113,7 @@ const styles = StyleSheet.create({
     flexDirection:'row',
     width: width-30,
     alignContent: 'stretch',
-    marginLeft:10,
+    marginHorizontal:7,
     marginRight:15,
     //borderWidth:1,
     //borderColor:'black'
@@ -147,5 +152,20 @@ const styles = StyleSheet.create({
     borderRadius:5,
     textAlign:'center'
   },
-
+  textInput: {
+    height: 43,
+    fontSize: 17,
+    borderRadius: 5,
+    //borderBottomWidth: 1,
+    //borderBottomColor: '#c4c3cb',
+    backgroundColor: '#fafafa',
+    borderWidth: 1,
+    borderColor: '#eaeaea',
+    paddingLeft: 10,
+    marginLeft: 7,
+    marginRight: 7,
+    marginTop: 5,
+    marginBottom: 5,
+  
+  },
 });
