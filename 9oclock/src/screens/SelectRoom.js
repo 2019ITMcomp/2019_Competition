@@ -90,7 +90,7 @@ export default class SelectRoom extends Component{
                 color = "blue"
                 onPress = {() => this.props.navigation.navigate("Rooms")}>
                 </Button>
-                <View> {/* 만드는 중, value값들 선택해서 makeRoom실행  */}
+                <View> {/* value 값 선택해서 새롭게 makeRoom 하는 기능 추가 */}
                     <RNPickerSelect 
                     onValueChange={(value) => console.log(value)} 
                     items={[                        
@@ -163,10 +163,13 @@ export default class SelectRoom extends Component{
                             minute: value,
                         });
                     }}
-                    />
+                    />                    
                     <TouchableHighlight
                     onPress={this.makeRoom}
-                    ></TouchableHighlight>
+                    >
+                        <Text>Touch Here</Text>
+                    </TouchableHighlight>                    
+                    
                 </View>
                 
 
