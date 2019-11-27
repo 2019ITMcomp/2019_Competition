@@ -13,11 +13,11 @@ import Rooms from './src/screens/Rooms';
 import SelectRoom from './src/screens/SelectRoom';
 
 // 아래 import는 소현 & 희진 작품
-import SignUpPage from './page/SignUp.js'
-import LoginPage from './page/Login.js'
-import LoginSuccessPage from './page/LoginSuccess'
-import IdFindPage from './page/IdFind'
-import PwFindPage from './page/PwFind'
+import SignUpPage from './src/page/SignUp';
+import LoginPage from './src/page/Login';
+import LoginSuccessPage from './src/page/LoginSuccess';
+import IdFindPage from './src/page/IdFind';
+import PwFindPage from './src/page/PwFind';
 import Mainpage from "./mypage/Mypagemain";
 
 import Mypagemain from "./mypage/Mypagemain";
@@ -49,7 +49,8 @@ const AppNavigator = createStackNavigator(
   },
   {
     initialRouteName: 'Home',
-    // headerMode:"none"
+    //headerBackTitleVisible: false,
+    headerMode:"none"
   }
 );
 

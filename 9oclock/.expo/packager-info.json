@@ -1,1 +1,9 @@
-{}
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19006,
+  "packagerPid": 93816,
+  "expoServerNgrokUrl": "https://ha-far.anonymous.9oclock.exp.direct",
+  "packagerNgrokUrl": "https://packager.ha-far.anonymous.9oclock.exp.direct",
+  "ngrokPid": 93835
+}
