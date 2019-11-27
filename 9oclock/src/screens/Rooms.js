@@ -68,9 +68,7 @@ export default class Rooms extends Component{
         
     }
 
-    openChat(room){        
-        
-        
+    openChat(room){               
         // 이것을 this.duplicated가 아니라 this.setState를 이용해서 하려고했는데
         // setState 메소드가 불통인지 잘 모르겠으나 안되더라... 나중에 해볼 것
         // 이미 user가 room에 들어가 있을 경우, 다시 들어가는 처리를 방지.
