@@ -72,7 +72,7 @@ export default class SelectRoom extends Component{
             alert("빼먹지 말고 모두 입력해라 =ㅅ=");
         }else{
             let today = new Date().getDate()
-            let newRoomName = today + this.state.termination + " " + this.state.hour + " " + this.state.minute;
+            let newRoomName = today + "일 "+ this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
             // 1. 룸 내임이 중복된 것이 있는지 확인해야함.
             // 2. 그 방들이 모두 다 찼는지도 확인해야함. isClosed를 통해서
             // db.ref(newRoomName + '/Rooms)이런식으로 들어가야됨. 최상위가 roomname이 되는 것.
@@ -109,8 +109,8 @@ export default class SelectRoom extends Component{
                         fontSize : 25,
                     }}  
                     items={[                        
-                        { label : '기숙사행', value : 'dormitory'},
-                        { label : '무궁관행', value : 'mugung'},
+                        { label : '기숙사행', value : '기숙사행'},
+                        { label : '무궁관행', value : '무궁관행'},
                     ]} 
                     onValueChange={(value) => {
                         this.setState({
