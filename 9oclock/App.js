@@ -18,9 +18,9 @@ import LoginPage from './src/page/Login';
 import LoginSuccessPage from './src/page/LoginSuccess';
 import IdFindPage from './src/page/IdFind';
 import PwFindPage from './src/page/PwFind';
-import Mainpage from "./mypage/Mypagemain";
 
-import Mypagemain from "./mypage/Mypagemain";
+
+import Mypagemain from "./mypage/MyPageMain";
 import ChangePw from "./mypage/ChangePw";
 import AppInfo from "./mypage/AppInfo";
 import AccountDrop from "./mypage/AccountDrop";
@@ -42,7 +42,6 @@ const AppNavigator = createStackNavigator(
     LoginSuccessPage,
     IdFindPage,
     PwFindPage,
-    Mainpage,
     //아래 소현
     Mypagemain,
     ChangePw,
