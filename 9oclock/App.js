@@ -23,6 +23,8 @@ import Mainpage from "./mypage/Mypagemain";
 import Mypagemain from "./mypage/Mypagemain";
 import ChangePw from "./mypage/ChangePw";
 import AppInfo from "./mypage/AppInfo";
+import AccountDrop from "./mypage/AccountDrop";
+import ChangeAccount from "./mypage/ChangeAccount";
 
 
 const AppNavigator = createStackNavigator(
@@ -45,7 +47,8 @@ const AppNavigator = createStackNavigator(
     Mypagemain,
     ChangePw,
     AppInfo,
-
+    AccountDrop,
+    ChangeAccount,
   },
   {
     initialRouteName: 'Home',
@@ -59,6 +62,8 @@ const AppContainer = createAppContainer(AppNavigator);
 export default class App extends Component  {
   render(){
     return <AppContainer />;
-  }
+    //<ChangeAccount/>
+
+    }
 }
 
