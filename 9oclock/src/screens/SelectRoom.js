@@ -66,6 +66,10 @@ export default class SelectRoom extends Component{
         });
     }
 
+    makeRoom(){ // 새롭게 
+
+    }
+
     renderRow(item) {        
 
         return (
@@ -86,20 +90,25 @@ export default class SelectRoom extends Component{
                 color = "blue"
                 onPress = {() => this.props.navigation.navigate("Rooms")}>
                 </Button>
-                <View>
+                <View> {/* 만드는 중, value값들 선택해서 makeRoom실행  */}
                     <RNPickerSelect 
-                        onValueChange={(value) => console.log(value)} 
-                        items={[                        
-                            { label : '기숙사행', value : 'dormitory'},
-                            { label : '무궁관행', value : 'mugung'},
-                        ]} 
-                        placeholder={{
-                            label : '어디로?',
-                            value : null,
-                            fontSize : 25,
-                        }} 
-                        textInputProps={{color:"#333333", fontSize:16}}
-                        value = {this.state.hour}
+                    onValueChange={(value) => console.log(value)} 
+                    items={[                        
+                        { label : '기숙사행', value : 'dormitory'},
+                        { label : '무궁관행', value : 'mugung'},
+                    ]} 
+                    placeholder={{
+                        label : '어디로?',
+                        value : null,
+                        fontSize : 25,
+                    }} 
+                    textInputProps={{color:"#333333", fontSize:16}}
+                    value = {this.state.termination}
+                    onValueChange={(value) => {
+                        this.setState({
+                            termination : value,
+                        });
+                    }}
                     />
                     <RNPickerSelect 
                     onValueChange={(value) => console.log(value)} 
@@ -117,6 +126,11 @@ export default class SelectRoom extends Component{
                     }} 
                     textInputProps={{color:"#333333", fontSize:16}}
                     value = {this.state.hour}
+                    onValueChange={(value) => {
+                        this.setState({
+                            hour: value,
+                        });
+                    }}
                     />
                     <RNPickerSelect 
                     onValueChange={(value) => console.log(value)} 
@@ -144,7 +158,15 @@ export default class SelectRoom extends Component{
                     }} 
                     textInputProps={{color:"#333333", fontSize:16}} 
                     value = {this.state.minute}
+                    onValueChange={(value) => {
+                        this.setState({
+                            minute: value,
+                        });
+                    }}
                     />
+                    <TouchableHighlight
+                    onPress={this.makeRoom}
+                    ></TouchableHighlight>
                 </View>
                 
 
