@@ -27,9 +27,9 @@ export default class SelectRoom extends Component{
         this.state = {
             rooms : [],
             newRoom : '',
-            termination : '',
-            hour :  '',
-            minute : '',
+            termination : undefined,
+            hour :  undefined,
+            minute : undefined,
         }
     }
 
@@ -66,7 +66,16 @@ export default class SelectRoom extends Component{
         });
     }
 
-    makeRoom(){ // 새롭게 
+    makeRoom =() => { // 새롭게 방을 만들기 위해서 생성.
+        // State - destination, hour, minute 중
+        // 하나라도 null 값을 갖고 있는 게 있다면, alert하도록
+                
+        if(this.state.termination === undefined || this.state.hour === undefined || this.state.minute === undefined){
+            alert("빼먹지 말고 모두 입력해라 =ㅅ=");
+        }else{
+
+
+        }
 
     }
 
@@ -90,28 +99,32 @@ export default class SelectRoom extends Component{
                 color = "blue"
                 onPress = {() => this.props.navigation.navigate("Rooms")}>
                 </Button>
-                <View> {/* value 값 선택해서 새롭게 makeRoom 하는 기능 추가 */}
-                    <RNPickerSelect 
-                    onValueChange={(value) => console.log(value)} 
-                    items={[                        
-                        { label : '기숙사행', value : 'dormitory'},
-                        { label : '무궁관행', value : 'mugung'},
-                    ]} 
+                <View> 
+                    <RNPickerSelect
                     placeholder={{
                         label : '어디로?',
                         value : null,
                         fontSize : 25,
-                    }} 
-                    textInputProps={{color:"#333333", fontSize:16}}
-                    value = {this.state.termination}
+                    }}  
+                    items={[                        
+                        { label : '기숙사행', value : 'dormitory'},
+                        { label : '무궁관행', value : 'mugung'},
+                    ]} 
                     onValueChange={(value) => {
                         this.setState({
                             termination : value,
                         });
+                        console.log(this.state.termination);
                     }}
+                    value = {this.state.termination}
+                    textInputProps={{color:"#333333", fontSize:16}}                     
                     />
-                    <RNPickerSelect 
-                    onValueChange={(value) => console.log(value)} 
+                    <RNPickerSelect   
+                    placeholder={{
+                        label : '몇 시?',
+                        value : null,
+                        fontSize : 25,
+                    }}                   
                     items={[                        
                         { label : '8시', value : '8'},
                         { label : '9시', value : '9'},
@@ -119,21 +132,21 @@ export default class SelectRoom extends Component{
                         { label : '11시', value : '11'},
                         { label : '12시', value : '12'},
                     ]} 
-                    placeholder={{
-                        label : '몇 시?',
-                        value : null,
-                        fontSize : 25,
-                    }} 
-                    textInputProps={{color:"#333333", fontSize:16}}
-                    value = {this.state.hour}
                     onValueChange={(value) => {
                         this.setState({
                             hour: value,
                         });
                     }}
+                    value = {this.state.hour}
+                    textInputProps={{color:"#333333", fontSize:16}}                
+                    
                     />
                     <RNPickerSelect 
-                    onValueChange={(value) => console.log(value)} 
+                    placeholder={{
+                        label : '몇 분?',
+                        value : null,
+                        fontSize : 25,
+                    }}         
                     items={[
                         { label : '0분', value : '0'},{ label : '2분', value : '2'},
                         { label : '4분', value : '4'},{ label : '6분', value : '6'},
@@ -150,19 +163,15 @@ export default class SelectRoom extends Component{
                         { label : '48분', value : '48'},{ label : '50분', value : '50'},
                         { label : '52분', value : '52'},{ label : '54분', value : '54'},
                         { label : '56분', value : '56'},{ label : '58분', value : '58'},
-                    ]} 
-                    placeholder={{
-                        label : '몇 분?',
-                        value : null,
-                        fontSize : 25,
-                    }} 
-                    textInputProps={{color:"#333333", fontSize:16}} 
-                    value = {this.state.minute}
+                    ]}          
                     onValueChange={(value) => {
                         this.setState({
                             minute: value,
                         });
-                    }}
+                    }}           
+                    textInputProps={{color:"#333333", fontSize:16}} 
+                    value = {this.state.minute}
+                    
                     />                    
                     <TouchableHighlight
                     onPress={this.makeRoom}
