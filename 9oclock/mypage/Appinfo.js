@@ -7,7 +7,7 @@ import {View,Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView} 
 
 const{height,width} = Dimensions.get("window");
 
-export default class Appinfo extends Component{
+export default class Mainpage extends Component{
     state = {
       trial : true,
       isOntf : true,
@@ -23,7 +23,7 @@ export default class Appinfo extends Component{
           
            <View style={styles.titlecontainer}>
                 <Text style={styles.title}>앱 정보</Text>
-           <TouchableOpacity onPress = {() => this.props.navigation.navigate("Mypagemain")}>
+           <TouchableOpacity onPress={this.xbutton}  >
           <Image source = {require('./x_button.png')} style = {styles.image}/>
        </TouchableOpacity>
        </View>

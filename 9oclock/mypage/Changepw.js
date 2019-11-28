@@ -21,36 +21,37 @@ export default class Mainpage extends Component{
         <View style={styles.container}>
           
           <View style={styles.titlecontainer}>
-            <Text style={styles.title}>비밀번호 변경</Text>
-            <TouchableOpacity onPress = {() => this.props.navigation.navigate("Mypagemain")}>
-              <Image source = {require('./x_button.png')} style = {styles.image}/>
-            </TouchableOpacity>
-          </View>
+                <Text style={styles.title}>비밀번호 변경</Text>
+          <TouchableOpacity onPress={this.xbutton}  >
+          <Image source = {require('./x_button.png')} style = {styles.image}/>
+       </TouchableOpacity>
+       </View>
 
-          <View> 
-            <View style={styles.inputContainer}>
-                    <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "기존 비밀번호 입력" textAlignVertical="center"/>
-              </View>
-              <View style={styles.inputContainer}>
-                    <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 입력" textAlignVertical="center"/>
-              </View>
-              <View style={styles.inputContainer}>
-                    <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 확인" textAlignVertical="center"/>
+        <View> 
+        <View style={styles.inputContainer}>
+                  <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "기존 비밀번호 입력" textAlignVertical="center"/>
             </View>
-          </View>
+            <View style={styles.inputContainer}>
+                  <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 입력" textAlignVertical="center"/>
+            </View>
+            <View style={styles.inputContainer}>
+                  <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 확인" textAlignVertical="center"/>
+            </View>
 
-          <View style={styles.buttoncontainer}>
-            <Button
-                  buttonStyle={styles.changebutton}
-                  onPress={() => this.changepress()}
-                  title="변경"
-                />
-                <Button
-                  buttonStyle={styles.cancelbutton}
-                  onPress={() => this.cancelpress()}
-                  title="취소"
-                />
-          </View>
+        </View>
+
+        <View style={styles.buttoncontainer}>
+          <Button
+                buttonStyle={styles.changebutton}
+                onPress={() => this.changepress()}
+                title="변경"
+              />
+              <Button
+                buttonStyle={styles.changebutton}
+                onPress={() => this.changepress()}
+                title="취소"
+              />
+        </View>
 
         </View>
         </View>
@@ -60,14 +61,7 @@ export default class Mainpage extends Component{
     }
     
     changepress(){
-      // db에 입력받은 데이터 전송하는 코드 있어야함. 
-      //기존 비번 일치여부, 새로운 비번 같은지 확인하는 코드 필요.
-      this.props.navigation.navigate("Mypagemain");
-    }
-
-    cancelpress(){
-      // 변화 없이 Mypage로 돌아감
-      this.props.navigation.navigate("Mypagemain");
+      
     }
     
     
@@ -77,6 +71,12 @@ const styles = StyleSheet.create({
     
     container: {
         flex: 1,
+      },
+      info : {
+        color : "black",
+        fontSize : 20,
+        fontWeight : "900",     
+        alignSelf : "center"
       },
       titlecontainer:{
         borderBottomColor:'#A9A9A9', 
@@ -89,14 +89,14 @@ const styles = StyleSheet.create({
         // borderColor: "black"
       },
       buttoncontainer:{
-        alignContent : "center",
         marginTop : 30,
-        //borderWidth :1,
+        borderWidth :1,
         borderColor : "black",
-        justifyContent: "center",
+        flex: 1,
         width : width - 20,
-        height : 300,
-        alignSelf: "center",       
+        height : 10,
+        alignSelf: "center",
+        alignContent : "stretch",
         flexDirection : "row"
       },
       image : {        
@@ -140,17 +140,6 @@ const styles = StyleSheet.create({
         textAlign : "center",
       },
       changebutton: {
-        
-        backgroundColor: '#a9a9a9',
-        borderRadius: 5,
-        borderWidth:1,        
-        width : 100,
-        marginTop: 10,
-        marginLeft: 15,
-        marginRight: 15,
-        flexDirection : "row"
-      },
-      cancelbutton: {
         backgroundColor: '#a9a9a9',
         borderRadius: 5,
         borderWidth:1,        
