@@ -67,10 +67,10 @@ export default class FirebaseSDK{
         );
     };
 
-    // 이 함수 안쓰는거 같은데?
-    // get refMessages(){
-    //     return Firebase.database().ref('Rooms/' + this.roomKey + '/messages');
-    // }
+    
+    get refMessages(){
+        return Firebase.database().ref('Rooms/' + this.roomKey + '/messages');
+    }
 
     get refUid(){
         return (Firebase.auth().currentUser || {}).uid; 
@@ -135,7 +135,7 @@ export default class FirebaseSDK{
         let room_ref = Firebase.database().ref('Rooms/' + roomName);
         //createdAt을 사용해서 
         // 1. 14일 뒤에 방 자동 폭파를 위해서 사용해야함
-        
+
         // 2. 분도 확인해서, 그 지정된 시간, 8시 58분이 되면 닫히도록 해야함.     
         // 수정.. 2번은 createdAt이 아니라, 현재 Date.now()와 방 제목을 비교해야함.
         room_ref.push( { 

@@ -96,9 +96,13 @@ export default class SelectRoom extends Component{
             // enter
             //else 들어갈 수 있는 방이 없다?
             // enter2
-            enter2(roomName, roomNumber);
-            Alert("새로운 방으로 이동합니다 !");
-            
+            firebase.enter2(newRoomName, roomNumber);
+            // Alert("새로운 방으로 이동합니다 !");
+            this.props.navigation.navigate('ChatScreen', {
+                name : app.auth().currentUser,
+                roomKey : roomNumber,
+                roomName : newRoomName,
+            });
         }
     }
 
