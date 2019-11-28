@@ -6,13 +6,22 @@ import { Button, CheckBox } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
 import RNPickerSelect from 'react-native-picker-select';
 
+import FirebaseSDK from '../config';
+import { HitTestResultTypes } from "expo/build/AR";
 
+const firebaseSDK = new FirebaseSDK();
 const { height, width } = Dimensions.get("window");
 
 export default class SignUpPage extends Component {
 
   state={
     checked: false,
+    name: null,
+    email: null,
+    password : null,
+    rePassword: null,
+    bank: null,
+    account: null,
   };
   render() {
     let data=[{label:'농협', value: '농협'},{label:'하나', value: '하나'},{label:'KB국민', value: 'KB국민'},{label:'신한', value: '신한'},{label:'우리', value:'우리'}, {label:'외환', value:'외환'},{label:'우체국', value:'우체국'},{label:'수협', value:'수협'},{label:'신협', value:'신협'},{label:'카카오뱅크', value:'카카오뱅크'},{label:'저축은행', value:'저축은행'},{label:'기업',value:'기업'}]
@@ -31,7 +40,7 @@ export default class SignUpPage extends Component {
               <View style={styles.titleContainer}>
                 <View style={styles.inputContainer}>
                   <Text style={styles.title}>회원가입</Text>
-                  <TouchableOpacity onPress = {() => this.props.navigation.navigate("LoginPage")} >
+                  <TouchableOpacity onPress = {this.onXbuttonPress.bind()}>
                     <Image source = {require('./x_button.png')} style={styles.x_button} />
                   </TouchableOpacity>
                 </View>
@@ -39,73 +48,157 @@ export default class SignUpPage extends Component {
         <ScrollView>
               <View style={{flex:1, flexDirection: "column"}}>
                 <Text style={styles.subTitle}>이름</Text>
-                <TextInput  placeholderColor="#c4c3cb" style={styles.textInput} />
+                <TextInput  
+                  placeholderColor="#c4c3cb" 
+                  style={styles.textInput} 
+                  onChangeText={this.onChangeTextName} 
+                  value={this.state.name} 
+                />
                 <Text style={styles.subTitle}>비밀번호</Text>
-                <TextInput  placeholderColor="#c4c3cb" style={styles.textInput} secureTextEntry={true}/>
+                <TextInput  
+                  placeholderColor="#c4c3cb" 
+                  style={styles.textInput} 
+                  secureTextEntry={true}
+                  onChangeText={this.onChangeTextPassword} 
+                  value={this.state.password} 
+                />
                 <Text style={styles.subTitle}>비밀번호 재입력</Text>
-                <TextInput  placeholderColor="#c4c3cb" style={styles.textInput} secureTextEntry={true}/>
+                <TextInput  
+                  placeholderColor="#c4c3cb" 
+                  style={styles.textInput} 
+                  secureTextEntry={true}
+                  onChangeText={this.onChangeTextRepassword} 
+                  value={this.state.rePassword} 
+                />
                 <Text style={styles.subTitle}>학교 웹메일</Text>
                 <View style={styles.inputContainer}>
-                  <TextInput placeholderColor="#c4c3cb" style={styles.emailInput}/>
+                  <TextInput 
+                    placeholderColor="#c4c3cb" 
+                    style={styles.emailInput}
+                    onChangeText={this.onChangeTextEmail} 
+                    value={this.state.email} 
+                  />
                   <Text style={styles.textMail}>@ seoultech.ac.kr</Text>
-                  <Button buttonStyle={styles.button} title="전송" fontSize='10'/>
-                </View>
-                <Text style={styles.subTitle}>인증번호</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput placeholderColor="#c4c3cb" style={styles.emailInput}/>
-                  <Button buttonStyle={styles.button} title="확인" fontSize='10'></Button>
                 </View>
                 <Text style={styles.subTitle}>계좌번호</Text>
                 <View style={styles.inputContainer}>
-                  
                   <View style={{marginVertical:8, marginRight:15,  borderRadius:5, borderWidth:1, borderColor:'#eaeaea', paddingVertical:10, paddingHorizontal:10}}>
-                    <RNPickerSelect onValueChange={(value) => console.log(value)} items={data} placeholder={placeholder} textInputProps={{color:"#333333", fontSize:16}} />
+                    <RNPickerSelect 
+                      onValueChange={(bank) => this.setState({bank})} 
+                      items={data} 
+                      placeholder={placeholder} 
+                      textInputProps={{color:"#333333", fontSize:16}}
+                      value ={this.state.bank}
+                    />
                   </View>
-                  <TextInput placeholder='-빼고 입력해주세요.' placeholderColor="#c4c3cb" style={styles.accountInput}/>
+                  <TextInput 
+                    placeholder='-빼고 입력해주세요.' 
+                    placeholderColor="#c4c3cb" 
+                    style={styles.accountInput}
+                    onChangeText={this.onChangeTextAccount} 
+                    value={this.state.account} 
+                  />
                 </View>
                 <View style={styles.inputContainer2}>
                   <Text style={styles.subTitle2}>이용약관</Text>
                   <Text style={styles.subTitle3}>을 읽고 이에 동의합니다.</Text>
-                  <CheckBox checked={this.state.checked}  onPress={() => this.setState({checked: !this.state.checked})} />
+                  <CheckBox 
+                    checked={this.state.checked}  
+                    onPress={() => this.setState({checked: !this.state.checked})} 
+                  />
                 </View>
                 <Button
                   buttonStyle={styles.signupButton}
-                  onPress = {() => this.props.navigation.navigate("SignUpSuccessPage")}
+                  onPress={this.onSignUpPress.bind(this)}
                   title="가입 완료"
                 />
                 <View style={{height:30}}></View>
               </View>
         </ScrollView>
-
             </View>
           </View>
       </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     );
   }
+  async onSignUpPress() {
+    if(this.state.name==null){
+      Alert.alert(
+        '',
+        '이름을 입력하세요 !',
+        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
+        ],
+        {cancelable: false}
+      )
+    }else if(this.state.email==null){
+      Alert.alert(
+        '',
+        '웹메일을 입력하세요 !',
+        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
+        ],
+        {cancelable: false}
+      )
+    }else if(this.state.password==null){
+      Alert.alert(
+        '',
+        '비밀번호를 입력하세요 !',
+        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
+        ],
+        {cancelable: false}
+      )
+    }else if(this.state.rePassword==null){
+      Alert.alert(
+        '',
+        '비밀번호 재입력을 확인하세요 !',
+        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
+        ],
+        {cancelable: false}
+      )
+    }else if(this.state.account==null){
+      Alert.alert(
+        '',
+        '계쫘를 입력하세요 !',
+        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
+        ],
+        {cancelable: false}
+      )
+    }else if(this.state.password != this.state.rePassword){
+      Alert.alert(
+        '',
+        '비밀번호를 잘못 입력하세요 !',
+        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
+        ],
+        {cancelable: false}
+      )
+    }else{
+      try{
+        const user ={
+            name : this.state.name,
+            email : this.state.email,
+            password : this.state.password,
+            // DB작업 후 추가 예정
+            //account: this.state.account,
+        };
+        await firebaseSDK.createAccount(user);
+        
+      }catch({message}){
+        console.log('Create account failed. catch error : ' + message);
 
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-
-  onLoginPress() {
-
-  }
-  onSignUpPress(){
-
-  }
-  onIdFind(){
-
-  }
-  onPwFind(){
-
-  }
-  xbutton(){
-
-  }
-
+        //TODO
+        // 만약에 같은 address가 있다면 오류 메시지를 뜨게 하는 것까지는 괜찮지만, 
+        // 오류를 캐치해서 보여주고 다시 입력하도록 해야한다. 
+    }
+      this.props.navigation.navigate("SignUpSuccessPage");
+    }
+  };
+  onXbuttonPress=()=>{
+    this.props.navigation.navigate("LoginPage");
+  };
+  onChangeTextName = name => this.setState({ name });
+  onChangeTextEmail = email => this.setState({ email });
+  onChangeTextPassword = password => this.setState({ password });
+  onChangeTextRepassword = rePassword => this.setState({ rePassword });
+  onChangeTextAccount = account => this.setState({ account });
 
 }
 

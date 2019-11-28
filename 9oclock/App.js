@@ -52,7 +52,7 @@ const AppNavigator = createStackNavigator(
   {
     initialRouteName: 'Home',
     //headerBackTitleVisible: false,
-    // headerMode:"none"
+     headerMode:"none"
   }
 );
 
