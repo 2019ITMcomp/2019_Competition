@@ -81,7 +81,7 @@ export default class SelectRoom extends Component{
             // roomRef를 바탕으로 #1 등 방번호를 확인해서 체크해줘야한다. 
             console.log(newRoomName);
             let roomRef = firebase.refRoom(newRoomName);            
-            let roomNumber = 1; // 임시로 1설정.
+            let roomNumber = 1; // 임시로 1설정.            
             // 방 번호는 중요하지 않고, 개수를 새서 추가만 하면 되니까.
             // 다만, 그 방에 들어있는 isClosed가 어떻게 되있는지가 중요하지.
             roomRef.on('value' , (dataSnapshot) => {
@@ -92,17 +92,22 @@ export default class SelectRoom extends Component{
             //위에 코드는 일단 확인하는 건데, 나중에
             // 일단은 방 이름으로 생성하도록 하자.
             
+
             //if 들어 갈 수 있는 방이 있다면?
             // enter
             //else 들어갈 수 있는 방이 없다?
             // enter2
             firebase.enter2(newRoomName, roomNumber);
+            let newRoomKey = firebase.refRoomKey(newRoomName);
+            firebase.enter(newRoomKey); 
             // Alert("새로운 방으로 이동합니다 !");
+            // TODO 위에서 새로운 방을 만들고, 바로 그 방의 룸키를 받아와서 사용해야댐...
             this.props.navigation.navigate('ChatScreen', {
                 name : app.auth().currentUser,
-                roomKey : roomNumber,
+                roomKey : newRoomKey,
                 roomName : newRoomName,
             });
+            //TODO 바로 들어가서 chatting을 한 경우에는, 그 방에 user가 등록이 안됨
         }
     }
 

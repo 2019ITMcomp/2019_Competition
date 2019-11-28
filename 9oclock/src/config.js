@@ -85,6 +85,9 @@ export default class FirebaseSDK{
         return Firebase.database().ref('Rooms/' + newRoomName);
     }
 
+    refRoomKey = (newRoomName) => {
+        return Firebase.database().ref('Rooms/' + newRoomName).key;
+    }
 
     setRoomKey = key => {
         this.roomKey = key;
@@ -127,12 +130,12 @@ export default class FirebaseSDK{
     };
 
     enter = roomKey =>{
-        var user_ref = Firebase.database().ref('Users/' + this.refUid);
+        let user_ref = Firebase.database().ref('Users/' + this.refUid);
         user_ref.push( { roomKey : roomKey });
     }
     
     enter2 = (roomName, roomNumber) =>{
-        let room_ref = Firebase.database().ref('Rooms/' + roomName);
+        let room_ref = Firebase.database().ref('Rooms/' + roomName);        
         //createdAt을 사용해서 
         // 1. 14일 뒤에 방 자동 폭파를 위해서 사용해야함
 
@@ -142,7 +145,6 @@ export default class FirebaseSDK{
             roomNumber : roomName + ' #' + roomNumber, 
             createdAt : Date.now(),
             isClosed : false,
-
         } )
     }
     
