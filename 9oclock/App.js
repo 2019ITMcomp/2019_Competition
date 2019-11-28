@@ -14,7 +14,8 @@ import SelectRoom from './src/screens/SelectRoom';
 // 아래 import는 소현 & 희진 작품
 import SignUpPage from './src/page/SignUp';
 import LoginPage from './src/page/Login';
-import LoginSuccessPage from './src/page/LoginSuccess';
+import SignUpSuccessPage from './src/page/SignUpSuccess';
+import EmailValidationPage from './src/page/EmailValidation';
 import IdFindPage from './src/page/IdFind';
 import PwFindPage from './src/page/PwFind';
 
@@ -37,9 +38,10 @@ const AppNavigator = createStackNavigator(
     //아래 희진
     SignUpPage,
     LoginPage,
-    LoginSuccessPage,
+    SignUpSuccessPage,
     IdFindPage,
     PwFindPage,
+    EmailValidationPage,
     //아래 소현
     Mypagemain,
     ChangePw,

@@ -89,7 +89,13 @@ export default class LoginScreen extends Component {
       try {
           await app.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword);
           console.log(this.state.userEmail + ' signed in');
-          this.props.navigation.navigate('SelectRoom');
+          console.log('이메일 로그인 성공 : ', JSON.stringify(app.auth().currentUser));
+          //email 인증 확인 후 메인페이지 접속 가능
+          if(app.auth().currentUser.emailVerified==false){
+            this.props.navigation.navigate('EmailValidationPage');
+          }else{
+            this.props.navigation.navigate('SelectRoom');
+          }
       } catch(error) {
           console.log(error.toString());
           Alert.alert(error.toString());

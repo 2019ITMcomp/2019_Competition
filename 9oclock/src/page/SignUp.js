@@ -70,7 +70,7 @@ export default class SignUpPage extends Component {
                 </View>
                 <Button
                   buttonStyle={styles.signupButton}
-                  onPress = {() => this.props.navigation.navigate("LoginSuccessPage")}
+                  onPress = {() => this.props.navigation.navigate("SignUpSuccessPage")}
                   title="가입 완료"
                 />
                 <View style={{height:30}}></View>
