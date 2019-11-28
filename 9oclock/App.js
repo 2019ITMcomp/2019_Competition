@@ -7,7 +7,6 @@ import { createAppContainer } from 'react-navigation';
 import Home from './src/screens/Home';
 
 import SignUp from './src/components/Signup';
-import SignIn from './src/components/SignIn';
 import ChatScreen from './src/components/ChatScreen';
 import Rooms from './src/screens/Rooms';
 import SelectRoom from './src/screens/SelectRoom';
@@ -18,7 +17,7 @@ import LoginPage from './src/page/Login';
 import LoginSuccessPage from './src/page/LoginSuccess';
 import IdFindPage from './src/page/IdFind';
 import PwFindPage from './src/page/PwFind';
-import Mainpage from "./mypage/Mypagemain";
+
 
 import Mypagemain from "./mypage/Mypagemain";
 import ChangePw from "./mypage/ChangePw";
@@ -31,7 +30,6 @@ const AppNavigator = createStackNavigator(
   {
     Home,
     SignUp,
-    SignIn,
     Rooms,
     ChatScreen,
     SelectRoom,
@@ -42,7 +40,6 @@ const AppNavigator = createStackNavigator(
     LoginSuccessPage,
     IdFindPage,
     PwFindPage,
-    Mainpage,
     //아래 소현
     Mypagemain,
     ChangePw,
@@ -53,7 +50,7 @@ const AppNavigator = createStackNavigator(
   {
     initialRouteName: 'Home',
     //headerBackTitleVisible: false,
-    headerMode:"none"
+    // headerMode:"none"
   }
 );
 

@@ -79,10 +79,10 @@ export default class FirebaseSDK{
         return Firebase.auth().currentUser.displayName;
     }
 
-    // refOn = callback =>{ // 지금 안쓰는 상태임.
-    //     this.ref
-    //     .limitToLast(20)
+    // get refRoom(newRoomName){
+    //     return Firebase.database().ref('Rooms/' + )
     // }
+
 
     setRoomKey = key => {
         this.roomKey = key;
