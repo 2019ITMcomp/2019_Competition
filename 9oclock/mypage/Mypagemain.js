@@ -14,14 +14,16 @@ export default class Mainpage extends Component{
     onToggle(isOn) {
       console.log("Changed to " + isOn);
     }
+
     constructor(props) {
       super(props);
       
     }
+
     render(){
       const { isOntf } = this.state;
         return(
-          
+
         <View style={styles.container}>        
         <View style={styles.container}>
           
@@ -30,8 +32,7 @@ export default class Mainpage extends Component{
            <TouchableOpacity onPress={this.xbutton}  >
           <Image source = {require('./x_button.png')} style = {styles.image}/>
        </TouchableOpacity>
-       </View>
-          
+       </View>          
           
        <ScrollView>
          <View style = {{alignItems:"center" , marginTop: 30 }}>
@@ -83,7 +84,7 @@ export default class Mainpage extends Component{
        </View>
 
        <View style={styles.subcontainer}>
-       <TouchableOpacity onPress={this.accountdrop}>
+       <TouchableOpacity onPress={() => this.props.navigation.navigate("AccountDrop")}>
           <Text style={styles.otherlink}>회원 탈퇴</Text>
        </TouchableOpacity>
        </View>
@@ -120,6 +121,7 @@ export default class Mainpage extends Component{
       );
     }
     accountdrop(){
+      
       Alert.alert(
         '회원 탈퇴',
         '정말로 탈퇴하시겠습니까?',

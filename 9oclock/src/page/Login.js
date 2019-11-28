@@ -1,13 +1,38 @@
 import React, { Component } from "react";
 
 //import styles from "./style.js";
-import {Keyboard, Text, View, StyleSheet, TextInput,Dimensions, Image,TouchableWithoutFeedback, Alert, KeyboardAvoidingView} from 'react-native';
+import {
+  Keyboard, 
+  Text, 
+  View, 
+  StyleSheet, 
+  TextInput,
+  Dimensions, 
+  Image,
+  TouchableWithoutFeedback, 
+  Alert, 
+  KeyboardAvoidingView} from 'react-native';
 import { Button } from 'react-native-elements';
-
+import { app } from '../config';
 
 const { height, width } = Dimensions.get("window");
+
 export default class LoginScreen extends Component {
   
+  static navigationOptions = {
+    title : 'SignIn',
+    header : null,
+
+  }
+  constructor(props){
+    super(props);
+    this.state = {
+        userEmail : '',
+        userPassword : '',
+
+    }
+  }
+
   render() {
     return (
       <KeyboardAvoidingView style={styles.containerView} behavior="padding">
@@ -18,16 +43,27 @@ export default class LoginScreen extends Component {
             <View style ={{justifyContent: 'center', alignItems: 'center'}}>
               <Image source={require('../../assets/icon.png')} style={styles.logo}/>
             </View>
-            <TextInput placeholder="Username" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} />
-            <TextInput placeholder="Password" placeholderColor="#c4c3cb" style={styles.loginFormTextInput} secureTextEntry={true}/>
+            <TextInput 
+            placeholder="UserEmail" 
+            placeholderColor="#c4c3cb" 
+            style={styles.loginFormTextInput}
+            onChangeText={(text) => this.setState({ userEmail: text })}
+            />
+            <TextInput 
+            placeholder="Password" 
+            placeholderColor="#c4c3cb" 
+            style={styles.loginFormTextInput} 
+            secureTextEntry={true}
+            onChangeText={(text) => this.setState({ userPassword: text })}
+            />
             <Button
               buttonStyle={styles.loginButton}
-              onPress={() => this.onLoginPress()}
+              onPress={this.onLoginPress.bind(this)}
               title="Login"
             />
             <Button
               buttonStyle={styles.signupButton}
-              onPress = {() => this.props.navigation.navigate("SignUpPage")}
+              onPress = {this.onSignUpPress.bind(this)}
               title="Sign Up"
             />
             <View style={styles.idpwFindView}>
@@ -48,11 +84,32 @@ export default class LoginScreen extends Component {
   componentWillUnmount() {
   }
 
-  onLoginPress() {
-
+  async onLoginPress() {
+    if (this.state.userEmail != '' && this.state.userPassword != '') {
+      try {
+          await app.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword);
+          console.log(this.state.userEmail + ' signed in');
+          this.props.navigation.navigate('SelectRoom');
+      } catch(error) {
+          console.log(error.toString());
+          Alert.alert(error.toString());
+      }
+    }
+    else {
+      Alert.alert(
+          'Invalid Sign In',
+          'The Email and Password fields cannot be blank.',
+          [
+          {text: 'OK', onPress: () => console.log('OK Pressed')},
+          ],
+          { cancelable: false }
+      )
+    }
   }
-  onSignUpPress(){
 
+  onSignUpPress = () =>{
+    console.log("test");
+    this.props.navigation.navigate("SignUpPage");
   }
   
 
