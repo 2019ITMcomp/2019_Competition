@@ -1,3 +1,4 @@
+
 import React, {Component} from "react";
 import {View,Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView} from "react-native";
 
@@ -7,7 +8,7 @@ import {View,Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView} 
 
 const{height,width} = Dimensions.get("window");
 
-export default class Appinfo extends Component{
+export default class Mainpage extends Component{
     state = {
       trial : true,
       isOntf : true,
@@ -21,14 +22,14 @@ export default class Appinfo extends Component{
         <View style={styles.container}>        
         <View style={styles.container}>
           
-          <View style={styles.titlecontainer}>
-            <Text style={styles.title}>앱 정보</Text>
-            <TouchableOpacity onPress = {() => this.props.navigation.navigate("Mypagemain")}>
-              <Image source = {require('./x_button.png')} style = {styles.image}/>
-            </TouchableOpacity>
-          </View>
+           <View style={styles.titlecontainer}>
+                <Text style={styles.title}>앱 정보</Text>
+           <TouchableOpacity onPress={this.xbutton}  >
+          <Image source = {require('./x_button.png')} style = {styles.image}/>
+       </TouchableOpacity>
+       </View>
 
-          <View>
+       <View>
            <Text style={styles.rules}>이용 약관 및 이용 규칙</Text>
            <View style={styles.textbox}>
                <ScrollView> 
@@ -102,4 +103,5 @@ const styles = StyleSheet.create({
         height: height - height/4,
         alignSelf: "center"
       }
+
 });
