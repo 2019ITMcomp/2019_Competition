@@ -1,23 +1,91 @@
 import React, {Component} from "react";
-import {Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
-
+import {FlatList, Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
 import RNPickerSelect from 'react-native-picker-select'
+import FirebaseSDK, {db, app} from '../src/config';
+import { Button } from 'react-native-elements';
 import { withTheme } from "react-native-elements";
+import ChangeAccount from "./ChangeAccount";
 
 const{height,width} = Dimensions.get("window");
-const { rating } = 3.5;
+
+
+const firebase = new FirebaseSDK();
 export default class Mainpage extends Component{
     
     constructor(props){
         super(props);
+        this.user_id = firebase.refUid; // id를 기반으로 찾기. 
+        this.userRef = db.ref('Users/' + this.user_id);
+
         this.state = {
-        title:"아홉시\n오분전"
+        title:"아홉시\n오분전",
+        newRoom : '',
+        departure:undefined,
+        termination : undefined,
+        hour :  undefined,
+        minute : undefined,
         };
       }  
-      
+    // componentDidMount(){
+    //     this.listenForRooms(this.userRef);
+        
+    // }
+
+    // listenForRooms(userRef){
+    //     userRef.on('value', (dataSnapshot) => {
+    //         var roomsFB = [];
+    //         dataSnapshot.forEach( (child) => {
+    //             var roomKey = child.val().roomKey;
+                
+    //             db.ref('Rooms/' + roomKey).once('value', (data) => {
+    //                 roomsFB.push({
+    //                     name : data.val().name,
+    //                     key : roomKey,
+    //                 });
+    //                 this.setState({ rooms : roomsFB});
+    //             })                
+    //         });                        
+    //     });
+    // }
+
+    openChat(room){                
+        
+        this.props.navigation.navigate('ChatScreen', {
+            name : app.auth().currentUser,
+            roomKey : room.key,
+            roomName : room.name,
+        });
+    }
+
+    makeRoom =() => { 
+
+        if(this.state.termination === undefined || this.state.hour === undefined || this.state.minute === undefined){
+            alert("빼먹지 말고 모두 입력해라 =ㅅ=");
+        }else{
+            let today = new Date().getDate()
+            let newRoomName = today + "일 "+ this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
+            // 1. 룸 내임이 중복된 것이 있는지 확인해야함.
+            // 2. 그 방들이 모두 다 찼는지도 확인해야함. isClosed를 통해서
+            // db.ref(newRoomName + '/Rooms)이런식으로 들어가야됨. 최상위가 roomname이 되는 것.
+            console.log(newRoomName);
+            // firebase.refRoom(newRoomName);
+        }
+    } 
+
+    renderRow(item) {        
+
+        return (
+            <TouchableOpacity style={styles.roomLi}
+            underlayColor="#fff"
+            onPress={() => this.openChat(item)}
+            >
+                <Text style={styles.taxilist}>{item.name}</Text>
+            </TouchableOpacity>
+        )
+    }
+
     render(){
-      const { isOntf } = this.state;
-        return(
+      return(
 
         <View style={styles.container}>        
         <View style={styles.container}>
@@ -31,62 +99,23 @@ export default class Mainpage extends Component{
             </TouchableOpacity>
        </View>          
           
-       <ScrollView>
-         <View style={styles.meeting}>
-            <Text>출발 예정 시각</Text>
+       
+         <View>
+            <Text style={styles.subtitle}>출발 예정 시각</Text>
+            </View>
+            <View style={styles.meeting}>
             <View>
-                <View style={styles.departure}>
-                    <RNPickerSelect
-                        placeholder={{
-                            label : '출발지',
-                            value : null,
-                            fontSize : 25,
-                        }}  
-                        items={[                        
-                            { label : '공릉역', value : '공릉역'},
-                            { label : '석계역', value : '석계역'},
-                            { label : '철길CU', value : '철길CU'},
-                        ]} 
-                        onValueChange={(value) => {
-                            this.setState({
-                                termination : value,
-                            });                        
-                        }}
-                        value = {this.state.termination}
-                        textInputProps={{color:"#333333", fontSize:16}}                     
-                    />
-                </View>
-            
-                <View style={styles.arrival}>
-                    <RNPickerSelect
-                        placeholder={{
-                            label : '도착지',
-                            value : null,
-                            fontSize : 25,
-                        }}  
-                        items={[                        
-                            { label : '기숙사행', value : '기숙사행'},
-                            { label : '무궁관행', value : '무궁관행'},
-                        ]} 
-                        onValueChange={(value) => {
-                            this.setState({
-                                termination : value,
-                            });                        
-                        }}
-                        value = {this.state.termination}
-                        textInputProps={{color:"#333333", fontSize:16}}                     
-                    />
-                </View>
-                <View style={styles.hour}>
+                <View style={styles.time}>                
+                
+                <View style={styles.hour}>                    
                     <RNPickerSelect   
                         placeholder={{
-                            label : '시',
-                            value : null,
-                            fontSize : 25,
+                            label : '08시',
+                            value : '8',
+                            fontSize : 20,
                         }}                   
                         items={[                        
-                            { label : '8시', value : '8'},
-                            { label : '9시', value : '9'},
+                            { label : '09시', value : '9'},
                             { label : '10시', value : '10'},
                             { label : '11시', value : '11'},
                             { label : '12시', value : '12'},
@@ -103,14 +132,14 @@ export default class Mainpage extends Component{
                 <View style={styles.minute}>
                     <RNPickerSelect 
                         placeholder={{
-                            label : '분',
-                            value : null,
-                            fontSize : 25,
+                            label : '00분',
+                            value : '0',
+                            fontSize : 20,
                         }}         
                         items={[
-                            { label : '0분', value : '0'},{ label : '2분', value : '2'},
-                            { label : '4분', value : '4'},{ label : '6분', value : '6'},
-                            { label : '8분', value : '8'},{ label : '10분', value : '10'},
+                            { label : '02분', value : '2'},
+                            { label : '04분', value : '4'},{ label : '06분', value : '6'},
+                            { label : '08분', value : '8'},{ label : '10분', value : '10'},
                             { label : '12분', value : '12'},{ label : '14분', value : '14'},
                             { label : '16분', value : '16'},{ label : '18분', value : '18'},
                             { label : '20분', value : '20'},{ label : '22분', value : '22'},
@@ -133,6 +162,60 @@ export default class Mainpage extends Component{
                         value = {this.state.minute}                    
                     />  
                 </View>
+                </View>
+
+                <View style={styles.place}>
+                <View style={styles.departure}>
+                    <RNPickerSelect
+                        placeholder={{
+                            label : '출발지',
+                            value : null,
+                            fontSize : 25,
+                        }}  
+                        items={[                        
+                            { label : '공릉역', value : '공릉역'},
+                            { label : '석계역', value : '석계역'},
+                            { label : '철길CU', value : '철길CU'},
+                        ]} 
+                        onValueChange={(value) => {
+                            this.setState({
+                                departure : value,
+                            });                        
+                        }}
+                        value = {this.state.departure}
+                        textInputProps={{color:"#333333", fontSize:16}}                     
+                    />
+                </View>
+            
+                <View style={styles.arrival}>
+                    <RNPickerSelect
+                        placeholder={{
+                            label : '도착지',
+                            value : null,
+                            fontSize : 25,
+                        }}  
+                        items={[                        
+                            { label : '무궁관', value : '무궁관'},
+                            { label : '어의관', value : '어의관'},
+                            { label : '다산관', value : '다산관'},
+                        ]} 
+                        onValueChange={(value) => {
+                            this.setState({
+                                termination : value,
+                            });                        
+                        }}
+                        value = {this.state.termination}
+                        textInputProps={{color:"#333333", fontSize:16}}                     
+                    />
+                </View>
+                <View>
+                <TouchableOpacity onPress = {() => this.makeRoom}>
+               <View>
+                    <Image source = {require('./glass.png')} style = {styles.glassimage}/>
+                </View>
+            </TouchableOpacity>
+                </View>
+                </View>
             </View>
 
          </View>
@@ -143,8 +226,28 @@ export default class Mainpage extends Component{
             
             
 
-      
-       
+            <View style={{height:100}}></View>
+            
+            <Button title = "All of rooms"
+                color = "blue"
+                onPress = {() => this.props.navigation.navigate("Rooms")}>
+                </Button>
+                
+
+                 
+           <View>
+           <View style={styles.titlecontainer}>
+               <Text style={styles.subtitle}>지난 동승 목록</Text>
+               </View>
+           </View>
+           <ScrollView>
+           <View>
+                   {/* <FlatList style={styles.taxilist}
+                    data={this.state.rooms}
+                    renderItem={({item}) => (this.renderRow(item)
+                    )}
+                    /> */}
+           </View>
        </ScrollView>
         </View>
         </View>
@@ -196,27 +299,90 @@ const styles = StyleSheet.create({
         resizeMode: 'stretch',
         flexDirection:"row",
       },
+      subtitle:{
+        color : "black",
+        fontSize : 20,
+        marginLeft : 15,
+        fontWeight : "500",
+        marginBottom : 7,
+        justifyContent:"center",
+      },
     meeting:{
-        borderWidth:1,
+        //borderWidth:1,
         marginHorizontal:10,
-        backgroundColor: "rgba(87, 185, 158, 0.7)",
+        borderRadius:5,
+        backgroundColor: "rgba(87, 185, 158, 0.48)",
     },
-    departure:{
-        borderWidth:1,
-        marginTop:10,
-        backgroundColor:"white"
-    },
-    arrival:{
-        borderWidth:1,
+    time:{
+        flexDirection:"row",
         marginTop:10,
     },
     hour:{
-        borderWidth:1,
+        paddingLeft:(width/6)/2-10,
+        paddingVertical:15,
+        //borderWidth:1,
+        height: 40,
+        width: width/5,
+        marginHorizontal: 15,
         marginTop:10,
+        backgroundColor:"white",
+        borderColor:"#e9e9e9",
+        borderRadius: 5,
+        
+        
     },
     minute:{
+        paddingLeft:(width/6)/2-10,
+        paddingVertical:15,
         borderWidth:1,
+        height: 40,
+        width: width/5,
+        //marginHorizontal: 15,
         marginTop:10,
-    }
-      
+        backgroundColor:"white",
+        borderColor:"#e9e9e9",
+        borderRadius: 5,
+        
+        
+    },
+    place:{
+        flexDirection:"row",
+        marginBottom:20,
+
+    },
+    departure:{
+        paddingLeft:(width/3)/2-22,
+        paddingVertical:15,
+        borderWidth:1,
+        height: 40,
+        width: width/3,
+        marginHorizontal: 15,
+        marginTop:10,
+        backgroundColor:"white",
+        borderColor:"#e9e9e9",
+        borderRadius: 5,
+    },
+    arrival:{
+        paddingLeft:(width/3)/2-22,
+        paddingVertical:15,
+        borderWidth:1,
+        height: 40,
+        width: width/3,
+        marginHorizontal: 15,
+        marginTop:10,
+        backgroundColor:"white",
+        borderColor:"#e9e9e9",
+        borderRadius: 5,
+    },
+    glassimage:{
+        alignSelf:"flex-end",
+        marginTop: 13,
+        width : 35,
+        height : 35,
+        resizeMode: 'stretch',
+    },
+    taxilist:{
+        marginLeft:15,
+        fontSize:20,
+    },
 });
