@@ -1,6 +1,7 @@
 import Firebase from 'firebase';
 import * as c from './constant';
 import { supportsOrientationLockAsync } from 'expo/build/ScreenOrientation/ScreenOrientation';
+import { rejects } from 'assert';
 
 let config = {
     apiKey : c.FIREBASE_API_KEY,
@@ -85,8 +86,23 @@ export default class FirebaseSDK{
         return Firebase.database().ref('Rooms/' + newRoomName);
     }
 
-    refRoomKey = (newRoomName) => {
-        return Firebase.database().ref('Rooms/' + newRoomName).key;
+    refRoomKey =(newRoomName) => {
+        let room_ref = Firebase.database().ref('Rooms/' + newRoomName);
+        let key = '';
+        return new Promise(function (resolve, rejects){
+        
+            room_ref.on('value', (dataSnapshot) =>{
+                dataSnapshot.forEach((child) =>{                
+                    if(child.val().isClosed === false){                         
+                        key = child.key;                    
+                    }                     
+            
+                });
+            });
+            resolve(key);
+        })
+        
+        
     }
 
     setRoomKey = key => {
@@ -129,25 +145,23 @@ export default class FirebaseSDK{
         });
     };
 
-    enter = roomKey =>{
-        let user_ref = Firebase.database().ref('Users/' + this.refUid);
-        user_ref.push( { roomKey : roomKey });
-    }
     
-    enter2 = (roomName, roomNumber) =>{
+    
+    enter = (roomName) =>{
         let room_ref = Firebase.database().ref('Rooms/' + roomName);        
-        //createdAt을 사용해서 
-        // 1. 14일 뒤에 방 자동 폭파를 위해서 사용해야함
-
-        // 2. 분도 확인해서, 그 지정된 시간, 8시 58분이 되면 닫히도록 해야함.     
-        // 수정.. 2번은 createdAt이 아니라, 현재 Date.now()와 방 제목을 비교해야함.
         room_ref.push( { 
-            roomNumber : roomName + ' #' + roomNumber, 
+            roomName : roomName, 
             createdAt : Date.now(),
             isClosed : false,
         } )
     }
-    
+    enter2 =  (newRoomName, roomKey) =>{
+        let user_ref = Firebase.database().ref('Users/' + this.refUid);
+        user_ref.push( {
+            roomName : newRoomName,
+            roomKey : roomKey 
+        });
+    }
 }
 
 

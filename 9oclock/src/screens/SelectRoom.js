@@ -12,6 +12,7 @@ import {
 import RNPickerSelect from 'react-native-picker-select'
 import FirebaseSDK, {db, app} from '../config';
 import styles from '../components/styles';
+import { calculateUTF8Chars } from 'bytebuffer';
 
 
 //TODO
@@ -41,14 +42,16 @@ export default class SelectRoom extends Component{
 
     listenForRooms(userRef){
         userRef.on('value', (dataSnapshot) => {
-            var roomsFB = [];
+            let roomsFB = [];
             dataSnapshot.forEach( (child) => {
-                var roomKey = child.val().roomKey;
                 
-                db.ref('Rooms/' + roomKey).once('value', (data) => {
+                let roomKey = child.val().roomKey;
+                let roomName = child.val().roomName;  
+                db.ref('Rooms/' + roomName + '/' + roomKey).on('value', (data) => {                    
+                                
                     roomsFB.push({
-                        name : data.val().name,
-                        key : roomKey,
+                        name : data.val().roomName,
+                        key : roomName + '/' + roomKey,
                     });
                     this.setState({ rooms : roomsFB});
                 })                
@@ -65,7 +68,35 @@ export default class SelectRoom extends Component{
         });
     }
 
-    makeRoom =() => { 
+
+    duplicateCheck = async (newRoomName) =>{
+        let roomRef = firebase.refRoom(newRoomName);            
+        let roomNumber = 1;
+        
+        roomRef.on('value' , (dataSnapshot) => {
+            
+            console.log('snapshot : ' + dataSnapshot);
+            dataSnapshot.forEach((child) => {
+                console.log("Roomnumber : " + roomNumber);
+                console.log('child : ' + child);
+                console.log('is closed? : ' + child.val().isClosed);
+                if(child.val().isClosed){
+                    roomNumber += 1;
+                }else{ // 빈 곳을 발견했다는 의미이므로. 
+                    //user를 그곳에 더하고!
+                    this.props.navigation.navigate('ChatScreen', {
+                        name : app.auth().currentUser,
+                        roomKey : child.key,
+                        roomName : newRoomName,
+                    });
+                    return;
+                }
+            });
+        })
+        return roomNumber;
+    }
+
+    makeRoom = async () => { 
 
         if(this.state.termination === undefined || this.state.hour === undefined || this.state.minute === undefined){
             alert("빼먹지 말고 모두 입력해라 =ㅅ=");
@@ -74,39 +105,32 @@ export default class SelectRoom extends Component{
             let newRoomName = today + "일 "+ this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
             // 1. 룸 내임이 중복된 것이 있는지 확인해야함.
             // 2. 그 방들이 모두 다 찼는지도 확인해야함. isClosed를 통해서
-            // db.ref(newRoomName + '/Rooms)이런식으로 들어가야됨. 최상위가 roomname이 되는 것.
             
-            // newRoomName --> 28일 기숙사행 8시 58분
-            // 이렇게 들어간 것에 안에 방들이 몇 개 있는지 다르겠지. 
-            // roomRef를 바탕으로 #1 등 방번호를 확인해서 체크해줘야한다. 
-            console.log(newRoomName);
-            let roomRef = firebase.refRoom(newRoomName);            
-            let roomNumber = 1; // 임시로 1설정.            
+            
             // 방 번호는 중요하지 않고, 개수를 새서 추가만 하면 되니까.
             // 다만, 그 방에 들어있는 isClosed가 어떻게 되있는지가 중요하지.
-            roomRef.on('value' , (dataSnapshot) => {
-                // 아래서 null 출력 왜냐하면 아무것도 없으니까 현재는
-                console.log(dataSnapshot);
-            })
-
-            //위에 코드는 일단 확인하는 건데, 나중에
-            // 일단은 방 이름으로 생성하도록 하자.
+            
+            // let roomNumber = await this.duplicateCheck(newRoomName);
+            let roomNumber = 1;
             
 
-            //if 들어 갈 수 있는 방이 있다면?
-            // enter
-            //else 들어갈 수 있는 방이 없다?
-            // enter2
-            firebase.enter2(newRoomName, roomNumber);
-            let newRoomKey = firebase.refRoomKey(newRoomName);
-            firebase.enter(newRoomKey); 
-            // Alert("새로운 방으로 이동합니다 !");
+
+            firebase.enter(newRoomName);
+            
+            let newRoomKey = await firebase.refRoomKey(newRoomName)
+            
+            firebase.enter2(newRoomName, newRoomKey); 
+            console.log(newRoomKey);
+            alert("새로운 방으로 이동합니다 !");
+
             // TODO 위에서 새로운 방을 만들고, 바로 그 방의 룸키를 받아와서 사용해야댐...
             this.props.navigation.navigate('ChatScreen', {
                 name : app.auth().currentUser,
                 roomKey : newRoomKey,
                 roomName : newRoomName,
             });
+            
+            
             //TODO 바로 들어가서 chatting을 한 경우에는, 그 방에 user가 등록이 안됨
         }
     }
@@ -211,9 +235,9 @@ export default class SelectRoom extends Component{
                 
 
                 <StatusBar barStyle="light-content"/>
-                <Text style={styles.roomsHeader}>Chatypus</Text>
+                <Text style={styles.roomsHeader}>진관이의 채팅앱</Text>
                 <View style={styles.roomsInputContainer}>
-                    <Text style={styles.roomsInput}>Your room !</Text>  
+                    <Text style={styles.roomsInput}>택시를 많이 탔구나!</Text>  
                 </View> 
                 <View style={styles.roomsListContainer}>
                     <FlatList
