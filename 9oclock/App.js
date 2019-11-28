@@ -24,7 +24,7 @@ import ChangePw from "./mypage/ChangePw";
 import AppInfo from "./mypage/AppInfo";
 import AccountDrop from "./mypage/AccountDrop";
 import ChangeAccount from "./mypage/ChangeAccount";
-
+import AppMain from "./mypage/Main";
 
 const AppNavigator = createStackNavigator(
   {
@@ -46,6 +46,7 @@ const AppNavigator = createStackNavigator(
     AppInfo,
     AccountDrop,
     ChangeAccount,
+    AppMain,
   },
   {
     initialRouteName: 'Home',

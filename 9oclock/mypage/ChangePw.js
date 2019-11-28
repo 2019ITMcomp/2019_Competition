@@ -143,7 +143,7 @@ const styles = StyleSheet.create({
         
         backgroundColor: '#a9a9a9',
         borderRadius: 5,
-        borderWidth:1,        
+        //borderWidth:1,        
         width : 100,
         marginTop: 10,
         marginLeft: 15,
@@ -153,7 +153,7 @@ const styles = StyleSheet.create({
       cancelbutton: {
         backgroundColor: '#a9a9a9',
         borderRadius: 5,
-        borderWidth:1,        
+        //borderWidth:1,        
         width : 100,
         marginTop: 10,
         marginLeft: 15,
