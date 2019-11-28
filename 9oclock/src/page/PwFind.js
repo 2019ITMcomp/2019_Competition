@@ -3,12 +3,21 @@ import React, { Component } from "react";
 import {Keyboard, Text, View, TextInput, Image,TouchableWithoutFeedback, Alert, KeyboardAvoidingView,Dimensions, StyleSheet, ScrollView,TouchableOpacity} from 'react-native';
 import { Button, CheckBox } from 'react-native-elements';
 import { Dropdown } from 'react-native-material-dropdown';
+import { app } from "../config";
+import { auth } from "firebase";
 
 
 const { height, width } = Dimensions.get("window");
 
 export default class PwFindPage extends Component {
-  render() {
+  constructor(){
+    super();
+    this.state={
+      email : null,
+      content: false, 
+    }
+  }
+  render() {   
     return (
       <KeyboardAvoidingView style={styles.containerView} behavior="padding">
 
@@ -24,38 +33,38 @@ export default class PwFindPage extends Component {
                 </View>
               </View>
               <View style={{ flexDirection: "column", borderBottomColor:'#A9A9A9', borderBottomWidth: StyleSheet.hairlineWidth, marginHorizontal:10,paddingBottom:20}}>
-                <Text style={styles.subTitle}>아이디</Text>
-                <TextInput  placeholderColor="#c4c3cb" style={styles.textInput} />
                 <Text style={styles.subTitle}>가입하신 학교 웹메일 주소를 입력해주세요.</Text>
                 <View style={styles.inputContainer}>
-                  <TextInput placeholderColor="#c4c3cb" style={styles.emailInput}/>
+                  <TextInput 
+                    placeholderColor="#c4c3cb" 
+                    style={styles.emailInput} 
+                    onChangeText={this.onChangeTextEmail}
+                    value={this.state.email}
+                   />
                   <Text style={styles.textMail}>@ seoultech.ac.kr</Text>
-                  <Button buttonStyle={styles.button} title="확인" fontSize='10'/>
+                  <Button buttonStyle={styles.button} title="확인" fontSize='10' onPress={this.onButtonPress.bind()} />
                 </View>
-                <Text style={styles.subTitle}>인증번호</Text>
-                <View style={styles.inputContainer}>
-                  <TextInput placeholderColor="#c4c3cb" style={styles.emailInput}/>
-                  <Button buttonStyle={styles.button} title="확인" fontSize='10'></Button>
-                </View>
-              </View>
-                <TouchableOpacity onPress={this.onLoginPagePress}>
-                        <Text style={styles.text2}>비밀번호 변경하기</Text>
-                </TouchableOpacity>
+              </View> 
+              {this.state.content ? ( <View><Text style={styles.text}>이메일을 확인해주세요! </Text></View> ) : null } 
             </View>
           </View>
       </TouchableWithoutFeedback>
       </KeyboardAvoidingView>
     );
   }
-
-  componentDidMount() {
-  }
-
-  componentWillUnmount() {
-  }
-  onLoginPagePress() {
-
-  }
+  onChangeTextEmail = email => this.setState({ email });
+  onButtonPress=()=>{
+    try{
+      // 이따 webmail로 형식바꿔야함
+      app.auth().sendPasswordResetEmail(this.state.email /*+'@seoultech.ac.kr'*/);
+      this.setState(previousState => ({content: !previousState.content}))
+      
+    }catch(error){
+      console.log(error.toString());
+      console.log('ㅅㅂ 안됨');
+    }   
+  };
+  
 
 
 }

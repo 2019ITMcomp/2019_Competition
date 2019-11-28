@@ -67,7 +67,6 @@ export default class LoginScreen extends Component {
               title="Sign Up"
             />
             <View style={styles.idpwFindView}>
-              <Text style={styles.text} onPress = {() => this.props.navigation.navigate("IdFindPage")}>아이디 찾기</Text>
               <Text style={styles.text} onPress = {() => this.props.navigation.navigate("PwFindPage")}>비밀번호 찾기</Text>
             </View>
 
@@ -172,6 +171,8 @@ const styles=StyleSheet.create({
     fontSize:15,
     marginLeft:20,
     marginRight:20,
+    textAlign:'right',
+    flex:1,
   },
   idpwFindView:{
     marginTop:20,
@@ -179,7 +180,6 @@ const styles=StyleSheet.create({
     justifyContent: 'space-around',
     flex:1,
     flexDirection:'row',
-  
   },
   signUpFormContainer:{
     flex:1,
