@@ -13,7 +13,7 @@ export default class AccountDrop extends Component{
       super(props);
       this.state = {
         isAlertVisible:false,
-        PwInput :"pw"
+        dropmsg: "회원탈퇴에 동의합니다",
       };
     }  
     
@@ -57,7 +57,7 @@ export default class AccountDrop extends Component{
           <View>
             <DialogInput isDialogVisible={this.state.isAlertVisible}
               title={"아래와 똑같이 입력해주세요."}
-              message={"회원탈퇴에 동의합니다"}
+              message={this.state.dropmsg}
               hintInput ={""}
               dialogStyle={"White"}
               submitInput={ (inputText) => {this.submit(inputText)} }
@@ -72,13 +72,20 @@ export default class AccountDrop extends Component{
 
     }
     closefunction(){
+      this.setState({dropmsg:"회원탈퇴에 동의합니다"})
       this.setState({isAlertVisible:false});
     }
 
     submit(inputText){
       console.log(inputText);
       this.setState({isAlertVisible:false});
+
+      if(inputText == this.state.dropmsg){
       this.props.navigation.navigate("Mypagemain");
+    }else{
+      this.setState({dropmsg:"틀렸습니다. 다시 입력해주세요. \n 회원탈퇴에 동의합니다"})
+      this.setState({isAlertVisible:true});
+    }
     }
     
     
