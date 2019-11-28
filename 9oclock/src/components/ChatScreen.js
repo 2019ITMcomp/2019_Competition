@@ -10,8 +10,6 @@ export default class ChatScreen extends React.Component {
     constructor(props){
         super(props);
         
-        // this.messagesRef = db.ref(`messages/${roomKey}`);
-        // 지금 당장은 쓰지 않는 코드
         var rKey = this.props.navigation.state.params.roomKey; 
         Firebase.setRoomKey(rKey);
         

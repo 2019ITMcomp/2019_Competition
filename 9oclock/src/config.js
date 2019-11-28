@@ -67,9 +67,10 @@ export default class FirebaseSDK{
         );
     };
 
-    get refMessages(){
-        return Firebase.database().ref('Rooms/' + this.roomKey + '/messages');
-    }
+    // 이 함수 안쓰는거 같은데?
+    // get refMessages(){
+    //     return Firebase.database().ref('Rooms/' + this.roomKey + '/messages');
+    // }
 
     get refUid(){
         return (Firebase.auth().currentUser || {}).uid; 
@@ -79,9 +80,10 @@ export default class FirebaseSDK{
         return Firebase.auth().currentUser.displayName;
     }
 
-    // get refRoom(newRoomName){
-    //     return Firebase.database().ref('Rooms/' + )
-    // }
+    // 적용이 왜 안될까. //get은 아무 formal한 parameter를 가지면 안된다는데
+    refRoom(newRoomName){
+        return Firebase.database().ref('Rooms/' + newRoomName);
+    }
 
 
     setRoomKey = key => {
@@ -107,8 +109,8 @@ export default class FirebaseSDK{
     };
 
     get = callback =>{ //아 ... 말 그대로 콜백 값이 callback에 담기는거야...? 바인딩 플러스에???
-        // console.log("Roomkey is this : " + roomkey);
-        // Firebase.database().ref("rooms/" + roomkey).on("child_added", snapshot => callback(this.parse(snapshot)));
+        // callback은 말 그대로 인자값을 넣어주는 것 같은데,,, 잘 모르겠다. 
+        
         this.refMessages.on("child_added", snapshot => callback(this.parse(snapshot)));
     };
 
@@ -129,7 +131,20 @@ export default class FirebaseSDK{
         user_ref.push( { roomKey : roomKey });
     }
     
-    
+    enter2 = (roomName, roomNumber) =>{
+        let room_ref = Firebase.database().ref('Rooms/' + roomName);
+        //createdAt을 사용해서 
+        // 1. 14일 뒤에 방 자동 폭파를 위해서 사용해야함
+        
+        // 2. 분도 확인해서, 그 지정된 시간, 8시 58분이 되면 닫히도록 해야함.     
+        // 수정.. 2번은 createdAt이 아니라, 현재 Date.now()와 방 제목을 비교해야함.
+        room_ref.push( { 
+            roomNumber : roomName + ' #' + roomNumber, 
+            createdAt : Date.now(),
+            isClosed : false,
+
+        } )
+    }
     
 }
 

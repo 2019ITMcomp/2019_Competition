@@ -7,6 +7,7 @@ import {
     TouchableHighlight,
     StatusBar,
     FlatList,
+    Alert,
 } from 'react-native';
 import RNPickerSelect from 'react-native-picker-select'
 import FirebaseSDK, {db, app} from '../config';
@@ -74,8 +75,30 @@ export default class SelectRoom extends Component{
             // 1. 룸 내임이 중복된 것이 있는지 확인해야함.
             // 2. 그 방들이 모두 다 찼는지도 확인해야함. isClosed를 통해서
             // db.ref(newRoomName + '/Rooms)이런식으로 들어가야됨. 최상위가 roomname이 되는 것.
+            
+            // newRoomName --> 28일 기숙사행 8시 58분
+            // 이렇게 들어간 것에 안에 방들이 몇 개 있는지 다르겠지. 
+            // roomRef를 바탕으로 #1 등 방번호를 확인해서 체크해줘야한다. 
             console.log(newRoomName);
-            // firebase.refRoom(newRoomName);
+            let roomRef = firebase.refRoom(newRoomName);            
+            let roomNumber = 1; // 임시로 1설정.
+            // 방 번호는 중요하지 않고, 개수를 새서 추가만 하면 되니까.
+            // 다만, 그 방에 들어있는 isClosed가 어떻게 되있는지가 중요하지.
+            roomRef.on('value' , (dataSnapshot) => {
+                // 아래서 null 출력 왜냐하면 아무것도 없으니까 현재는
+                console.log(dataSnapshot);
+            })
+
+            //위에 코드는 일단 확인하는 건데, 나중에
+            // 일단은 방 이름으로 생성하도록 하자.
+            
+            //if 들어 갈 수 있는 방이 있다면?
+            // enter
+            //else 들어갈 수 있는 방이 없다?
+            // enter2
+            enter2(roomName, roomNumber);
+            Alert("새로운 방으로 이동합니다 !");
+            
         }
     }
 
