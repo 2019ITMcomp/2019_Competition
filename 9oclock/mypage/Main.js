@@ -1,10 +1,10 @@
 import React, {Component} from "react";
-import {FlatList, Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
+import {FlatList, Alert,View,Text, TouchableOpacity, StyleSheet,Platform, Dimensions, Image, ScrollView} from "react-native";
 import RNPickerSelect from 'react-native-picker-select'
 import FirebaseSDK, {db, app} from '../src/config';
 import { Button } from 'react-native-elements';
-import { withTheme } from "react-native-elements";
-import ChangeAccount from "./ChangeAccount";
+
+
 
 const{height,width} = Dimensions.get("window");
 
@@ -242,11 +242,11 @@ export default class Mainpage extends Component{
            </View>
            <ScrollView>
            <View>
-                   {/* <FlatList style={styles.taxilist}
+                   <FlatList style={styles.taxilist}
                     data={this.state.rooms}
                     renderItem={({item}) => (this.renderRow(item)
                     )}
-                    /> */}
+                    />
            </View>
        </ScrollView>
         </View>
