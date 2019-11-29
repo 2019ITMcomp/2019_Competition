@@ -5,10 +5,10 @@ import { createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
 import Home from './src/screens/Home';
 
-import SignUp from './src/components/Signup';
+
 import ChatScreen from './src/components/ChatScreen';
 import Rooms from './src/screens/Rooms';
-import SelectRoom from './src/screens/SelectRoom';
+
 
 // 아래 import는 소현 & 희진 작품
 import SignUpPage from './src/page/SignUp';
@@ -61,12 +61,10 @@ contentOptions:{
 const AppNavigator = createStackNavigator(
   {
     Home,
-    SignUp,
     Rooms,
     ChatScreen:{
       screen:SideDrawerNavigator
     },
-    SelectRoom,
 
     //아래 희진
     SignUpPage,

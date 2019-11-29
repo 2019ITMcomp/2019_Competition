@@ -1,7 +1,5 @@
 import Firebase from 'firebase';
 import * as c from './constant';
-import { supportsOrientationLockAsync } from 'expo/build/ScreenOrientation/ScreenOrientation';
-import { rejects } from 'assert';
 
 let config = {
     apiKey : c.FIREBASE_API_KEY,
@@ -81,30 +79,41 @@ export default class FirebaseSDK{
         return Firebase.auth().currentUser.displayName;
     }
 
-    // 적용이 왜 안될까. //get은 아무 formal한 parameter를 가지면 안된다는데
+    refUser(userId){
+        return Firebase.database().ref('Users/' + userId + '/_info');
+    }
+
     refRoom(newRoomName){
         return Firebase.database().ref('Rooms/' + newRoomName);
     }
 
-    refRoomKey = (newRoomName) => {
-        let room_ref = Firebase.database().ref('Rooms/' + newRoomName);
-        let key = '';
+    refRoomKey = async (newRoomName) => {
         
+        return new Promise(async function (resolve, rejects){
+            console.log("refRoomKey 안으로 들어옴!")
+            let SDK = new FirebaseSDK();
+            let room_ref = Firebase.database().ref('Rooms/' + newRoomName);
+            let key = await SDK.refRoomKey_sub(room_ref);
+            
+            console.log('key is this : ' + key);
+            resolve(key);
+        })        
+    }
+
+    refRoomKey_sub = (room_ref) =>{
         return new Promise(function (resolve, rejects){
-        
             room_ref.on('value', (dataSnapshot) =>{
+                let key = "";
                 console.log("data : " + dataSnapshot);
                 dataSnapshot.forEach((child) =>{                
                     if(child.val().isClosed === false){                         
                         key = child.key;                    
                     }                     
-            
                 });
+                resolve(key)
             });
-            resolve(key);
+            
         })
-        
-        
     }
 
     setRoomKey = key => {
@@ -147,49 +156,7 @@ export default class FirebaseSDK{
         });
     };
 
-    // duplicateCheck = (newRoomName) =>{
-    //     let roomRef = firebase.refRoom(newRoomName);            
-    //     let roomNumber = 1;
-        
-    //     roomRef.on('value' , (dataSnapshot) => {
-            
-    //         console.log('snapshot : ' + dataSnapshot);
-    //         dataSnapshot.forEach((child) => {
-    //             console.log("Roomnumber : " + roomNumber);
-    //             console.log('child : ' + child);
-    //             console.log('is closed? : ' + child.val().isClosed);
-    //             if(child.val().isClosed){
-    //                 roomNumber += 1;
-    //             }else{ // 빈 곳을 발견했다는 의미이므로. 
-    //                 //user를 그곳에 더하고!
-    //                 this.props.navigation.navigate('ChatScreen', {
-    //                     name : app.auth().currentUser,
-    //                     roomKey : child.key,
-    //                     roomName : newRoomName,
-    //                 });
-    //                 return;
-    //             }
-    //         });
-    //     })
-    //     return roomNumber;
-    // }
 
-    checkRoom = (newRoomName) =>{
-        return new Promise(function (resolve, reject){
-            let key = '';
-            let room_ref = Firebase.database().ref('Rooms/' + newRoomName);
-            room_ref.on('value', (dataSnapshot)=>{
-                dataSnapshot.forEach( (child) =>{
-                    if(!child.val().isClosed){//열려 있는 방이 있을 때
-                        key = child.key;
-                    }   
-                })
-            })
-
-            resolve(key);
-        })
-    }
-    
     createRoom = async (roomName) =>{
         return new Promise(async function( resolve, rejects){
             let room_ref = Firebase.database().ref('Rooms/' + roomName);        
@@ -205,17 +172,34 @@ export default class FirebaseSDK{
     enter =  (newRoomName, roomKey) =>{
         
         let user_ref = Firebase.database().ref('Users/' + this.refUid);
-        user_ref.push( {
-            roomName : newRoomName,
-            roomKey : roomKey 
-        });
+        let duplicated = false;
+        user_ref.on('value', (dataSnapshot) =>{
+            dataSnapshot.forEach( (child) =>{
+                if(child.val().roomKey === roomKey){
+                    //같은 게 있다면, 똑같은 방에 들어오게 된 것이므로 빽
+                    duplicated = true; 
+                }
+            })
+        })
+        if(!duplicated){
+            user_ref.push( {
+                roomName : newRoomName,
+                roomKey : roomKey 
+            });
+        }   
+    }
+    setUserInfo = (userId, name, bank, account) =>{
+        let user_ref = this.refUser(userId);
+        console.log("user ref : " + user_ref);
+        user_ref.push({
+            name : name,
+            bank : bank,
+            account : account,
+        })
     }
 }
 
-
-
-//위에 코드는 로그인을 위해서 만들어 놓은 것이고, 아래는 db만을 따로 사용하기 위해서 만들어 놓은 코드...? 
-export let app = Firebase.initializeApp(config);
+export const app = Firebase.initializeApp(config);
 export const db = app.database();
 
 
