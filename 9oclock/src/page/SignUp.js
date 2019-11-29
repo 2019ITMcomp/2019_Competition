@@ -5,7 +5,7 @@ import {Keyboard, Text, View, TextInput, Image,TouchableWithoutFeedback, Alert, 
 import { Button, CheckBox } from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 
-import FirebaseSDK from '../config';
+import FirebaseSDK, { app } from '../config';
 import { HitTestResultTypes } from "expo/build/AR";
 
 const firebaseSDK = new FirebaseSDK();
@@ -179,6 +179,7 @@ export default class SignUpPage extends Component {
             account: this.state.account,
         };
         await firebaseSDK.createAccount(user);
+        await app.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
         console.log(user.toString());
       }catch({message}){
         console.log('Create account failed. catch error : ' + message);

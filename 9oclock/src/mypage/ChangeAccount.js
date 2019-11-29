@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {View,Text, TouchableOpacity, StyleSheet, Dimensions, TextInput,Image, ScrollView} from "react-native";
+import {View,Text, TouchableOpacity, StyleSheet, Dimensions,Alert, TextInput,Image, ScrollView} from "react-native";
 import { Button } from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 import FirebaseSDK, { app } from '../config';
@@ -8,14 +8,16 @@ import FirebaseSDK, { app } from '../config';
 const{height,width} = Dimensions.get("window");
 
 export default class ChangeAccount extends Component{
-    
+  
   constructor(props){
     super(props);
     this.state = {
       //useraccount : "농협은행, 010-0101010-102",
       //bank : app.auth().currentUser.account,
-      currentAccount: app.auth().currentUser.account,
-      currentBank : app.auth().currentUser.bank,
+      //currentAccount: app.auth().currentUser.account,
+      //currentBank : app.auth().currentUser.bank,
+      currentAccount:'3020525108671',
+      currentBank : '농협',
       newBank: null,
       newAccount:null,      
 
@@ -91,6 +93,13 @@ export default class ChangeAccount extends Component{
     
     changepress(){
       //계좌 변경
+      Alert.alert(
+        '',
+        '변경되었습니다. 사실은 안했지롱!',
+        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
+        ],
+        {cancelable: false}
+      )
       
     }
     cancelpress(){
