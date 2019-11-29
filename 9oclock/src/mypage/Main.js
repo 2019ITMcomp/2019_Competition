@@ -19,34 +19,37 @@ export default class Mainpage extends Component{
 
         this.state = {
         title:"아홉시\n오분전",
+        rooms : [],
         newRoom : '',
-        departure:undefined,
+        departure: undefined,
         termination : undefined,
         hour :  undefined,
         minute : undefined,
         };
       }  
-    // componentDidMount(){
-    //     this.listenForRooms(this.userRef);
+    componentDidMount(){
+        this.listenForRooms(this.userRef);
         
-    // }
+    }
 
-    // listenForRooms(userRef){
-    //     userRef.on('value', (dataSnapshot) => {
-    //         var roomsFB = [];
-    //         dataSnapshot.forEach( (child) => {
-    //             var roomKey = child.val().roomKey;
+    listenForRooms(userRef){
+        userRef.on('value', (dataSnapshot) => {
+            let roomsFB = [];
+            dataSnapshot.forEach( (child) => {
                 
-    //             db.ref('Rooms/' + roomKey).once('value', (data) => {
-    //                 roomsFB.push({
-    //                     name : data.val().na\\me,
-    //                     key : roomKey,
-    //                 });
-    //                 this.setState({ rooms : roomsFB});
-    //             })                
-    //         });                        
-    //     });
-    // }
+                let roomKey = child.val().roomKey;
+                let roomName = child.val().roomName;  
+                db.ref('Rooms/' + roomName + '/' + roomKey).on('value', (data) => {                    
+                                
+                    roomsFB.push({
+                        name : data.val().roomName,
+                        key : roomName + '/' + roomKey,
+                    });
+                    this.setState({ rooms : roomsFB});
+                })                
+            });                        
+        });
+    }
 
     openChat(room){                
         
@@ -57,7 +60,18 @@ export default class Mainpage extends Component{
         });
     }
 
-    makeRoom =() => { 
+    isEmpty = (value) =>{
+        if( value == "" || 
+        value == null || 
+        value == undefined || 
+        ( value != null && typeof value == "object" && !Object.keys(value).length ) ){ 
+            return true }
+        else{ 
+            return false 
+        } 
+    };
+
+    makeRoom = async () => { 
 
         if(this.state.termination === undefined || this.state.hour === undefined || this.state.minute === undefined){
             alert("빼먹지 말고 모두 입력해라 =ㅅ=");
@@ -66,11 +80,44 @@ export default class Mainpage extends Component{
             let newRoomName = today + "일 "+ this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
             // 1. 룸 내임이 중복된 것이 있는지 확인해야함.
             // 2. 그 방들이 모두 다 찼는지도 확인해야함. isClosed를 통해서
-            // db.ref(newRoomName + '/Rooms)이런식으로 들어가야됨. 최상위가 roomname이 되는 것.
-            console.log(newRoomName);
-            // firebase.refRoom(newRoomName);
+            
+            
+            // 방 번호는 중요하지 않고, 개수를 새서 추가만 하면 되니까.
+            // 다만, 그 방에 들어있는 isClosed가 어떻게 되있는지가 중요하지.
+            
+            // let roomNumber = await this.duplicateCheck(newRoomName);
+            let roomNumber = 1;
+            let noRoom = false; 
+
+            //TODO 이부분 수정
+            let newRoomKey = await firebase.checkRoom(newRoomName); //
+            console.log("만약에 방이 있다면 : " + newRoomKey);
+            noRoom = this.isEmpty(newRoomKey) //비어있으면 true
+            console.log('noRoom is : ' + noRoom);
+            // 이 부분에서 create가 아니라 사람이 3명이라면 바로 enter해버림.
+            if(noRoom){ // 들어갈 수 있는 방이 없다면 새로 만들어야지
+                await firebase.createRoom(newRoomName);
+                newRoomKey = await firebase.refRoomKey(newRoomName)
+            }
+            
+            
+            
+
+            firebase.enter(newRoomName, newRoomKey); 
+            console.log('NewRoomKey : '  +newRoomKey);
+            alert("새로운 방으로 이동합니다 !");
+
+            // TODO 위에서 새로운 방을 만들고, 바로 그 방의 룸키를 받아와서 사용해야댐...
+            this.props.navigation.navigate('ChatScreen', {
+                name : app.auth().currentUser,
+                roomKey : newRoomKey,
+                roomName : newRoomName,
+            });
+            
+            
+            //TODO 바로 들어가서 chatting을 한 경우에는, 그 방에 user가 등록이 안됨
         }
-    } 
+    }
 
     renderRow(item) {        
 
