@@ -23,8 +23,8 @@ export default class Mainpage extends Component{
         newRoom : '',
         departure: undefined,
         termination : undefined,
-        hour :  undefined,
-        minute : undefined,
+        hour :  8,
+        minute : 0,
         };
       }  
     componentDidMount(){
@@ -77,7 +77,7 @@ export default class Mainpage extends Component{
             alert("빼먹지 말고 모두 입력해라 =ㅅ=");
         }else{
             let today = new Date().getDate()
-            let newRoomName = today + "일 "+ this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
+            let newRoomName = today + "일 "+ this.state.departure + " " + this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
             // 1. 룸 내임이 중복된 것이 있는지 확인해야함.
             // 2. 그 방들이 모두 다 찼는지도 확인해야함. isClosed를 통해서
             
@@ -91,18 +91,15 @@ export default class Mainpage extends Component{
 
             //TODO 이부분 수정
             let newRoomKey = await firebase.checkRoom(newRoomName); //
-            console.log("만약에 방이 있다면 : " + newRoomKey);
+            
             noRoom = this.isEmpty(newRoomKey) //비어있으면 true
-            console.log('noRoom is : ' + noRoom);
-            // 이 부분에서 create가 아니라 사람이 3명이라면 바로 enter해버림.
+            
+            
             if(noRoom){ // 들어갈 수 있는 방이 없다면 새로 만들어야지
                 await firebase.createRoom(newRoomName);
                 newRoomKey = await firebase.refRoomKey(newRoomName)
             }
             
-            
-            
-
             firebase.enter(newRoomName, newRoomKey); 
             console.log('NewRoomKey : '  +newRoomKey);
             alert("새로운 방으로 이동합니다 !");
@@ -256,7 +253,7 @@ export default class Mainpage extends Component{
                     />
                 </View>
                 <View>
-                <TouchableOpacity onPress = {() => this.makeRoom}>
+                <TouchableOpacity onPress = {this.makeRoom}>
                <View>
                     <Image source = {require('./glass.png')} style = {styles.glassimage}/>
                 </View>
