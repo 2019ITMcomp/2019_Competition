@@ -7,6 +7,7 @@ import {Header, Left, Right, Icon} from 'native-base';
 const Firebase = new FirebaseSDK();
 export default class ChatScreen extends React.Component {
 
+
     constructor(props){
         super(props);
         
