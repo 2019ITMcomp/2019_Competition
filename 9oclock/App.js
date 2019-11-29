@@ -119,7 +119,6 @@ contentOptions:{
 }
 });
 
-
 const AppNavigator = createStackNavigator(
   {
     Home,

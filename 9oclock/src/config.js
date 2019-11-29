@@ -90,12 +90,11 @@ export default class FirebaseSDK{
     refRoomKey = async (newRoomName) => {
         
         return new Promise(async function (resolve, rejects){
-            console.log("refRoomKey 안으로 들어옴!")
+            
             let SDK = new FirebaseSDK();
             let room_ref = Firebase.database().ref('Rooms/' + newRoomName);
             let key = await SDK.refRoomKey_sub(room_ref);
-            
-            console.log('key is this : ' + key);
+
             resolve(key);
         })        
     }
@@ -204,10 +203,36 @@ export default class FirebaseSDK{
         })
     }
 
-    enrollToRoom = async(path) =>{
+    enrollToRoom = async (path) =>{
         await Firebase.database().ref('Rooms/' + path + '/user_info').push({
             id : this.refUid,
         });
+    }
+
+    closeRoom = path =>{
+        return new Promise( async function(resolve, rejects){
+            let room_ref = Firebase.database().ref('Rooms/' + path + '/user_info');
+            room_ref.on('value', async (dataSnapshot) =>{
+                let size = 0;
+                dataSnapshot.forEach((child)=>{                    
+                    size = size + 1;
+                    console.log("사이즈 테스트 !" + size);
+                })
+                console.log("사이즈 정리 끝 ! ");
+                if(size >= 3){ //isClosed를 true로 교체.
+                    await Firebase.database().ref('Rooms/' + path).update({
+                        isClosed : true,
+                    });
+                    
+                    resolve("success");
+                }else{
+                    resolve("fail");
+                }
+                
+            })
+
+        })
+            
     }
 }
 

@@ -80,19 +80,17 @@ export default class Mainpage extends Component{
             let newRoomName = today + "일 "+ this.state.departure + " " + this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
             let noRoom = false;
             let newRoomKey = await firebase.refRoomKey(newRoomName); //
-            console.log("RoomKey :" + newRoomKey);
             noRoom = this.isEmpty(newRoomKey) //비어있으면 true
-            
-            console.log("NOROOM : " + noRoom)
+
             if(noRoom){ // 들어갈 수 있는 방이 없다면 새로 만들어야지
-                console.log("새로운 방을 만듭니다.");
                 await firebase.createRoom(newRoomName);
                 newRoomKey = await firebase.refRoomKey(newRoomName)
             }
             
-            // firebase.enrollToRoom( (newRoomName + '/' + newRoomKey) )
+            firebase.enrollToRoom( (newRoomName + '/' + newRoomKey) )
+            let test = await firebase.closeRoom( (newRoomName + '/' + newRoomKey) );
+            console.log("테스트 결과 : " + test);
             firebase.enter(newRoomName, newRoomKey); 
-            console.log('NewRoomKey : '  +newRoomKey);
             alert("새로운 방으로 이동합니다 !");
 
             this.props.navigation.navigate('ChatScreen', {
@@ -106,10 +104,7 @@ export default class Mainpage extends Component{
     renderRow(item) {        
 
         return (
-            <TouchableOpacity style={styles.roomLi}
-            underlayColor="#fff"
-            onPress={() => this.openChat(item)}
-            >
+            <TouchableOpacity underlayColor="#fff" style={styles.roomlist} onPress={() => this.openChat(item)}>
                 <Text style={styles.taxilist}>{item.name}</Text>
             </TouchableOpacity>
         )
@@ -256,35 +251,26 @@ export default class Mainpage extends Component{
          <View>
 
          </View>
-            
-            
-
-            <View style={{height:100}}></View>
-          
-
-                 
-           <View>
-           <View style={styles.titlecontainer}>
+            <View style={{height:100}}></View> 
+            <View>
+            <View style={styles.titlecontainer}>
                <Text style={styles.subtitle}>지난 동승 목록</Text>
                </View>
-           </View>
-           <ScrollView>
-           <View>
-                   <FlatList style={styles.taxilist}
-                    data={this.state.rooms}
-                    renderItem={({item}) => (this.renderRow(item)
-                    )}
-                    />
+            </View>
+            <ScrollView>
+            <View>
+            <FlatList 
+                //style={styles.taxilist}
+                data={this.state.rooms}
+                renderItem={({item}) => (this.renderRow(item))}
+            />
            </View>
        </ScrollView>
         </View>
         </View>
         
         );
-
-    }
-  
-    
+    }    
 }
 
 const styles = StyleSheet.create({
@@ -296,9 +282,10 @@ const styles = StyleSheet.create({
         // 타이틀 박스
         borderBottomColor:'#A9A9A9', 
         borderBottomWidth: 2,
-        marginBottom:10, 
+        //marginBottom:10,
+        //marginTop:15, 
         marginHorizontal:10,
-        paddingBottom:7,
+        paddingBottom:3,
         flexDirection:"row",
         //borderWidth:1,        
       },
@@ -333,6 +320,7 @@ const styles = StyleSheet.create({
         marginLeft : 15,
         fontWeight : "500",
         marginBottom : 7,
+        marginTop:10,
         justifyContent:"center",
       },
     meeting:{
@@ -359,15 +347,31 @@ const styles = StyleSheet.create({
         
     },
     glassimage:{
-        marginLeft:15,
+        marginLeft:9,
         alignSelf:"flex-end",
         marginTop: 13,
-        width : 35,
-        height : 35,
+        width : 30,
+        height : 30,
         resizeMode: 'stretch',
+        marginRight:10,
     },
     taxilist:{
         marginLeft:15,
         fontSize:20,
+        //borderBottomColor: "#BBBBBB",
+        //borderBottomWidth:2,
+        //borderWidth:1,
+        marginRight:15,
+        marginTop:5,
+        paddingBottom:4,
     },
+    roomlist:{
+        marginHorizontal:10,
+        //fontSize:20,
+        borderBottomColor: "#BBBBBB",
+        borderBottomWidth : 0.8,
+        //borderWidth:1,
+        marginTop:5,
+        paddingBottom:4,
+    }
 });
