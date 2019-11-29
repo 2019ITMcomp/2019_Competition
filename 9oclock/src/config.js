@@ -89,9 +89,11 @@ export default class FirebaseSDK{
     refRoomKey =(newRoomName) => {
         let room_ref = Firebase.database().ref('Rooms/' + newRoomName);
         let key = '';
+        
         return new Promise(function (resolve, rejects){
         
             room_ref.on('value', (dataSnapshot) =>{
+                console.log("data : " + dataSnapshot);
                 dataSnapshot.forEach((child) =>{                
                     if(child.val().isClosed === false){                         
                         key = child.key;                    
@@ -148,12 +150,16 @@ export default class FirebaseSDK{
     
     
     enter = (roomName) =>{
-        let room_ref = Firebase.database().ref('Rooms/' + roomName);        
-        room_ref.push( { 
-            roomName : roomName, 
-            createdAt : Date.now(),
-            isClosed : false,
-        } )
+        return new Promise(function( resolve, rejects){
+            let room_ref = Firebase.database().ref('Rooms/' + roomName);        
+            room_ref.push( { 
+                roomName : roomName, 
+                createdAt : Date.now(),
+                isClosed : false,
+            } )
+            resolve();
+        })
+        
     }
     enter2 =  (newRoomName, roomKey) =>{
         let user_ref = Firebase.database().ref('Users/' + this.refUid);

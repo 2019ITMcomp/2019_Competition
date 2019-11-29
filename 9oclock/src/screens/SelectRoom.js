@@ -115,12 +115,12 @@ export default class SelectRoom extends Component{
             
 
 
-            firebase.enter(newRoomName);
+            await firebase.enter(newRoomName);
             
             let newRoomKey = await firebase.refRoomKey(newRoomName)
             
             firebase.enter2(newRoomName, newRoomKey); 
-            console.log(newRoomKey);
+            console.log('NewRoomKey : '  +newRoomKey);
             alert("새로운 방으로 이동합니다 !");
 
             // TODO 위에서 새로운 방을 만들고, 바로 그 방의 룸키를 받아와서 사용해야댐...
