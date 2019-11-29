@@ -147,9 +147,50 @@ export default class FirebaseSDK{
         });
     };
 
+    // duplicateCheck = (newRoomName) =>{
+    //     let roomRef = firebase.refRoom(newRoomName);            
+    //     let roomNumber = 1;
+        
+    //     roomRef.on('value' , (dataSnapshot) => {
+            
+    //         console.log('snapshot : ' + dataSnapshot);
+    //         dataSnapshot.forEach((child) => {
+    //             console.log("Roomnumber : " + roomNumber);
+    //             console.log('child : ' + child);
+    //             console.log('is closed? : ' + child.val().isClosed);
+    //             if(child.val().isClosed){
+    //                 roomNumber += 1;
+    //             }else{ // 빈 곳을 발견했다는 의미이므로. 
+    //                 //user를 그곳에 더하고!
+    //                 this.props.navigation.navigate('ChatScreen', {
+    //                     name : app.auth().currentUser,
+    //                     roomKey : child.key,
+    //                     roomName : newRoomName,
+    //                 });
+    //                 return;
+    //             }
+    //         });
+    //     })
+    //     return roomNumber;
+    // }
+
+    checkRoom = (newRoomName) =>{
+        return new Promise(function (resolve, reject){
+            let key = '';
+            let room_ref = Firebase.database().ref('Rooms/' + newRoomName);
+            room_ref.on('value', (dataSnapshot)=>{
+                dataSnapshot.forEach( (child) =>{
+                    if(!child.val().isClosed){//열려 있는 방이 있을 때
+                        key = child.key;
+                    }   
+                })
+            })
+
+            resolve(key);
+        })
+    }
     
-    
-    enter = (roomName) =>{
+    createRoom = (roomName) =>{
         return new Promise(function( resolve, rejects){
             let room_ref = Firebase.database().ref('Rooms/' + roomName);        
             room_ref.push( { 
@@ -161,7 +202,7 @@ export default class FirebaseSDK{
         })
         
     }
-    enter2 =  (newRoomName, roomKey) =>{
+    enter =  (newRoomName, roomKey) =>{
         let user_ref = Firebase.database().ref('Users/' + this.refUid);
         user_ref.push( {
             roomName : newRoomName,

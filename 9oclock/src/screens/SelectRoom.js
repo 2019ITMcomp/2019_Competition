@@ -69,32 +69,18 @@ export default class SelectRoom extends Component{
     }
 
 
-    duplicateCheck = async (newRoomName) =>{
-        let roomRef = firebase.refRoom(newRoomName);            
-        let roomNumber = 1;
-        
-        roomRef.on('value' , (dataSnapshot) => {
-            
-            console.log('snapshot : ' + dataSnapshot);
-            dataSnapshot.forEach((child) => {
-                console.log("Roomnumber : " + roomNumber);
-                console.log('child : ' + child);
-                console.log('is closed? : ' + child.val().isClosed);
-                if(child.val().isClosed){
-                    roomNumber += 1;
-                }else{ // 빈 곳을 발견했다는 의미이므로. 
-                    //user를 그곳에 더하고!
-                    this.props.navigation.navigate('ChatScreen', {
-                        name : app.auth().currentUser,
-                        roomKey : child.key,
-                        roomName : newRoomName,
-                    });
-                    return;
-                }
-            });
-        })
-        return roomNumber;
-    }
+    isEmpty = (value) =>{
+        if( value == "" || 
+        value == null || 
+        value == undefined || 
+        ( value != null && typeof value == "object" && !Object.keys(value).length ) ){ 
+            return true }
+        else{ 
+            return false 
+        } 
+    };
+
+
 
     makeRoom = async () => { 
 
@@ -112,14 +98,23 @@ export default class SelectRoom extends Component{
             
             // let roomNumber = await this.duplicateCheck(newRoomName);
             let roomNumber = 1;
+            let noRoom = false; 
+
+            //TODO 이부분 수정
+            let newRoomKey = await firebase.checkRoom(newRoomName); //
+            console.log("만약에 방이 있다면 : " + newRoomKey);
+            noRoom = this.isEmpty(newRoomKey) //비어있으면 true
+            console.log('noRoom is : ' + noRoom);
+            // 이 부분에서 create가 아니라 사람이 3명이라면 바로 enter해버림.
+            if(noRoom){ // 들어갈 수 있는 방이 없다면 새로 만들어야지
+                await firebase.createRoom(newRoomName);
+                newRoomKey = await firebase.refRoomKey(newRoomName)
+            }
+            
+            
             
 
-
-            await firebase.enter(newRoomName);
-            
-            let newRoomKey = await firebase.refRoomKey(newRoomName)
-            
-            firebase.enter2(newRoomName, newRoomKey); 
+            firebase.enter(newRoomName, newRoomKey); 
             console.log('NewRoomKey : '  +newRoomKey);
             alert("새로운 방으로 이동합니다 !");
 
