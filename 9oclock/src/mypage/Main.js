@@ -90,16 +90,18 @@ export default class Mainpage extends Component{
             let noRoom = false; 
 
             //TODO 이부분 수정
-            let newRoomKey = await firebase.checkRoom(newRoomName); //
-            
+            let newRoomKey = await firebase.refRoomKey(newRoomName); //
+            console.log("RoomKey :" + newRoomKey);
             noRoom = this.isEmpty(newRoomKey) //비어있으면 true
             
-            
+            console.log("NOROOM : " + noRoom)
             if(noRoom){ // 들어갈 수 있는 방이 없다면 새로 만들어야지
+                console.log("새로운 방을 만듭니다.");
                 await firebase.createRoom(newRoomName);
                 newRoomKey = await firebase.refRoomKey(newRoomName)
             }
             
+            //같은 유저가 같은방에 들어가려고 할때
             firebase.enter(newRoomName, newRoomKey); 
             console.log('NewRoomKey : '  +newRoomKey);
             alert("새로운 방으로 이동합니다 !");
@@ -107,12 +109,9 @@ export default class Mainpage extends Component{
             // TODO 위에서 새로운 방을 만들고, 바로 그 방의 룸키를 받아와서 사용해야댐...
             this.props.navigation.navigate('ChatScreen', {
                 name : app.auth().currentUser,
-                roomKey : newRoomKey,
+                roomKey : newRoomName + '/' + newRoomKey,
                 roomName : newRoomName,
             });
-            
-            
-            //TODO 바로 들어가서 chatting을 한 경우에는, 그 방에 user가 등록이 안됨
         }
     }
 
@@ -144,10 +143,10 @@ export default class Mainpage extends Component{
        </View>          
           
        
-         <View>
+        <View>
             <Text style={styles.subtitle}>출발 예정 시각</Text>
-            </View>
-            <View style={styles.meeting}>
+        </View>
+        <View style={styles.meeting}>
             <View>
                 <View style={styles.time}>                
                 
@@ -256,7 +255,7 @@ export default class Mainpage extends Component{
                 </View>
                 <View>
                 <TouchableOpacity onPress = {this.makeRoom}>
-               <View>
+                <View>
                     <Image source = {require('./glass.png')} style = {styles.glassimage}/>
                 </View>
             </TouchableOpacity>
