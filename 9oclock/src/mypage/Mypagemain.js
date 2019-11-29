@@ -67,7 +67,7 @@ export default class Mainpage extends Component{
 
        <View style={styles.subcontainer}>
        <TouchableOpacity 
-       onPress = {() => this.props.navigation.navigate("ChangePw")}>
+       onPress = {this.onPwChange.bind()}>
           <Text style={styles.otherlink}>비밀번호 변경</Text>
        </TouchableOpacity>
        </View>
@@ -145,7 +145,9 @@ export default class Mainpage extends Component{
         }
       }); 
     }
-    
+    onPwChange=()=>{
+      this.props.navigation.navigate("ChangePw")
+    }    
 }
 
 const styles = StyleSheet.create({

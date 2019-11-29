@@ -24,7 +24,7 @@ export default class Mainpage extends Component{
           
            <View style={styles.titlecontainer}>
                 <Text style={styles.title}>앱 정보</Text>
-           <TouchableOpacity onPress={this.xbutton}  >
+           <TouchableOpacity onPress = {() => this.props.navigation.navigate("Mypagemain")}>
           <Image source = {require('./x_button.png')} style = {styles.image}/>
        </TouchableOpacity>
        </View>

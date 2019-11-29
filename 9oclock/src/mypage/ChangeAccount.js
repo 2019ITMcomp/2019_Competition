@@ -1,8 +1,8 @@
 import React, {Component} from "react";
 import {View,Text, TouchableOpacity, StyleSheet, Dimensions, TextInput,Image, ScrollView} from "react-native";
 import { Button } from 'react-native-elements';
-
-
+import RNPickerSelect from 'react-native-picker-select';
+import FirebaseSDK, { app } from '../config';
 
 
 const{height,width} = Dimensions.get("window");
@@ -12,18 +12,22 @@ export default class ChangeAccount extends Component{
   constructor(props){
     super(props);
     this.state = {
-      useraccount : "농협은행, 010-0101010-102",
+      //useraccount : "농협은행, 010-0101010-102",
+      //bank : app.auth().currentUser.account,
+      currentAccount: app.auth().currentUser.account,
+      currentBank : app.auth().currentUser.bank,
+      newBank: null,
+      newAccount:null,      
 
     }
   }  
-
-  
-  state = {
-      
-    };
-    
-    render(){
-      
+  render(){
+        let data=[{label:'농협', value: '농협'},{label:'하나', value: '하나'},{label:'KB국민', value: 'KB국민'},{label:'신한', value: '신한'},{label:'우리', value:'우리'}, {label:'외환', value:'외환'},{label:'우체국', value:'우체국'},{label:'수협', value:'수협'},{label:'신협', value:'신협'},{label:'카카오뱅크', value:'카카오뱅크'},{label:'저축은행', value:'저축은행'},{label:'기업',value:'기업'}]
+        const placeholder = {
+          label: '은행명',
+          value: null,
+          fontSize:25,
+        };
         return(
           
         <View style={styles.container}>        
@@ -36,17 +40,33 @@ export default class ChangeAccount extends Component{
        </TouchableOpacity>
        </View>
 
-        <View> 
-            <View style={styles.beforecontainer}>
-                <Text>기존 계좌번호 : </Text>
-                <Text>{this.state.useraccount}</Text>
+        <View>
+        <Text style={styles.subTitle}>기존 계좌번호</Text>
+          <View style={{flexDirection:"row", marginHorizontal:15,}}>
+              <Text style={{marginVertical:8, marginRight:15,  borderRadius:5, borderWidth:1, borderColor:'#eaeaea', paddingVertical:11, paddingHorizontal:10, fontSize: 16}}>{this.state.currentBank}</Text>
+              <View style={styles.accountInput}>
+                <Text>{this.state.currentAccount}</Text>
+              </View>
+          </View>
+          <Text style={styles.subTitle}>신규 계좌번호</Text>
+          <View style={styles.inputContainer}>
+            <View style={{marginVertical:8, marginRight:15,  borderRadius:5, borderWidth:1, borderColor:'#eaeaea', paddingVertical:10, paddingHorizontal:10}}>
+              <RNPickerSelect 
+                onValueChange={(newBank) => this.setState({newBank})} 
+                items={data} 
+                placeholder={placeholder} 
+                textInputProps={{color:"#333333", fontSize:16}}
+                value ={this.state.newBank}
+              />
             </View>
-            <View style={styles.inputContainer}>
-                <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "은행 명" textAlignVertical="center"/>
-            </View>
-            <View style={styles.inputContainer}>
-                <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 확인" textAlignVertical="center"/>
-            </View>
+            <TextInput 
+              placeholder='-빼고 입력해주세요.' 
+              placeholderColor="#c4c3cb" 
+              style={styles.accountInput}
+              onChangeText={this.onChangeTextAccount} 
+              value={this.state.newAccount} 
+            />
+          </View>
 
         </View>
 
@@ -62,7 +82,6 @@ export default class ChangeAccount extends Component{
                 title="취소"
               />
         </View>
-
         </View>
         </View>
         
@@ -71,10 +90,11 @@ export default class ChangeAccount extends Component{
     }
     
     changepress(){
-      this.setState({useraccount : "input 받은거 넣어줘야함", });
+      //계좌 변경
+      
     }
     cancelpress(){
-
+      this.props.navigation.navigate("Mypagemain")
     }
     
 }
@@ -177,6 +197,44 @@ const styles = StyleSheet.create({
     
   },
   beforeaccount:{
-    flex : 1
-  }
+    height: 43,
+    //flex:1,
+    fontSize: 14,
+    borderRadius: 5,
+    //borderBottomWidth: 1,
+    //borderBottomColor: '#c4c3cb',
+    backgroundColor: '#fafafa',
+    borderWidth: 1,
+    borderColor: '#eaeaea',
+    paddingLeft: 10,
+    // marginTop: 10,
+    // marginBottom: 5
+    marginHorizontal:15,
+    marginVertical:8,
+    justifyContent: 'center',
+  },
+  accountInput:{
+    height: 43,
+    flex:1,
+    fontSize: 14,
+    borderRadius: 5,
+    //borderBottomWidth: 1,
+    //borderBottomColor: '#c4c3cb',
+    backgroundColor: '#fafafa',
+    borderWidth: 1,
+    borderColor: '#eaeaea',
+    paddingLeft: 10,
+    // marginTop: 10,
+    // marginBottom: 5
+    marginVertical:8,
+    justifyContent:'center',
+    
+  },
+  subTitle:{
+    fontSize:16,
+    marginLeft:16,
+    marginTop:5,
+    color: '#333333'
+
+  },
 });

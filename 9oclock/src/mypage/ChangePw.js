@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {View,Text, TouchableOpacity, StyleSheet, Dimensions, TextInput,Image, ScrollView} from "react-native";
 import { Button } from 'react-native-elements';
-
+import { app } from "../config";
 
 
 
@@ -10,6 +10,7 @@ const{height,width} = Dimensions.get("window");
 export default class ChangePw extends Component{
     state = {
       userpw : "default",
+      content: false,
     };
     
     render(){
@@ -30,12 +31,6 @@ export default class ChangePw extends Component{
           <View> 
             <View style={styles.inputContainer}>
                     <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "기존 비밀번호 입력" textAlignVertical="center"/>
-              </View>
-              <View style={styles.inputContainer}>
-                    <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 입력" textAlignVertical="center"/>
-              </View>
-              <View style={styles.inputContainer}>
-                    <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 확인" textAlignVertical="center"/>
             </View>
           </View>
 
@@ -51,6 +46,7 @@ export default class ChangePw extends Component{
                   title="취소"
                 />
           </View>
+          {this.state.content ? ( <View><Text style={styles.text}>이메일을 확인해주세요! </Text></View> ) : null }   
 
         </View>
         </View>
@@ -62,7 +58,15 @@ export default class ChangePw extends Component{
     changepress(){
       // db에 입력받은 데이터 전송하는 코드 있어야함. 
       //기존 비번 일치여부, 새로운 비번 같은지 확인하는 코드 필요.
-      this.props.navigation.navigate("Mypagemain");
+      try{
+        // 이따 webmail로 형식바꿔야함
+        app.auth().sendPasswordResetEmail(app.auth().currentUser.email);
+        this.setState(previousState => ({content: !previousState.content}))
+        
+      }catch(error){
+        console.log(error.toString());
+        console.log('ㅅㅂ 안됨');
+      }
     }
 
     cancelpress(){
@@ -139,11 +143,19 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         textAlign : "center",
       },
+      text:{
+        fontSize:20,
+        marginLeft:10,
+        marginTop:20,
+        marginBottom:15,
+        color: '#333333',
+        textAlign:'center'
+      },
       changebutton: {
         
         backgroundColor: '#a9a9a9',
         borderRadius: 5,
-        borderWidth:1,        
+        
         width : 100,
         marginTop: 10,
         marginLeft: 15,
@@ -153,7 +165,7 @@ const styles = StyleSheet.create({
       cancelbutton: {
         backgroundColor: '#a9a9a9',
         borderRadius: 5,
-        borderWidth:1,        
+        
         width : 100,
         marginTop: 10,
         marginLeft: 15,

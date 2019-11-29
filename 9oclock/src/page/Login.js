@@ -93,11 +93,12 @@ export default class LoginScreen extends Component {
           if(app.auth().currentUser.emailVerified==false){
             this.props.navigation.navigate('EmailValidationPage');
           }else{
-            this.props.navigation.navigate('SelectRoom');
+            this.props.navigation.navigate('AppMain');
           }
       } catch(error) {
           console.log(error.toString());
           Alert.alert(error.toString());
+          app.auth().updateCurrentUser
       }
     }
     else {

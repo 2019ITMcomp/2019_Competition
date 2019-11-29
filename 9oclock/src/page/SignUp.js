@@ -149,7 +149,7 @@ export default class SignUpPage extends Component {
     }else if(this.state.rePassword==null){
       Alert.alert(
         '',
-        '비밀번호 재입력을 확인하세요 !',
+        '비밀번호 재입력해주세요 !',
         [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
         ],
         {cancelable: false}
@@ -157,7 +157,7 @@ export default class SignUpPage extends Component {
     }else if(this.state.account==null){
       Alert.alert(
         '',
-        '계쫘를 입력하세요 !',
+        '계좌를 입력하세요 !',
         [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
         ],
         {cancelable: false}
@@ -165,7 +165,7 @@ export default class SignUpPage extends Component {
     }else if(this.state.password != this.state.rePassword){
       Alert.alert(
         '',
-        '비밀번호를 잘못 입력하세요 !',
+        '비밀번호를 잘못 입력하셨습니다. !',
         [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
         ],
         {cancelable: false}
@@ -176,17 +176,18 @@ export default class SignUpPage extends Component {
             name : this.state.name,
             email : this.state.email,
             password : this.state.password,
-            // DB작업 후 추가 예정
-            //account: this.state.account,
+            bank: this.state.bank,
+            account: this.state.account,
         };
         await firebaseSDK.createAccount(user);
-        
+        console.log(user.toString());
       }catch({message}){
         console.log('Create account failed. catch error : ' + message);
 
         //TODO
         // 만약에 같은 address가 있다면 오류 메시지를 뜨게 하는 것까지는 괜찮지만, 
         // 오류를 캐치해서 보여주고 다시 입력하도록 해야한다. 
+        // admin이 안돼서 실패 ^.^ 안돼요~ 
     }
       this.props.navigation.navigate("SignUpSuccessPage");
     }
