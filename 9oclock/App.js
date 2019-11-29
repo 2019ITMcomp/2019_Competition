@@ -29,24 +29,20 @@ import AppMain from "./src/mypage/Main";
 const {width}=Dimensions.get('window');
 const CustomDrawerComponent =(props)=>(
   <SafeAreaView style={{flex:1}}>
-  <View style={{height:150, backgroundColor:'black',alignItems:'center', justifyContent:'center'}}>
-  <Image source={require('./assets/icon.png')} style={{height:120, width:120,
-    borderRadius: 60}}
-    />
-  </View>
+    <View style={{height:150, backgroundColor:'black',alignItems:'center', justifyContent:'center'}} >
+      <Image 
+        source={require('./assets/icon.png')} 
+        style={{height:120, width:120, borderRadius: 60}}
+      />
+    </View>
   <View style={{height: 200, marginTop:50}}>
-  <Text style={{color:'blue'}}>
-  {fname}
-  </Text>
+    <Text style={{color:'blue'}}>집에 일찍 가자.</Text>
   </View>
   <View>
-  <Text>
-  계좌가져오기
-  </Text>
+    <Text>계좌가져오기</Text>
   </View>
-  
-  <DrawerItems {...props}/>
-  
+  <DrawerItems {...props}>
+  </DrawerItems>
   </SafeAreaView>
 )
 
@@ -61,7 +57,6 @@ contentOptions:{
   activeBackgroundColor:'#fff'
 }
 });
-
 
 const AppNavigator = createStackNavigator(
   {
