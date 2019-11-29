@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import {View,Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView, TextInput} from "react-native";
 import { Button } from 'react-native-elements';
 import DialogInput from 'react-native-dialog-input';
+import { app } from "../config";
 
 
 
@@ -38,9 +39,14 @@ export default class AccountDrop extends Component{
             <Text style={styles.rules}>회원 탈퇴시, 모든 정보가 삭제되며 복구가 불가능 합니다.</Text>
 
             <View style={styles.inputContainer}>
-            <Text style={styles.presentpw}>현재 비밀번호 : </Text>
-              
-                      <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "비밀번호 입력" textAlignVertical="center"/> 
+            <Text style={styles.presentpw}>현재 비밀번호  </Text>
+                      <TextInput  
+                        placeholderColor="#c4c3cb" 
+                        style={styles.PwTextinput} 
+                        placeholder = "비밀번호 입력" 
+                        textAlignVertical="center"
+                        secureTextEntry={true}
+                      /> 
                 </View>
                 
           </View>
@@ -81,11 +87,13 @@ export default class AccountDrop extends Component{
       this.setState({isAlertVisible:false});
 
       if(inputText == this.state.dropmsg){
-      this.props.navigation.navigate("Mypagemain");
-    }else{
-      this.setState({dropmsg:"틀렸습니다. 다시 입력해주세요. \n 회원탈퇴에 동의합니다"})
-      this.setState({isAlertVisible:true});
-    }
+        app.auth().currentUser.delete();
+        console.log('회원탈퇴');
+        this.props.navigation.navigate("LoginPage");
+      }else{
+        this.setState({dropmsg:"틀렸습니다. 다시 입력해주세요. \n 회원탈퇴에 동의합니다"})
+        this.setState({isAlertVisible:true});
+      }
     }
     
     
@@ -108,11 +116,10 @@ const styles = StyleSheet.create({
       buttoncontainer:{
         alignContent : "center",
         marginTop : 30,
-        borderWidth :1,
         borderColor : "black",
         justifyContent: "center",
         width : width - 20,
-        height : 300,
+        height : 70,
         alignItems: "center",       
         flexDirection : "row",
         alignSelf:"center",
@@ -164,7 +171,6 @@ const styles = StyleSheet.create({
         
         backgroundColor: '#a9a9a9',
         borderRadius: 5,
-        borderWidth:1,        
         width : 100,
         marginTop: 10,
         marginLeft: 15,
