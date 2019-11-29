@@ -5,7 +5,7 @@ import { createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
 import Home from './src/screens/Home';
 
-import SignUp from './src/components/Signup';
+
 import ChatScreen from './src/components/ChatScreen';
 import Rooms from './src/screens/Rooms';
 
@@ -66,7 +66,6 @@ contentOptions:{
 const AppNavigator = createStackNavigator(
   {
     Home,
-    SignUp,
     Rooms,
     ChatScreen:{
       screen:SideDrawerNavigator
@@ -90,7 +89,7 @@ const AppNavigator = createStackNavigator(
   {
     initialRouteName: 'Home',
     //headerBackTitleVisible: false,
-    //  headerMode:"none"
+    headerMode:"none"
   }
 );
 
