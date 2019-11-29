@@ -92,17 +92,7 @@ export default class Mainpage extends Component{
        </TouchableOpacity>
        </View>
       
-       <View style={styles.subcontainer}>
-        <Text style={styles.otherlink}>앱 알림</Text>
-       <ToggleSwitch
-        style={styles.togglebtn}
-        isOn={isOntf}
-        onColor="green"
-        offColor="#a9a9a9"
-        size="large"
-        onToggle={isOntf => {this.setState({isOntf}); this.onToggle(isOntf)}}
-      />
-        </View>
+       
        </ScrollView>
         </View>
         </View>
