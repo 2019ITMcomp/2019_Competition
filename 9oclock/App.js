@@ -36,7 +36,7 @@ const CustomDrawerComponent =(props)=>(
   </View>
   <View style={{height: 200, marginTop:50}}>
   <Text style={{color:'blue'}}>
-  {fname}
+  
   </Text>
   </View>
   <View>
