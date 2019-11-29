@@ -119,10 +119,7 @@ export default class Mainpage extends Component{
     renderRow(item) {        
 
         return (
-            <TouchableOpacity style={styles.roomLi}
-            underlayColor="#fff"
-            onPress={() => this.openChat(item)}
-            >
+            <TouchableOpacity underlayColor="#fff" style={styles.roomlist} onPress={() => this.openChat(item)}>
                 <Text style={styles.taxilist}>{item.name}</Text>
             </TouchableOpacity>
         )
@@ -269,35 +266,26 @@ export default class Mainpage extends Component{
          <View>
 
          </View>
-            
-            
-
-            <View style={{height:100}}></View>
-          
-
-                 
-           <View>
-           <View style={styles.titlecontainer}>
+            <View style={{height:100}}></View> 
+            <View>
+            <View style={styles.titlecontainer}>
                <Text style={styles.subtitle}>지난 동승 목록</Text>
                </View>
-           </View>
-           <ScrollView>
-           <View>
-                   <FlatList style={styles.taxilist}
-                    data={this.state.rooms}
-                    renderItem={({item}) => (this.renderRow(item)
-                    )}
-                    />
+            </View>
+            <ScrollView>
+            <View>
+            <FlatList 
+                //style={styles.taxilist}
+                data={this.state.rooms}
+                renderItem={({item}) => (this.renderRow(item))}
+            />
            </View>
        </ScrollView>
         </View>
         </View>
         
         );
-
-    }
-  
-    
+    }    
 }
 
 const styles = StyleSheet.create({
@@ -309,9 +297,10 @@ const styles = StyleSheet.create({
         // 타이틀 박스
         borderBottomColor:'#A9A9A9', 
         borderBottomWidth: 2,
-        marginBottom:10, 
+        //marginBottom:10,
+        //marginTop:15, 
         marginHorizontal:10,
-        paddingBottom:7,
+        paddingBottom:3,
         flexDirection:"row",
         //borderWidth:1,        
       },
@@ -346,6 +335,7 @@ const styles = StyleSheet.create({
         marginLeft : 15,
         fontWeight : "500",
         marginBottom : 7,
+        marginTop:10,
         justifyContent:"center",
       },
     meeting:{
@@ -372,15 +362,31 @@ const styles = StyleSheet.create({
         
     },
     glassimage:{
-        marginLeft:15,
+        marginLeft:9,
         alignSelf:"flex-end",
         marginTop: 13,
-        width : 35,
-        height : 35,
+        width : 30,
+        height : 30,
         resizeMode: 'stretch',
+        marginRight:10,
     },
     taxilist:{
         marginLeft:15,
         fontSize:20,
+        //borderBottomColor: "#BBBBBB",
+        //borderBottomWidth:2,
+        //borderWidth:1,
+        marginRight:15,
+        marginTop:5,
+        paddingBottom:4,
     },
+    roomlist:{
+        marginHorizontal:10,
+        //fontSize:20,
+        borderBottomColor: "#BBBBBB",
+        borderBottomWidth : 0.8,
+        //borderWidth:1,
+        marginTop:5,
+        paddingBottom:4,
+    }
 });
