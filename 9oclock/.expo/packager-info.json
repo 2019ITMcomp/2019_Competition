@@ -1,1 +1,9 @@
-{}
+{
+  "devToolsPort": 19002,
+  "expoServerPort": 19000,
+  "packagerPort": 19001,
+  "packagerPid": 21452,
+  "expoServerNgrokUrl": "https://xd-ax2.anonymous.9oclock.exp.direct",
+  "packagerNgrokUrl": "https://packager.xd-ax2.anonymous.9oclock.exp.direct",
+  "ngrokPid": 21477
+}

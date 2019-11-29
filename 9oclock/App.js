@@ -3,21 +3,17 @@ import {SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} from 'react-n
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
-import Home from './src/screens/Home';
 
 
 import ChatScreen from './src/components/ChatScreen';
 import Rooms from './src/screens/Rooms';
 
-
-// 아래 import는 소현 & 희진 작품
 import SignUpPage from './src/page/SignUp';
 import LoginPage from './src/page/Login';
 import SignUpSuccessPage from './src/page/SignUpSuccess';
 import EmailValidationPage from './src/page/EmailValidation';
 import IdFindPage from './src/page/IdFind';
 import PwFindPage from './src/page/PwFind';
-
 
 import Mypagemain from "./src/mypage/Mypagemain";
 import ChangePw from "./src/mypage/ChangePw";
@@ -68,7 +64,6 @@ contentOptions:{
 
 const AppNavigator = createStackNavigator(
   {
-    Home,
     Rooms,
     ChatScreen:{
       screen:SideDrawerNavigator
@@ -90,7 +85,7 @@ const AppNavigator = createStackNavigator(
     AppMain,
   },
   {
-    initialRouteName: 'Home',
+    initialRouteName: 'LoginPage',
     //headerBackTitleVisible: false,
     headerMode:"none"
   }
