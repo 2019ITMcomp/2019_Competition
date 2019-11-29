@@ -120,8 +120,8 @@ export default class SelectRoom extends Component{
 
             // TODO 위에서 새로운 방을 만들고, 바로 그 방의 룸키를 받아와서 사용해야댐...
             this.props.navigation.navigate('ChatScreen', {
-                name : app.auth().currentUser,
-                roomKey : newRoomKey,
+                name : app.auth().currentUser,                
+                roomKey : newRoomName + '/' + newRoomKey,
                 roomName : newRoomName,
             });
             

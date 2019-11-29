@@ -109,7 +109,7 @@ export default class Mainpage extends Component{
             // TODO 위에서 새로운 방을 만들고, 바로 그 방의 룸키를 받아와서 사용해야댐...
             this.props.navigation.navigate('ChatScreen', {
                 name : app.auth().currentUser,
-                roomKey : newRoomKey,
+                roomKey : newRoomName + '/' + newRoomKey,
                 roomName : newRoomName,
             });
         }
@@ -143,10 +143,10 @@ export default class Mainpage extends Component{
        </View>          
           
        
-         <View>
+        <View>
             <Text style={styles.subtitle}>출발 예정 시각</Text>
-            </View>
-            <View style={styles.meeting}>
+        </View>
+        <View style={styles.meeting}>
             <View>
                 <View style={styles.time}>                
                 
@@ -255,7 +255,7 @@ export default class Mainpage extends Component{
                 </View>
                 <View>
                 <TouchableOpacity onPress = {this.makeRoom}>
-               <View>
+                <View>
                     <Image source = {require('./glass.png')} style = {styles.glassimage}/>
                 </View>
             </TouchableOpacity>
