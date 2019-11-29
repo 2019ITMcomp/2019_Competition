@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {FlatList, Alert,View,Text, TouchableOpacity, StyleSheet,Platform, Dimensions, Image, ScrollView} from "react-native";
 import RNPickerSelect from 'react-native-picker-select'
-import FirebaseSDK, {db, app} from '../src/config';
+import FirebaseSDK, {db, app} from '../config';
 import { Button } from 'react-native-elements';
 
 
@@ -39,7 +39,7 @@ export default class Mainpage extends Component{
                 
     //             db.ref('Rooms/' + roomKey).once('value', (data) => {
     //                 roomsFB.push({
-    //                     name : data.val().name,
+    //                     name : data.val().na\\me,
     //                     key : roomKey,
     //                 });
     //                 this.setState({ rooms : roomsFB});
