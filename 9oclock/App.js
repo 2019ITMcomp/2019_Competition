@@ -1,7 +1,7 @@
 import React, {Component, } from 'react';
 import {SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import {NavigationActions,createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
 import Home from './src/screens/Home';
 
