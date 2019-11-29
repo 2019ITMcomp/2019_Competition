@@ -30,6 +30,8 @@ import FirebaseSDK, { app } from './src/config';
 
 const {width}=Dimensions.get('window');
 
+
+
 const CustomDrawerComponent =(props)=>(
   <SafeAreaView style={{flex:1}}>
     <View style={{height:150, backgroundColor:'black',alignItems:'center', justifyContent:'center'}}>
