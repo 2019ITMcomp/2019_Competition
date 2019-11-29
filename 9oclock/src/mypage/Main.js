@@ -78,18 +78,7 @@ export default class Mainpage extends Component{
         }else{
             let today = new Date().getDate()
             let newRoomName = today + "일 "+ this.state.departure + " " + this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
-            // 1. 룸 내임이 중복된 것이 있는지 확인해야함.
-            // 2. 그 방들이 모두 다 찼는지도 확인해야함. isClosed를 통해서
-            
-            
-            // 방 번호는 중요하지 않고, 개수를 새서 추가만 하면 되니까.
-            // 다만, 그 방에 들어있는 isClosed가 어떻게 되있는지가 중요하지.
-            
-            // let roomNumber = await this.duplicateCheck(newRoomName);
-            let roomNumber = 1;
-            let noRoom = false; 
-
-            //TODO 이부분 수정
+            let noRoom = false;
             let newRoomKey = await firebase.refRoomKey(newRoomName); //
             console.log("RoomKey :" + newRoomKey);
             noRoom = this.isEmpty(newRoomKey) //비어있으면 true
@@ -101,12 +90,11 @@ export default class Mainpage extends Component{
                 newRoomKey = await firebase.refRoomKey(newRoomName)
             }
             
-            //같은 유저가 같은방에 들어가려고 할때
+            // firebase.enrollToRoom( (newRoomName + '/' + newRoomKey) )
             firebase.enter(newRoomName, newRoomKey); 
             console.log('NewRoomKey : '  +newRoomKey);
             alert("새로운 방으로 이동합니다 !");
 
-            // TODO 위에서 새로운 방을 만들고, 바로 그 방의 룸키를 받아와서 사용해야댐...
             this.props.navigation.navigate('ChatScreen', {
                 name : app.auth().currentUser,
                 roomKey : newRoomName + '/' + newRoomKey,
@@ -125,7 +113,7 @@ export default class Mainpage extends Component{
     }
 
     render(){
-      return(
+        return(
 
         <View style={styles.container}>        
         <View style={styles.container}>
