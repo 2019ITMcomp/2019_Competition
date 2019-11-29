@@ -67,7 +67,6 @@ export default class LoginScreen extends Component {
               title="Sign Up"
             />
             <View style={styles.idpwFindView}>
-              <Text style={styles.text} onPress = {() => this.props.navigation.navigate("IdFindPage")}>아이디 찾기</Text>
               <Text style={styles.text} onPress = {() => this.props.navigation.navigate("PwFindPage")}>비밀번호 찾기</Text>
             </View>
 
@@ -89,10 +88,17 @@ export default class LoginScreen extends Component {
       try {
           await app.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword);
           console.log(this.state.userEmail + ' signed in');
-          this.props.navigation.navigate('SelectRoom');
+          console.log('이메일 로그인 성공 : ', JSON.stringify(app.auth().currentUser));
+          //email 인증 확인 후 메인페이지 접속 가능
+          if(app.auth().currentUser.emailVerified==false){
+            this.props.navigation.navigate('EmailValidationPage');
+          }else{
+            this.props.navigation.navigate('AppMain');
+          }
       } catch(error) {
           console.log(error.toString());
           Alert.alert(error.toString());
+          app.auth().updateCurrentUser
       }
     }
     else {
@@ -166,6 +172,8 @@ const styles=StyleSheet.create({
     fontSize:15,
     marginLeft:20,
     marginRight:20,
+    textAlign:'right',
+    flex:1,
   },
   idpwFindView:{
     marginTop:20,
@@ -173,7 +181,6 @@ const styles=StyleSheet.create({
     justifyContent: 'space-around',
     flex:1,
     flexDirection:'row',
-  
   },
   signUpFormContainer:{
     flex:1,

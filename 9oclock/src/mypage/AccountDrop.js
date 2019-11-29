@@ -1,19 +1,26 @@
 import React, {Component} from "react";
-import {View,Text, TouchableOpacity, StyleSheet, Dimensions, TextInput,Image, ScrollView} from "react-native";
+import {View,Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView, TextInput} from "react-native";
 import { Button } from 'react-native-elements';
-
+import DialogInput from 'react-native-dialog-input';
 
 
 
 const{height,width} = Dimensions.get("window");
 
-export default class ChangePw extends Component{
-    state = {
-      userpw : "default",
-    };
+export default class AccountDrop extends Component{
+
+    constructor(props){
+      super(props);
+      this.state = {
+        isAlertVisible:false,
+        dropmsg: "회원탈퇴에 동의합니다",
+      };
+    }  
     
+    
+
+
     render(){
-      const { isOntf } = this.state;
       
         return(
           
@@ -21,35 +28,41 @@ export default class ChangePw extends Component{
         <View style={styles.container}>
           
           <View style={styles.titlecontainer}>
-            <Text style={styles.title}>비밀번호 변경</Text>
+            <Text style={styles.title}>회원 탈퇴</Text>
             <TouchableOpacity onPress = {() => this.props.navigation.navigate("Mypagemain")}>
               <Image source = {require('./x_button.png')} style = {styles.image}/>
             </TouchableOpacity>
           </View>
 
-          <View> 
+          <View>
+            <Text style={styles.rules}>회원 탈퇴시, 모든 정보가 삭제되며 복구가 불가능 합니다.</Text>
+
             <View style={styles.inputContainer}>
-                    <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "기존 비밀번호 입력" textAlignVertical="center"/>
-              </View>
-              <View style={styles.inputContainer}>
-                    <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 입력" textAlignVertical="center"/>
-              </View>
-              <View style={styles.inputContainer}>
-                    <TextInput placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "새로운 비밀번호 확인" textAlignVertical="center"/>
-            </View>
+            <Text style={styles.presentpw}>현재 비밀번호 : </Text>
+              
+                      <TextInput  placeholderColor="#c4c3cb" style={styles.PwTextinput} placeholder = "비밀번호 입력" textAlignVertical="center"/> 
+                </View>
+                
           </View>
 
           <View style={styles.buttoncontainer}>
             <Button
                   buttonStyle={styles.changebutton}
-                  onPress={() => this.changepress()}
-                  title="변경"
+                  onPress={()=>this.setState({isAlertVisible:true})}
+                  title="탈퇴하기"
                 />
-                <Button
-                  buttonStyle={styles.cancelbutton}
-                  onPress={() => this.cancelpress()}
-                  title="취소"
-                />
+                
+          </View>
+
+          <View>
+            <DialogInput isDialogVisible={this.state.isAlertVisible}
+              title={"아래와 똑같이 입력해주세요."}
+              message={this.state.dropmsg}
+              hintInput ={""}
+              dialogStyle={"White"}
+              submitInput={ (inputText) => {this.submit(inputText)} }
+              closeDialog={ () => {this.closefunction()}}>
+            </DialogInput>
           </View>
 
         </View>
@@ -58,16 +71,21 @@ export default class ChangePw extends Component{
         );
 
     }
-    
-    changepress(){
-      // db에 입력받은 데이터 전송하는 코드 있어야함. 
-      //기존 비번 일치여부, 새로운 비번 같은지 확인하는 코드 필요.
-      this.props.navigation.navigate("Mypagemain");
+    closefunction(){
+      this.setState({dropmsg:"회원탈퇴에 동의합니다"})
+      this.setState({isAlertVisible:false});
     }
 
-    cancelpress(){
-      // 변화 없이 Mypage로 돌아감
+    submit(inputText){
+      console.log(inputText);
+      this.setState({isAlertVisible:false});
+
+      if(inputText == this.state.dropmsg){
       this.props.navigation.navigate("Mypagemain");
+    }else{
+      this.setState({dropmsg:"틀렸습니다. 다시 입력해주세요. \n 회원탈퇴에 동의합니다"})
+      this.setState({isAlertVisible:true});
+    }
     }
     
     
@@ -85,19 +103,21 @@ const styles = StyleSheet.create({
         marginHorizontal:10,
         paddingBottom:7,
         flexDirection:"row",
-        // borderWidth:1,
-        // borderColor: "black"
+        
       },
       buttoncontainer:{
         alignContent : "center",
         marginTop : 30,
-        //borderWidth :1,
+        borderWidth :1,
         borderColor : "black",
         justifyContent: "center",
         width : width - 20,
         height : 300,
-        alignSelf: "center",       
-        flexDirection : "row"
+        alignItems: "center",       
+        flexDirection : "row",
+        alignSelf:"center",
+
+        
       },
       image : {        
         flex:1,
@@ -125,6 +145,7 @@ const styles = StyleSheet.create({
         alignContent: 'stretch',
         marginLeft:15,
         marginRight:15,
+        //borderWidth:1,
       },
       PwTextinput:{
         height: 43,
@@ -150,15 +171,16 @@ const styles = StyleSheet.create({
         marginRight: 15,
         flexDirection : "row"
       },
-      cancelbutton: {
-        backgroundColor: '#a9a9a9',
-        borderRadius: 5,
-        borderWidth:1,        
-        width : 100,
-        marginTop: 10,
-        marginLeft: 15,
-        marginRight: 15,
-        flexDirection : "row"
+      rules:{
+        fontSize:15,
+        marginLeft: 25,
+        marginRight:10,
+        marginTop:15,
+        marginBottom:15,
       },
-    
+      presentpw:{
+        fontSize:15,
+        marginRight:10,
+        marginTop:30,
+      },
 });
