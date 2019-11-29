@@ -160,11 +160,13 @@ export default class FirebaseSDK{
     createRoom = async (roomName) =>{
         return new Promise(async function( resolve, rejects){
             let room_ref = Firebase.database().ref('Rooms/' + roomName);        
+            
             await room_ref.push( { 
                 roomName : roomName, 
                 createdAt : Date.now(),
                 isClosed : false,
             } )
+    
             resolve();
         })
         
@@ -182,20 +184,30 @@ export default class FirebaseSDK{
             })
         })
         if(!duplicated){
-            user_ref.push( {
+            await user_ref.push( {
                 roomName : newRoomName,
                 roomKey : roomKey 
             });
+
         }   
     }
     setUserInfo = (userId, name, bank, account) =>{
+        
         let user_ref = this.refUser(userId);
         console.log("user ref : " + user_ref);
         user_ref.push({
             name : name,
             bank : bank,
             account : account,
+            rating : 5, // rating / count해서 평점을 나타내기 위함.
+            count : 1,
         })
+    }
+
+    enrollToRoom = (path) =>{
+        await Firebase.database().ref('Rooms/' + path + '/user_info').push({
+            id : this.refUid,
+        });
     }
 }
 
