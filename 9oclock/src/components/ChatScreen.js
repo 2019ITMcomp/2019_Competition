@@ -70,7 +70,7 @@ export default class ChatScreen extends React.Component {
         }
 
         return <SafeAreaView style={styles.container}>
-        <Header>
+        <Header style={{backgroundColor:'white'}}>
         <Left>
         <Icon name='arrow-round-back' onPress={()=> this.props.navigation.navigate('AppMain')}/>
         </Left>
@@ -88,4 +88,4 @@ const styles=StyleSheet.create({
         
 
     }
-})
+});

@@ -171,7 +171,7 @@ export default class FirebaseSDK{
         })
         
     }
-    enter =  (newRoomName, roomKey) =>{
+    enter = async (newRoomName, roomKey) =>{
         
         let user_ref = Firebase.database().ref('Users/' + this.refUid);
         let duplicated = false;
@@ -204,7 +204,7 @@ export default class FirebaseSDK{
         })
     }
 
-    enrollToRoom = (path) =>{
+    enrollToRoom = async(path) =>{
         await Firebase.database().ref('Rooms/' + path + '/user_info').push({
             id : this.refUid,
         });
