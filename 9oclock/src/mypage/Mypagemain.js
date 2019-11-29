@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import ToggleSwitch from 'toggle-switch-react-native'
+import { auth } from "firebase";
+import { app } from "../config";
 
 
 const{height,width} = Dimensions.get("window");
@@ -79,7 +81,7 @@ export default class Mainpage extends Component{
        </View>
 
        <View style={styles.subcontainer}>
-       <TouchableOpacity onPress={this.logout}>
+       <TouchableOpacity onPress={this.onLogoutPress.bind()}>
           <Text style={styles.otherlink}>로그아웃</Text>
        </TouchableOpacity>
        </View>
@@ -109,17 +111,23 @@ export default class Mainpage extends Component{
 
     }
     
-    logout(){
+    onLogoutPress=()=>{
       Alert.alert(
         '로그아웃',
         '접속중인 기기에서 로그아웃 하시겠습니까?',
-        [{text: '로그아웃', onPress: () => console.log('OK Pressed')},
+        [{text: '로그아웃', 
+          onPress: this.logout},
           {text: '취소',
            onPress: () => console.log('Cancel Pressed'),
            style: 'cancel'},
         ],
         {cancelable: false},
       );
+    }
+    logout=()=>{
+      app.auth().signOut();
+      console.log('로그아웃');
+      this.props.navigation.navigate("LoginPage");
     }
     accountdrop(){
       

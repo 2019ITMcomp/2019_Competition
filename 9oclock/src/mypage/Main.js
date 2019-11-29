@@ -150,7 +150,7 @@ export default class Mainpage extends Component{
             <View>
                 <View style={styles.time}>                
                 
-                <View style={styles.hour}>                    
+                <View>                    
                     <RNPickerSelect   
                         placeholder={{
                             label : '08시',
@@ -168,11 +168,12 @@ export default class Mainpage extends Component{
                                 hour: value,
                             });
                         }}
+                        style={styles}
                         value = {this.state.hour}
                         textInputProps={{color:"#333333", fontSize:16}}                                    
                     />
                 </View>
-                <View style={styles.minute}>
+                <View>
                     <RNPickerSelect 
                         placeholder={{
                             label : '00분',
@@ -200,15 +201,14 @@ export default class Mainpage extends Component{
                             this.setState({
                                 minute: value,
                             });
-                        }}           
+                        }}  
+                        style={styles}         
                         textInputProps={{color:"#333333", fontSize:16}} 
                         value = {this.state.minute}                    
                     />  
                 </View>
-                </View>
-
-                <View style={styles.place}>
-                <View style={styles.departure}>
+                
+                <View>
                     <RNPickerSelect
                         placeholder={{
                             label : '출발지',
@@ -225,12 +225,13 @@ export default class Mainpage extends Component{
                                 departure : value,
                             });                        
                         }}
+                        style={styles}
                         value = {this.state.departure}
                         textInputProps={{color:"#333333", fontSize:16}}                     
                     />
                 </View>
             
-                <View style={styles.arrival}>
+                <View>
                     <RNPickerSelect
                         placeholder={{
                             label : '도착지',
@@ -247,6 +248,7 @@ export default class Mainpage extends Component{
                                 termination : value,
                             });                        
                         }}
+                        style={styles}
                         value = {this.state.termination}
                         textInputProps={{color:"#333333", fontSize:16}}                     
                     />
@@ -270,12 +272,7 @@ export default class Mainpage extends Component{
             
 
             <View style={{height:100}}></View>
-            
-            <Button title = "All of rooms"
-                color = "blue"
-                onPress = {() => this.props.navigation.navigate("Rooms")}>
-                </Button>
-                
+          
 
                  
            <View>
@@ -359,65 +356,22 @@ const styles = StyleSheet.create({
     time:{
         flexDirection:"row",
         marginTop:10,
+        marginLeft:10,
     },
-    hour:{
-        paddingLeft:(width/6)/2-10,
-        paddingVertical:15,
-        //borderWidth:1,
+    inputIOS:{    
+        textAlign:"center",
         height: 40,
-        width: width/5,
-        marginHorizontal: 15,
+        width: width/6,
+        marginHorizontal: 5,
         marginTop:10,
+        marginBottom:15,
         backgroundColor:"white",
         borderColor:"#e9e9e9",
         borderRadius: 5,
         
-        
-    },
-    minute:{
-        paddingLeft:(width/6)/2-10,
-        paddingVertical:15,
-        borderWidth:1,
-        height: 40,
-        width: width/5,
-        //marginHorizontal: 15,
-        marginTop:10,
-        backgroundColor:"white",
-        borderColor:"#e9e9e9",
-        borderRadius: 5,
-        
-        
-    },
-    place:{
-        flexDirection:"row",
-        marginBottom:20,
-
-    },
-    departure:{
-        paddingLeft:(width/3)/2-22,
-        paddingVertical:15,
-        borderWidth:1,
-        height: 40,
-        width: width/3,
-        marginHorizontal: 15,
-        marginTop:10,
-        backgroundColor:"white",
-        borderColor:"#e9e9e9",
-        borderRadius: 5,
-    },
-    arrival:{
-        paddingLeft:(width/3)/2-22,
-        paddingVertical:15,
-        borderWidth:1,
-        height: 40,
-        width: width/3,
-        marginHorizontal: 15,
-        marginTop:10,
-        backgroundColor:"white",
-        borderColor:"#e9e9e9",
-        borderRadius: 5,
     },
     glassimage:{
+        marginLeft:15,
         alignSelf:"flex-end",
         marginTop: 13,
         width : 35,

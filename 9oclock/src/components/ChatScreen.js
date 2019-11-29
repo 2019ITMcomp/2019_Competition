@@ -1,7 +1,8 @@
 import React from "react";
-import {Platform,KeyboardAvoidingView, SafeAreaView} from "react-native";
+import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 import FirebaseSDK, {db} from '../config';
+import {Header, Left, Right, Icon} from 'native-base';
 
 
 const Firebase = new FirebaseSDK();
@@ -55,15 +56,37 @@ export default class ChatScreen extends React.Component {
 
         if(Platform.OS === 'android'){
             return(
-                <KeyboardAvoidingView style={{flex:1}} behavior="padding" keyboardVerticalOffset={30} enabled>
+                <KeyboardAvoidingView style={styles.container} behavior="padding" keyboardVerticalOffset={30} enabled>
+                <Header>
+        <Left>
+        <Icon name='arrow-round-back' onPress={()=> this.props.navigation.navigate('AppMain')}/>
+        </Left>
+        <Right>
+        <Icon name="menu" onPress={()=> this.props.navigation.openDrawer()}/>
+        </Right>
+            </Header>
                 {chat}
                 </KeyboardAvoidingView>
             );
         }
 
-        return <SafeAreaView style={{ flex : 1}}>{chat}</SafeAreaView>;
+        return <SafeAreaView style={styles.container}>
+        <Header>
+        <Left>
+        <Icon name='arrow-round-back' onPress={()=> this.props.navigation.navigate('AppMain')}/>
+        </Left>
+        <Right>
+        <Icon name="menu" onPress={()=> this.props.navigation.openDrawer()}/>
+        </Right>
+            </Header>
+        {chat}</SafeAreaView>;
     }
-
-
-
 }
+const styles=StyleSheet.create({
+    container:{
+        flex:1,
+        backgroundColor:'#fff',
+        
+
+    }
+})
