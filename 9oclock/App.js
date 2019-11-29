@@ -1,5 +1,5 @@
 import React, {Component, } from 'react';
-import {SafeAreaView,View,Image,Text,Dimensions} from 'react-native';
+import {SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
@@ -25,25 +25,30 @@ import AppInfo from "./src/mypage/AppInfo";
 import AccountDrop from "./src/mypage/AccountDrop";
 import ChangeAccount from "./src/mypage/ChangeAccount";
 import AppMain from "./src/mypage/Main";
+import FirebaseSDK, { app } from './src/config';
+
 
 const {width}=Dimensions.get('window');
+
 const CustomDrawerComponent =(props)=>(
   <SafeAreaView style={{flex:1}}>
-  <View style={{height:150, backgroundColor:'black',alignItems:'center', justifyContent:'center'}}>
-  <Image source={require('./assets/icon.png')} style={{height:120, width:120,
-    borderRadius: 60}}
-    />
-  </View>
-  <View style={{height: 200, marginTop:50}}>
-  <Text style={{color:'blue'}}>
-  {fname}
-  </Text>
-  </View>
-  <View>
-  <Text>
-  계좌가져오기
-  </Text>
-  </View>
+    <View style={{height:150, backgroundColor:'black',alignItems:'center', justifyContent:'center'}}>
+      <Image source={require('./assets/icon.png')} style={{height:120, width:120,
+        borderRadius: 60}}
+      />
+    </View>
+    <View style={{height: 50, marginTop:50, backgroundColor:'yellow'}}>
+    <Text>
+    hi
+    </Text>
+    </View>
+    <View>
+    <TouchableOpacity>
+      <Text>
+        계좌가져오기
+      </Text>
+    </TouchableOpacity>
+    </View>
   
   <DrawerItems {...props}/>
   
@@ -56,6 +61,7 @@ const SideDrawerNavigator=createDrawerNavigator({
   contentComponent:CustomDrawerComponent,
 drawerPosition : 'right',
 drawerWidth:width * 3/5,
+keyboardDismissMode:'none',
 contentOptions:{
   activeTintcolor:'Orange',
   activeBackgroundColor:'#fff'
@@ -91,7 +97,7 @@ const AppNavigator = createStackNavigator(
   {
     initialRouteName: 'Home',
     //headerBackTitleVisible: false,
-    //  headerMode:"none"
+    headerMode:"none"
   }
 );
 
@@ -99,6 +105,7 @@ const AppContainer = createAppContainer(AppNavigator);
 
 
 export default class App extends Component  {
+
   render(){
     return <AppContainer />;
     //<ChangeAccount/>
