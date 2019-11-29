@@ -79,7 +79,10 @@ export default class FirebaseSDK{
         return Firebase.auth().currentUser.displayName;
     }
 
-    // 적용이 왜 안될까. //get은 아무 formal한 parameter를 가지면 안된다는데
+    refUser(userId){
+        return Firebase.database().ref('Users/' + userId + '/_info');
+    }
+
     refRoom(newRoomName){
         return Firebase.database().ref('Rooms/' + newRoomName);
     }
@@ -153,32 +156,6 @@ export default class FirebaseSDK{
         });
     };
 
-    // duplicateCheck = (newRoomName) =>{
-    //     let roomRef = firebase.refRoom(newRoomName);            
-    //     let roomNumber = 1;
-        
-    //     roomRef.on('value' , (dataSnapshot) => {
-            
-    //         console.log('snapshot : ' + dataSnapshot);
-    //         dataSnapshot.forEach((child) => {
-    //             console.log("Roomnumber : " + roomNumber);
-    //             console.log('child : ' + child);
-    //             console.log('is closed? : ' + child.val().isClosed);
-    //             if(child.val().isClosed){
-    //                 roomNumber += 1;
-    //             }else{ // 빈 곳을 발견했다는 의미이므로. 
-    //                 //user를 그곳에 더하고!
-    //                 this.props.navigation.navigate('ChatScreen', {
-    //                     name : app.auth().currentUser,
-    //                     roomKey : child.key,
-    //                     roomName : newRoomName,
-    //                 });
-    //                 return;
-    //             }
-    //         });
-    //     })
-    //     return roomNumber;
-    // }
 
     createRoom = async (roomName) =>{
         return new Promise(async function( resolve, rejects){
@@ -209,8 +186,16 @@ export default class FirebaseSDK{
                 roomName : newRoomName,
                 roomKey : roomKey 
             });
-        }
-        
+        }   
+    }
+    setUserInfo = (userId, name, bank, account) =>{
+        let user_ref = this.refUser(userId);
+        console.log("user ref : " + user_ref);
+        user_ref.push({
+            name : name,
+            bank : bank,
+            account : account,
+        })
     }
 }
 

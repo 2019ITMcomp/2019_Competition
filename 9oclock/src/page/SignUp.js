@@ -8,7 +8,7 @@ import RNPickerSelect from 'react-native-picker-select';
 import FirebaseSDK, { app } from '../config';
 import { HitTestResultTypes } from "expo/build/AR";
 
-const firebaseSDK = new FirebaseSDK();
+const firebase = new FirebaseSDK();
 const { height, width } = Dimensions.get("window");
 
 export default class SignUpPage extends Component {
@@ -178,7 +178,7 @@ export default class SignUpPage extends Component {
             bank: this.state.bank,
             account: this.state.account,
         };
-        await firebaseSDK.createAccount(user);
+        await firebase.createAccount(user);
         await app.auth().signInWithEmailAndPassword(this.state.email, this.state.password);
         console.log(user.toString());
       }catch({message}){
@@ -188,7 +188,13 @@ export default class SignUpPage extends Component {
         // 만약에 같은 address가 있다면 오류 메시지를 뜨게 하는 것까지는 괜찮지만, 
         // 오류를 캐치해서 보여주고 다시 입력하도록 해야한다. 
         // admin이 안돼서 실패 ^.^ 안돼요~ 
-    }
+      }
+      //TODO 여기다가 db 연동해서 user에다가 값들을 넣어줘야함. 
+      let userId = app.auth().currentUser.uid;
+      firebase.setUserInfo(userId, this.state.name, this.state.bank, this.state.account);
+      
+      console.log("실행이 되나? : " + userId);
+      await app.auth().signOut();
       this.props.navigation.navigate("SignUpSuccessPage");
     }
   };
