@@ -1,9 +1,8 @@
-import React, {
-  Component, 
-} from 'react';
+import React, {Component, } from 'react';
+import {SafeAreaView,View,Image,Text,Dimensions} from 'react-native';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
-
+import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
 import Home from './src/screens/Home';
 
 import SignUp from './src/components/Signup';
@@ -27,12 +26,51 @@ import AccountDrop from "./src/mypage/AccountDrop";
 import ChangeAccount from "./src/mypage/ChangeAccount";
 import AppMain from "./src/mypage/Main";
 
+const {width}=Dimensions.get('window');
+const CustomDrawerComponent =(props)=>(
+  <SafeAreaView style={{flex:1}}>
+  <View style={{height:150, backgroundColor:'black',alignItems:'center', justifyContent:'center'}}>
+  <Image source={require('./assets/icon.png')} style={{height:120, width:120,
+    borderRadius: 60}}
+    />
+  </View>
+  <View style={{height: 200, marginTop:50}}>
+  <Text style={{color:'blue'}}>
+  {fname}
+  </Text>
+  </View>
+  <View>
+  <Text>
+  계좌가져오기
+  </Text>
+  </View>
+  
+  <DrawerItems {...props}/>
+  
+  </SafeAreaView>
+)
+
+const SideDrawerNavigator=createDrawerNavigator({
+  Happy:{screen: ChatScreen},
+},{
+  contentComponent:CustomDrawerComponent,
+drawerPosition : 'right',
+drawerWidth:width * 3/5,
+contentOptions:{
+  activeTintcolor:'Orange',
+  activeBackgroundColor:'#fff'
+}
+});
+
+
 const AppNavigator = createStackNavigator(
   {
     Home,
     SignUp,
     Rooms,
-    ChatScreen,
+    ChatScreen:{
+      screen:SideDrawerNavigator
+    },
     SelectRoom,
 
     //아래 희진
@@ -53,7 +91,7 @@ const AppNavigator = createStackNavigator(
   {
     initialRouteName: 'Home',
     //headerBackTitleVisible: false,
-     headerMode:"none"
+    //  headerMode:"none"
   }
 );
 

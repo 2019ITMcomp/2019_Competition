@@ -86,7 +86,7 @@ export default class FirebaseSDK{
         return Firebase.database().ref('Rooms/' + newRoomName);
     }
 
-    refRoomKey =(newRoomName) => {
+    refRoomKey = (newRoomName) => {
         let room_ref = Firebase.database().ref('Rooms/' + newRoomName);
         let key = '';
         
@@ -190,10 +190,10 @@ export default class FirebaseSDK{
         })
     }
     
-    createRoom = (roomName) =>{
-        return new Promise(function( resolve, rejects){
+    createRoom = async (roomName) =>{
+        return new Promise(async function( resolve, rejects){
             let room_ref = Firebase.database().ref('Rooms/' + roomName);        
-            room_ref.push( { 
+            await room_ref.push( { 
                 roomName : roomName, 
                 createdAt : Date.now(),
                 isClosed : false,
@@ -203,6 +203,7 @@ export default class FirebaseSDK{
         
     }
     enter =  (newRoomName, roomKey) =>{
+        
         let user_ref = Firebase.database().ref('Users/' + this.refUid);
         user_ref.push( {
             roomName : newRoomName,
