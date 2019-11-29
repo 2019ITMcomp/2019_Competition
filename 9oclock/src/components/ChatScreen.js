@@ -1,5 +1,5 @@
 import React from "react";
-import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView} from "react-native";
+import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView, Keyboard} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 import FirebaseSDK, {db} from '../config';
 import {Header, Left, Right, Icon} from 'native-base';
@@ -62,7 +62,7 @@ export default class ChatScreen extends React.Component {
         <Icon name='arrow-round-back' onPress={()=> this.props.navigation.navigate('AppMain')}/>
         </Left>
         <Right>
-        <Icon name="menu" onPress={()=> this.props.navigation.openDrawer()}/>
+        <Icon name="menu" onPress={()=> {this.props.navigation.openDrawer(); Keyboard.dismiss()}}/>
         </Right>
             </Header>
                 {chat}
@@ -76,7 +76,7 @@ export default class ChatScreen extends React.Component {
         <Icon name='arrow-round-back' onPress={()=> this.props.navigation.navigate('AppMain')}/>
         </Left>
         <Right>
-        <Icon name="menu" onPress={()=> this.props.navigation.openDrawer()}/>
+        <Icon name="menu" onPress={()=> {this.props.navigation.openDrawer();Keyboard.dismiss()}}/>
         </Right>
             </Header>
         {chat}</SafeAreaView>;

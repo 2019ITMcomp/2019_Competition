@@ -80,19 +80,17 @@ export default class Mainpage extends Component{
             let newRoomName = today + "일 "+ this.state.departure + " " + this.state.termination + " " + this.state.hour + "시 " + this.state.minute + "분";
             let noRoom = false;
             let newRoomKey = await firebase.refRoomKey(newRoomName); //
-            console.log("RoomKey :" + newRoomKey);
             noRoom = this.isEmpty(newRoomKey) //비어있으면 true
-            
-            console.log("NOROOM : " + noRoom)
+
             if(noRoom){ // 들어갈 수 있는 방이 없다면 새로 만들어야지
-                console.log("새로운 방을 만듭니다.");
                 await firebase.createRoom(newRoomName);
                 newRoomKey = await firebase.refRoomKey(newRoomName)
             }
             
-            // firebase.enrollToRoom( (newRoomName + '/' + newRoomKey) )
+            firebase.enrollToRoom( (newRoomName + '/' + newRoomKey) )
+            let test = await firebase.closeRoom( (newRoomName + '/' + newRoomKey) );
+            console.log("테스트 결과 : " + test);
             firebase.enter(newRoomName, newRoomKey); 
-            console.log('NewRoomKey : '  +newRoomKey);
             alert("새로운 방으로 이동합니다 !");
 
             this.props.navigation.navigate('ChatScreen', {
