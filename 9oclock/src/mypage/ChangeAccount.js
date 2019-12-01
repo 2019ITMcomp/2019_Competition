@@ -11,13 +11,11 @@ export default class ChangeAccount extends Component{
   
   constructor(props){
     super(props);
+
+
     this.state = {
-      //useraccount : "농협은행, 010-0101010-102",
-      //bank : app.auth().currentUser.account,
-      //currentAccount: app.auth().currentUser.account,
-      //currentBank : app.auth().currentUser.bank,
-      currentAccount:'3020525108671',
-      currentBank : '농협',
+      currentAccount: this.props.navigation.state.params.account,
+      currentBank : this.props.navigation.state.params.bank,
       newBank: null,
       newAccount:null,      
 

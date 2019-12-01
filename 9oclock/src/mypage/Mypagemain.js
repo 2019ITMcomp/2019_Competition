@@ -3,14 +3,17 @@ import {Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimen
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import ToggleSwitch from 'toggle-switch-react-native'
 import { auth } from "firebase";
-import { app } from "../config";
+import FirebaseSDK, { app } from "../config";
+import { userInfo } from "os";
 
 
 const{height,width} = Dimensions.get("window");
 const { rating } = 3.5;
+const firebase = new FirebaseSDK();
+
 export default class Mainpage extends Component{
     state = {
-      trial : true,
+      trial : true, 
       isOntf : true,
     };
     onToggle(isOn) {
@@ -75,7 +78,7 @@ export default class Mainpage extends Component{
        </View>
 
        <View style={styles.subcontainer}>
-       <TouchableOpacity onPress = {() => this.props.navigation.navigate("ChangeAccount")}>
+       <TouchableOpacity onPress = {this.onChangeAccountPress}>
           <Text style={styles.otherlink}>계좌번호 변경</Text>
        </TouchableOpacity>
        </View>
@@ -99,6 +102,19 @@ export default class Mainpage extends Component{
         
         );
 
+    }
+
+    onChangeAccountPress =() =>{
+
+      firebase.refUser(firebase.refUid).once('value', (dataSnapshot)=>{
+        console.log("user's account is :" + dataSnapshot.val().account)        
+        this.props.navigation.navigate("ChangeAccount", {
+          account  : dataSnapshot.val().account,
+          bank : dataSnapshot.val().bank,
+        });
+      });
+
+      
     }
     
     onLogoutPress=()=>{
