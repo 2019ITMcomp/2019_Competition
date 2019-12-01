@@ -50,7 +50,7 @@ export default class FirebaseSDK{
                 //TODO 
                 // email을 수령했는지, 확인이 되는구나.
                 // set user info
-                await Firebase.database().ref('Users/'+userf.uid + '/_info').push({
+                await Firebase.database().ref('Users/'+userf.uid + '/_info').set({
                     name : user.name,
                     bank : user.bank,
                     account : user.account,
@@ -95,6 +95,10 @@ export default class FirebaseSDK{
 
     refUser(userId){
         return Firebase.database().ref('Users/' + userId + '/_info');
+    }
+
+    refUserInfo(userId){
+        return Firebase.database().ref('Users/' + userId + '/_info/' + this.refUser(this.refUid).key);
     }
 
     refRoom(newRoomName){

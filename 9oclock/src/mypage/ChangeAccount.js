@@ -6,6 +6,7 @@ import FirebaseSDK, { app } from '../config';
 
 
 const{height,width} = Dimensions.get("window");
+const firebase = new FirebaseSDK();
 
 export default class ChangeAccount extends Component{
   
@@ -90,8 +91,13 @@ export default class ChangeAccount extends Component{
     
     changepress(){
       //계좌 변경
-      
-      
+      console.log(firebase.refUser(firebase.refUid).key);
+      firebase.refUserInfo(firebase.refUid).once('value', (data)=>{
+        console.log("data is this : " + data);
+        data.forEach((child)=>{
+          
+        })
+      })
 
       Alert.alert(
         '',
