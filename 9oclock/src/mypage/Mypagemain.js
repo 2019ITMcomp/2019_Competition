@@ -107,16 +107,11 @@ export default class Mainpage extends Component{
     onChangeAccountPress =() =>{
 
       firebase.refUser(firebase.refUid).once('value', (dataSnapshot)=>{
-        
-        dataSnapshot.forEach((child)=>{
-          this.props.navigation.navigate("ChangeAccount", {
-            account  : child.val().account,
-            bank : child.val().bank,
-          });
-        })
+        this.props.navigation.navigate("ChangeAccount", {
+          account  : dataSnapshot.val().account,
+          bank : dataSnapshot.val().bank,
+        });
       });
-
-      
     }
     
     onLogoutPress=()=>{

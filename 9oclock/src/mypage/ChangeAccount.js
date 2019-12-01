@@ -89,14 +89,13 @@ export default class ChangeAccount extends Component{
 
     }
     
-    changepress(){
+    async changepress(){
       //계좌 변경
-      console.log(firebase.refUser(firebase.refUid).key);
-      firebase.refUserInfo(firebase.refUid).once('value', (data)=>{
-        console.log("data is this : " + data);
-        data.forEach((child)=>{
-          
-        })
+      //TODO 이 부분에 대해서 update 에 대한 사용법을 좀더 익히고 와서 끝내도록 하자
+      // 거의다 끝냈다!!
+      await firebase.refUser(firebase.refUid).update({
+        account : this.state.newAccount,
+        bank : this.state.newBank,
       })
 
       Alert.alert(

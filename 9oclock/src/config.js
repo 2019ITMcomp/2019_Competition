@@ -97,9 +97,6 @@ export default class FirebaseSDK{
         return Firebase.database().ref('Users/' + userId + '/_info');
     }
 
-    refUserInfo(userId){
-        return Firebase.database().ref('Users/' + userId + '/_info/' + this.refUser(this.refUid).key);
-    }
 
     refRoom(newRoomName){
         return Firebase.database().ref('Rooms/' + newRoomName);
