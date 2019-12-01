@@ -36,7 +36,7 @@ export default class FirebaseSDK{
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(
-            function() {
+            async function() {
                 console.log(
                 'created user successfully. User email:' +
                 user.email +
@@ -46,8 +46,21 @@ export default class FirebaseSDK{
 
                 var userf = Firebase.auth().currentUser;
 
+                console.log("user id is : " + userf.uid);
+                
+                // set user info
+                await Firebase.database().ref('Users/'+userf.uid + '/_info').push({
+                    name : user.name,
+                    bank : user.bank,
+                    account : user.account,
+                    rating  : 5, // rating / count해서 평점을 나타내기 위함.
+                    count : 1,
+                });
+
                 userf.updateProfile({ displayName: user.name }).then(
                     function() {
+
+
                         console.log('Updated displayName successfully. name:' + user.name);
                         alert(
                             'User ' + user.name + ' was created successfully. Please login.'
@@ -207,18 +220,6 @@ export default class FirebaseSDK{
             });
 
         }   
-    }
-    setUserInfo = (userId, name, bank, account) =>{
-        
-        let user_ref = this.refUser(userId);
-        console.log("user ref : " + user_ref);
-        user_ref.push({
-            name : name,
-            bank : bank,
-            account : account,
-            rating : 5, // rating / count해서 평점을 나타내기 위함.
-            count : 1,
-        })
     }
 
     enrollToRoom = async (path) =>{
