@@ -48,6 +48,8 @@ export default class FirebaseSDK{
 
                 console.log("user id is : " + userf.uid);
                 
+                //TODO 
+                // email을 수령했는지, 확인이 되는구나.
                 // set user info
                 await Firebase.database().ref('Users/'+userf.uid + '/_info').push({
                     name : user.name,
@@ -150,9 +152,7 @@ export default class FirebaseSDK{
         };
     };
 
-    get = callback =>{ //아 ... 말 그대로 콜백 값이 callback에 담기는거야...? 바인딩 플러스에???
-        // callback은 말 그대로 인자값을 넣어주는 것 같은데,,, 잘 모르겠다. 
-        
+    get = callback =>{ 
         this.refMessages.on("child_added", snapshot => callback(this.parse(snapshot)));
     };
 

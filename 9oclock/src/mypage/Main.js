@@ -36,17 +36,20 @@ export default class Mainpage extends Component{
         userRef.on('value', (dataSnapshot) => {
             let roomsFB = [];
             dataSnapshot.forEach( (child) => {
-                
                 let roomKey = child.val().roomKey;
                 let roomName = child.val().roomName;  
-                db.ref('Rooms/' + roomName + '/' + roomKey).on('value', (data) => {                    
-                                
-                    roomsFB.push({
-                        name : data.val().roomName,
-                        key : roomName + '/' + roomKey,
-                    });
-                    this.setState({ rooms : roomsFB});
-                })                
+                
+                if(!this.isEmpty(roomKey) && !this.isEmpty(roomName)){
+                    
+                    db.ref('Rooms/' + roomName + '/' + roomKey).on('value', (data) => {                    
+                        roomsFB.push({
+                            name : data.val().roomName,
+                            key : roomName + '/' + roomKey,
+                        });
+                                                    
+                        this.setState({ rooms : roomsFB});
+                    })                
+                }                            
             });                        
         });
     }
