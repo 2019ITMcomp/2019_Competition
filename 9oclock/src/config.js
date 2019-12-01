@@ -18,8 +18,7 @@ export default class FirebaseSDK{
         if(!Firebase.apps.length){
             // for avoiding re-initializing
             Firebase.initializeApp(config); 
-        }
-        
+        }        
         this.roomKey = '';
     }
 
@@ -155,24 +154,6 @@ export default class FirebaseSDK{
     get = callback =>{ 
         this.refMessages.on("child_added", snapshot => callback(this.parse(snapshot)));
     };
-
-    getBankAccount = () =>{
-        let ref_user = this.refUser(this.refUid);        
-        return new Promise( function(resolve, rejects){
-            
-            let values = [];
-            console.log('ref_user : ' + ref_user);
-            
-            ref_user.on('value', (dataSnapshot) =>{
-                dataSnapshot.forEach( (child) =>{
-                    console.log(child);
-                })
-            })
-            console.log("끝");
-            resolve();
-        }) 
-        
-    }
 
     send = messages => {
         messages.forEach(item => {

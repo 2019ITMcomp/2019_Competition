@@ -90,17 +90,22 @@ export default class ChangeAccount extends Component{
     
     changepress(){
       //계좌 변경
+      
+      
+
       Alert.alert(
         '',
         '변경되었습니다. 사실은 안했지롱!',
-        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
-        ],
+        [{
+          text: 'OK', 
+          onPress: ()=> console.log('OK Pressed')
+        },],
         {cancelable: false}
       )
       
     }
     cancelpress(){
-      this.props.navigation.navigate("Mypagemain")
+      this.props.navigation.navigate("Mypagemain");
     }
     
 }
