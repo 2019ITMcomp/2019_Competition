@@ -88,7 +88,7 @@ export default class LoginScreen extends Component {
       try {
           await app.auth().signInWithEmailAndPassword(this.state.userEmail, this.state.userPassword);
           console.log(this.state.userEmail + ' signed in');
-          console.log('이메일 로그인 성공 : ', JSON.stringify(app.auth().currentUser));
+          // console.log('이메일 로그인 성공 : ', JSON.stringify(app.auth().currentUser));
           //email 인증 확인 후 메인페이지 접속 가능
           if(app.auth().currentUser.emailVerified==false){
             this.props.navigation.navigate('EmailValidationPage');
@@ -114,7 +114,6 @@ export default class LoginScreen extends Component {
   }
 
   onSignUpPress = () =>{
-    console.log("test");
     this.props.navigation.navigate("SignUpPage");
   }
   
