@@ -12,7 +12,6 @@ export default class ChangeAccount extends Component{
   constructor(props){
     super(props);
 
-
     this.state = {
       currentAccount: this.props.navigation.state.params.account,
       currentBank : this.props.navigation.state.params.bank,
