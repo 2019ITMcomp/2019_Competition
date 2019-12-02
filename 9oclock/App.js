@@ -160,12 +160,15 @@ export default class App extends Component  {
       username3:'원소현',
       rating3:'  ★★★★(4.5)',
       account:'농협 12345678',
-      isReal:'정말 나가시겠습니까?'
+      isReal:'정말 나가시겠습니까?',
+      userIds : [],
     };
   }
 
-  getUserData = () =>{
-    
+  setUserId = (ids) =>{
+    this.setState({
+      userIds : ids
+    })
   }
 
 
@@ -173,9 +176,15 @@ export default class App extends Component  {
 
 
 
-    return <AppContainer screenProps={{username:this.state.username,username2:this.state.username2,
-      username3:this.state.username3,rating:this.state.rating,rating2:this.state.rating2,
-      rating3:this.state.rating3, account:this.state.account,isReal:this.state.isReal}}/>;
+    return <AppContainer screenProps={{
+      username:this.state.username,
+      username2:this.state.username2,
+      username3:this.state.username3,
+      rating:this.state.rating,
+      rating2:this.state.rating2,
+      rating3:this.state.rating3, 
+      account:this.state.account,
+      isReal:this.state.isReal}}/>;
     //<ChangeAccount/>
 
     }
