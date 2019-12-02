@@ -22,11 +22,13 @@ import AppInfo from "./src/mypage/AppInfo";
 import AccountDrop from "./src/mypage/AccountDrop";
 import ChangeAccount from "./src/mypage/ChangeAccount";
 import AppMain from "./src/mypage/Main";
-import FirebaseSDK, { app } from './src/config';
+import FirebaseSDK from './src/config';
+
 
 
 const {width}=Dimensions.get('window');
 const out='방나가기    '
+const firebase = new FirebaseSDK();
 const CustomDrawerComponent =(props)=>(
   <SafeAreaView style={{flex:1}}>
     <View style={{height:150, backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
@@ -162,7 +164,15 @@ export default class App extends Component  {
     };
   }
 
-  render(){
+  getUserData = () =>{
+    
+  }
+
+
+  render(){ 
+
+
+
     return <AppContainer screenProps={{username:this.state.username,username2:this.state.username2,
       username3:this.state.username3,rating:this.state.rating,rating2:this.state.rating2,
       rating3:this.state.rating3, account:this.state.account,isReal:this.state.isReal}}/>;

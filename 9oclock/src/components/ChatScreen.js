@@ -11,13 +11,15 @@ export default class ChatScreen extends React.Component {
     constructor(props){
         super(props);
         
-        var rKey = this.props.navigation.state.params.roomKey; 
-        Firebase.setRoomKey(rKey);
+        let roomKey = this.props.navigation.state.params.roomKey; 
+        let roomName = this.props.navigation.state.params.roomName;
+        Firebase.setRoomKey(roomKey);
         
         this.state ={
             user : '',
             messages : [],
-            roomKey : rKey,
+            roomKey : roomKey,
+            roomName : roomName,
         }
     }
 
@@ -48,6 +50,7 @@ export default class ChatScreen extends React.Component {
     }
 
     onPressMenu = () =>{
+
         this.props.navigation.openDrawer();
         Keyboard.dismiss();
     }

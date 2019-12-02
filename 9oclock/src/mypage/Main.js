@@ -92,7 +92,7 @@ export default class Mainpage extends Component{
             
             firebase.enrollToRoom( (newRoomName + '/' + newRoomKey) )
             let test = await firebase.closeRoom( (newRoomName + '/' + newRoomKey) );
-            console.log("테스트 결과 : " + test);
+            
             firebase.enter(newRoomName, newRoomKey); 
             alert("새로운 방으로 이동합니다 !");
 
