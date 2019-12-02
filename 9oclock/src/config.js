@@ -205,8 +205,8 @@ export default class FirebaseSDK{
     }
 
     enrollToRoom = async (path) =>{
-        await Firebase.database().ref('Rooms/' + path + '/user_info').push({
-            id : this.refUid,
+        await Firebase.database().ref('Rooms/' + path + '/userId/' + this.refUid).push({
+            user : this.refUid
         });
     }
 
