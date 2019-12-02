@@ -3,6 +3,7 @@ import {View,Text, TouchableOpacity, StyleSheet, Dimensions,Alert, TextInput,Ima
 import { Button } from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 import FirebaseSDK, { app } from '../config';
+import { isNull } from "util";
 
 
 const{height,width} = Dimensions.get("window");
@@ -91,24 +92,28 @@ export default class ChangeAccount extends Component{
     
     async changepress(){
       //계좌 변경
-      //TODO 이 부분에 대해서 update 에 대한 사용법을 좀더 익히고 와서 끝내도록 하자
-      // 거의다 끝냈다!!
-      console.log("new account : " + this.state.newAccount);
-      console.log("new bank : " + this.state.newBank);
-      await firebase.refUser(firebase.refUid).update({
-        account : this.state.newAccount,
-        bank : this.state.newBank,
-      })
+      
+      if(this.state.newAccount == null || this.state.newBank == null){
+        alert("은행과 계좌번호를 모두 입력해주세요 !");
+      }else{
+        console.log("new account : " + this.state.newAccount);
+        console.log("new bank : " + this.state.newBank);
+        await firebase.refUser(firebase.refUid).update({
+          account : this.state.newAccount,
+          bank : this.state.newBank,
+        })
 
-      Alert.alert(
+        Alert.alert(
         '',
-        '변경되었습니다. 사실은 안했지롱!',
-        [{
-          text: 'OK', 
-          onPress: ()=> console.log('OK Pressed')
-        },],
-        {cancelable: false}
-      )
+          '변경되었습니다. 사실은 안했지롱!',
+          [{
+            text: 'OK', 
+            onPress: ()=> console.log('OK Pressed')
+          },],
+          {cancelable: false}
+        )
+      }
+      
       
     }
     cancelpress(){
