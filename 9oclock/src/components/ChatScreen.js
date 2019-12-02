@@ -47,6 +47,11 @@ export default class ChatScreen extends React.Component {
         Firebase.refOff();
     }
 
+    onPressMenu = () =>{
+        this.props.navigation.openDrawer();
+        Keyboard.dismiss();
+    }
+
     render(){
         const chat = <GiftedChat 
         messages={this.state.messages} 
@@ -62,7 +67,7 @@ export default class ChatScreen extends React.Component {
         <Icon name='arrow-round-back' onPress={()=> this.props.navigation.navigate('AppMain')}/>
         </Left>
         <Right>
-        <Icon name="menu" onPress={()=> {this.props.navigation.openDrawer();Keyboard.dismiss()}}/>
+        <Icon name="menu" onPress={this.onPressMenu}/>
         </Right>
             </Header>
                 {chat}
@@ -76,7 +81,7 @@ export default class ChatScreen extends React.Component {
         <Icon name='arrow-round-back' onPress={()=> this.props.navigation.navigate('AppMain')}/>
         </Left>
         <Right>
-        <Icon name="menu" onPress={()=> {this.props.navigation.openDrawer();Keyboard.dismiss()}}/>
+        <Icon name="menu" onPress={this.onPressMenu}/>
         </Right>
             </Header>
         {chat}</SafeAreaView>;
