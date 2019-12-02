@@ -1,32 +1,27 @@
 import React, {Component} from "react";
 import {Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import ToggleSwitch from 'toggle-switch-react-native'
-import { auth } from "firebase";
 import FirebaseSDK, { app } from "../config";
-import { userInfo } from "os";
 
-
-const{height,width} = Dimensions.get("window");
-const { rating } = 3.5;
 const firebase = new FirebaseSDK();
 
 export default class Mainpage extends Component{
-    state = {
-      trial : true, 
-      isOntf : true,
-    };
-    onToggle(isOn) {
-      console.log("Changed to " + isOn);
-    }
-
+    
     constructor(props) {
       super(props);
       
+      this.state = {
+        trial : true, 
+        userName : this.props.navigation.state.params.userName, 
+        userRating : this.props.navigation.state.params.rating,
+        count : this.props.navigation.state.params.count, 
+      };
+          
     }
 
+
     render(){
-      const { isOntf } = this.state;
+      
         return(
 
         <View style={styles.container}>        
@@ -43,14 +38,14 @@ export default class Mainpage extends Component{
        <ScrollView>
          <View style = {{alignItems:"center" , marginTop: 30 }}>
             <View style = {styles.circlename}>
-                <Text style = {styles.username}>희진</Text>
+                <Text style = {styles.username}>{this.state.userName}</Text>
             </View>
             <Rating
               type="custom"
               fractions={1} // 소수 점에 맞춰
-              startingValue={4.6}
+              startingValue={this.state.userRating/this.state.count}
               showReadOnlyText = {false}
-              readonly
+              readonly = {false}
               showRating
               imageSize={40}
               ratingTextColor="black"

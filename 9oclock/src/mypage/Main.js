@@ -113,6 +113,20 @@ export default class Mainpage extends Component{
         )
     }
 
+    onPressMypageButton= () =>{
+
+        firebase.refUser(firebase.refUid).once('value', (data)=>{
+            
+            this.props.navigation.navigate("Mypagemain" , {
+                userName : data.val().name,
+                rating : data.val().rating,
+                count : data.val().count,
+            })    
+        })
+
+        
+    }
+
     render(){
         return(
 
@@ -121,7 +135,7 @@ export default class Mainpage extends Component{
           
         <View style={styles.titlecontainer}>
             <Text style={styles.title}>{this.state.title}</Text>
-            <TouchableOpacity onPress = {() => this.props.navigation.navigate("Mypagemain")}>
+            <TouchableOpacity onPress = {this.onPressMypageButton}>
                <View style={styles.userimg}>
                     <Image source = {require('./user.png')} style = {styles.image}/>
                 </View>
