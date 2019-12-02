@@ -63,7 +63,7 @@ export default class ChangeAccount extends Component{
               placeholder='-빼고 입력해주세요.' 
               placeholderColor="#c4c3cb" 
               style={styles.accountInput}
-              onChangeText={this.onChangeTextAccount} 
+              onChangeText={(newAccount) => this.setState({newAccount})} 
               value={this.state.newAccount} 
             />
           </View>
@@ -93,6 +93,8 @@ export default class ChangeAccount extends Component{
       //계좌 변경
       //TODO 이 부분에 대해서 update 에 대한 사용법을 좀더 익히고 와서 끝내도록 하자
       // 거의다 끝냈다!!
+      console.log("new account : " + this.state.newAccount);
+      console.log("new bank : " + this.state.newBank);
       await firebase.refUser(firebase.refUid).update({
         account : this.state.newAccount,
         bank : this.state.newBank,
