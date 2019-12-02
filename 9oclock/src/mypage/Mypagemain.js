@@ -45,7 +45,7 @@ export default class Mainpage extends Component{
               fractions={1} // 소수 점에 맞춰
               startingValue={this.state.userRating/this.state.count}
               showReadOnlyText = {false}
-              readonly = {false}
+              readonly = {true}
               showRating
               imageSize={40}
               ratingTextColor="black"
