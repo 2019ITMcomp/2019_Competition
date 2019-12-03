@@ -2,13 +2,15 @@ import React, {Component} from 'react';
 import {Alert,SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-native';
 import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
+import FirebaseSDK, { app } from './src/config';
+const Firebase = new FirebaseSDK();
 
 export default class DrawerComponent extends Component{
     constructor(props){
         super(props);
 
         this.state={
-            user:'',
+            
         }
     }
     render(){
@@ -57,7 +59,8 @@ export default class DrawerComponent extends Component{
             </Text>
             </View>
           <View style={{ alignItems:'center',justifyContent:'center'}}>
-          <TouchableOpacity onPress={()=>alert('계좌번호다')}>
+          <TouchableOpacity onPress={()=>alert(app.auth().currentUser.displayName)}>
+          {/*displayName 다른걸로 설정*/}
           <Text style={{fontSize:23,fontweight:15}}>
           내 계좌번호 가져오기
           </Text>
