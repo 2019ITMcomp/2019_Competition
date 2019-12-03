@@ -2,7 +2,7 @@ import React from "react";
 import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView, Keyboard, Text} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 import FirebaseSDK from '../config';
-import {Header, Left, Right, Icon} from 'native-base';
+import {Header, Left, Right, Icon,Body, Title} from 'native-base';
 import DrawerComponent from '../../DrawerComponent';
 
 const Firebase = new FirebaseSDK();
@@ -22,6 +22,7 @@ export default class ChatScreen extends React.Component {
             messages : [],
             roomKey : roomKey,
             roomName : roomName, //룸 네임 쓰는 부분을 빼버림... 삭제할까 생각.
+            
         }
     }
 

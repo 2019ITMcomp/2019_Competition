@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Alert, SafeAreaView, View, Image, Text, TouchableOpacity,StyleSheet} from 'react-native';
+import {Alert, Clipboard, SafeAreaView, View, Image, Text, TouchableOpacity,StyleSheet} from 'react-native';
 import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
 import Star from 'react-native-star-view';
@@ -26,7 +26,11 @@ export default class DrawerComponent extends Component{
             count_2 : "3",
             userName_3 : "희진",
             userRating_3 : "22",
-            count_3 : "6",          
+            count_3 : "6", 
+            currentAccount: "3020525108671",
+            currentBank: "농협", 
+            //currentAccount: this.props.navigation.state.params.account,
+            //currentBank : this.props.navigation.state.params.bank,        
         }
         
     }
@@ -111,7 +115,7 @@ export default class DrawerComponent extends Component{
             </Text>
             </View>
           <View style={{ alignItems:'center',justifyContent:'center'}}>
-          <TouchableOpacity onPress={()=>alert(app.auth().currentUser.displayName)}>
+          <TouchableOpacity onPress={()=> alert('계좌번호를 클립보드로 복사하였습니다.')}>
           {/*displayName 다른걸로 설정*/}
           <Text style={{fontSize:23,fontweight:15}}>
           내 계좌번호 가져오기
