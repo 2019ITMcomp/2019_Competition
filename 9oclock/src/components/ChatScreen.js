@@ -30,7 +30,7 @@ export default class ChatScreen extends React.Component {
     get user(){ 
         return {
             _id: Firebase.refUid,
-            _name: Firebase.refUserName
+            name: Firebase.refUserName
         };
     }
 
