@@ -18,13 +18,13 @@ export default class DrawerComponent extends Component{
             user2 : '',
             user3 : '', 
 
-            userName_1 : "소현",
+            userName_1 : "원소현",
             userRating_1 : "32",
             count_1 : "7",
-            userName_2 : "의현",
+            userName_2 : "강의현",
             userRating_2 : "14",
             count_2 : "3",
-            userName_3 : "희진",
+            userName_3 : "손희진",
             userRating_3 : "22",
             count_3 : "6", 
             currentAccount: "3020525108671",
@@ -81,7 +81,7 @@ export default class DrawerComponent extends Component{
               </Text>
               </View>
             <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
-              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_1}</Text> 
+              <Text style={{fontSize:18,flex:2,marginLeft:15}}>{this.state.userName_1}</Text> 
               <Star score={this.state.userRating_1/this.state.count_1} style={styles.starStyle} />
               <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_1/this.state.count_1).toFixed(1)}</Text>
             </View>
@@ -91,7 +91,7 @@ export default class DrawerComponent extends Component{
               </Text>
               </View>
             <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
-              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_2}</Text> 
+              <Text style={{fontSize:18,flex:2,marginLeft:15}}>{this.state.userName_2}</Text> 
               <Star score={this.state.userRating_1/this.state.count_1} style={styles.starStyle} />
               <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_2/this.state.count_2).toFixed(1)}</Text>
             </View>
@@ -101,7 +101,7 @@ export default class DrawerComponent extends Component{
               </Text>
               </View>
             <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
-              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_3}</Text> 
+              <Text style={{fontSize:18,flex:2,marginLeft:15}}>{this.state.userName_3}</Text> 
               <Star score={this.state.userRating_3/this.state.count_3} style={styles.starStyle} />
               <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_3/this.state.count_3).toFixed(1)}</Text>
             </View>
@@ -154,6 +154,6 @@ const styles = StyleSheet.create({
   starStyle : {
     width: 100,
     height: 20,
-    flex:2,
+    flex:3,
   },
 });
