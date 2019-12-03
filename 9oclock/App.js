@@ -1,6 +1,6 @@
 import React, {Component, } from 'react';
 import {Icon} from 'native-base';
-import {Button,SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} from 'react-native';
+import {Alert,Button,SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} from 'react-native';
 import { createStackNavigator, HeaderStyleInterpolator } from 'react-navigation-stack';
 import {NavigationActions,createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
@@ -85,7 +85,9 @@ const CustomDrawerComponent =(props)=>(
     ───────────────
     </Text>
     </View>
-  <TouchableOpacity onPress={()=>alert(props.screenProps.isReal)}>
+  <TouchableOpacity onPress={()=>Alert.alert('아홉시 오분전',props.screenProps.isReal,
+  [{text:'방 나가기',onPress:null},{text:'취소',onPress:null}],
+  {cancelable:false})}>
 
   <View style={{marginTop:90,alignItems:'center'}} >
   <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
