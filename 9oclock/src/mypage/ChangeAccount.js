@@ -3,21 +3,20 @@ import {View,Text, TouchableOpacity, StyleSheet, Dimensions,Alert, TextInput,Ima
 import { Button } from 'react-native-elements';
 import RNPickerSelect from 'react-native-picker-select';
 import FirebaseSDK, { app } from '../config';
+import { isNull } from "util";
 
 
 const{height,width} = Dimensions.get("window");
+const firebase = new FirebaseSDK();
 
 export default class ChangeAccount extends Component{
   
   constructor(props){
     super(props);
+
     this.state = {
-      //useraccount : "농협은행, 010-0101010-102",
-      //bank : app.auth().currentUser.account,
-      //currentAccount: app.auth().currentUser.account,
-      //currentBank : app.auth().currentUser.bank,
-      currentAccount:'3020525108671',
-      currentBank : '농협',
+      currentAccount: this.props.navigation.state.params.account,
+      currentBank : this.props.navigation.state.params.bank,
       newBank: null,
       newAccount:null,      
 
@@ -65,7 +64,7 @@ export default class ChangeAccount extends Component{
               placeholder='-빼고 입력해주세요.' 
               placeholderColor="#c4c3cb" 
               style={styles.accountInput}
-              onChangeText={this.onChangeTextAccount} 
+              onChangeText={(newAccount) => this.setState({newAccount})} 
               value={this.state.newAccount} 
             />
           </View>
@@ -91,19 +90,34 @@ export default class ChangeAccount extends Component{
 
     }
     
-    changepress(){
+    async changepress(){
       //계좌 변경
-      Alert.alert(
+      
+      if(this.state.newAccount == null || this.state.newBank == null){
+        alert("은행과 계좌번호를 모두 입력해주세요 !");
+      }else{
+        console.log("new account : " + this.state.newAccount);
+        console.log("new bank : " + this.state.newBank);
+        await firebase.refUser(firebase.refUid).update({
+          account : this.state.newAccount,
+          bank : this.state.newBank,
+        })
+
+        Alert.alert(
         '',
-        '변경되었습니다. 사실은 안했지롱!',
-        [{text: 'OK', onPress: ()=> console.log('OK Pressed')},
-        ],
-        {cancelable: false}
-      )
+          '변경되었습니다. 사실은 안했지롱!',
+          [{
+            text: 'OK', 
+            onPress: ()=> console.log('OK Pressed')
+          },],
+          {cancelable: false}
+        )
+      }
+      
       
     }
     cancelpress(){
-      this.props.navigation.navigate("Mypagemain")
+      this.props.navigation.navigate("Mypagemain");
     }
     
 }

@@ -1,29 +1,27 @@
 import React, {Component} from "react";
 import {Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
 import { Rating, AirbnbRating } from 'react-native-ratings';
-import ToggleSwitch from 'toggle-switch-react-native'
-import { auth } from "firebase";
-import { app } from "../config";
+import FirebaseSDK, { app } from "../config";
 
+const firebase = new FirebaseSDK();
 
-const{height,width} = Dimensions.get("window");
-const { rating } = 3.5;
 export default class Mainpage extends Component{
-    state = {
-      trial : true,
-      isOntf : true,
-    };
-    onToggle(isOn) {
-      console.log("Changed to " + isOn);
-    }
-
+    
     constructor(props) {
       super(props);
       
+      this.state = {
+        trial : true, 
+        userName : this.props.navigation.state.params.userName, 
+        userRating : this.props.navigation.state.params.rating,
+        count : this.props.navigation.state.params.count, 
+      };
+          
     }
 
+
     render(){
-      const { isOntf } = this.state;
+      
         return(
 
         <View style={styles.container}>        
@@ -40,14 +38,14 @@ export default class Mainpage extends Component{
        <ScrollView>
          <View style = {{alignItems:"center" , marginTop: 30 }}>
             <View style = {styles.circlename}>
-                <Text style = {styles.username}>희진</Text>
+                <Text style = {styles.username}>{this.state.userName}</Text>
             </View>
             <Rating
               type="custom"
               fractions={1} // 소수 점에 맞춰
-              startingValue={4.6}
+              startingValue={this.state.userRating/this.state.count}
               showReadOnlyText = {false}
-              readonly
+              readonly = {true}
               showRating
               imageSize={40}
               ratingTextColor="black"
@@ -75,7 +73,7 @@ export default class Mainpage extends Component{
        </View>
 
        <View style={styles.subcontainer}>
-       <TouchableOpacity onPress = {() => this.props.navigation.navigate("ChangeAccount")}>
+       <TouchableOpacity onPress = {this.onChangeAccountPress}>
           <Text style={styles.otherlink}>계좌번호 변경</Text>
        </TouchableOpacity>
        </View>
@@ -92,23 +90,23 @@ export default class Mainpage extends Component{
        </TouchableOpacity>
        </View>
       
-       <View style={styles.subcontainer}>
-        <Text style={styles.otherlink}>앱 알림</Text>
-       <ToggleSwitch
-        style={styles.togglebtn}
-        isOn={isOntf}
-        onColor="green"
-        offColor="#a9a9a9"
-        size="large"
-        onToggle={isOntf => {this.setState({isOntf}); this.onToggle(isOntf)}}
-      />
-        </View>
+       
        </ScrollView>
         </View>
         </View>
         
         );
 
+    }
+
+    onChangeAccountPress =() =>{
+
+      firebase.refUser(firebase.refUid).once('value', (dataSnapshot)=>{
+        this.props.navigation.navigate("ChangeAccount", {
+          account  : dataSnapshot.val().account,
+          bank : dataSnapshot.val().bank,
+        });
+      });
     }
     
     onLogoutPress=()=>{

@@ -3,7 +3,7 @@ import {View,Text, TouchableOpacity, StyleSheet, Dimensions,Alert, TextInput,Ima
 import { Button } from 'react-native-elements';
 import { app } from "../config";
 
-
+//TODO 비밀번호 변경에서, 비밀번호를 입력받아서, 기존비밀번호랑 비교해서 확인작업을 통해서 이메일을 발송해야함.
 
 const{height,width} = Dimensions.get("window");
 

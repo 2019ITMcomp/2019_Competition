@@ -18,8 +18,7 @@ export default class FirebaseSDK{
         if(!Firebase.apps.length){
             // for avoiding re-initializing
             Firebase.initializeApp(config); 
-        }
-        
+        }        
         this.roomKey = '';
     }
 
@@ -36,7 +35,7 @@ export default class FirebaseSDK{
         .auth()
         .createUserWithEmailAndPassword(user.email, user.password)
         .then(
-            function() {
+            async function() {
                 console.log(
                 'created user successfully. User email:' +
                 user.email +
@@ -46,8 +45,23 @@ export default class FirebaseSDK{
 
                 var userf = Firebase.auth().currentUser;
 
+                console.log("user id is : " + userf.uid);
+                
+                //TODO 
+                // email을 수령했는지, 확인이 되는구나.
+                // set user info
+                await Firebase.database().ref('Users/'+userf.uid + '/_info').set({
+                    name : user.name,
+                    bank : user.bank,
+                    account : user.account,
+                    rating  : 5, // rating / count해서 평점을 나타내기 위함.
+                    count : 1,
+                });
+
                 userf.updateProfile({ displayName: user.name }).then(
                     function() {
+
+
                         console.log('Updated displayName successfully. name:' + user.name);
                         alert(
                             'User ' + user.name + ' was created successfully. Please login.'
@@ -83,8 +97,8 @@ export default class FirebaseSDK{
         return Firebase.database().ref('Users/' + userId + '/_info');
     }
 
-    refRoom(newRoomName){
-        return Firebase.database().ref('Rooms/' + newRoomName);
+    refRoom_UserId(roomKey, roomName){
+        return Firebase.database().ref('Rooms/' + roomName + '/' + roomKey + '/userId');
     }
 
     refRoomKey = async (newRoomName) => {
@@ -137,9 +151,7 @@ export default class FirebaseSDK{
         };
     };
 
-    get = callback =>{ //아 ... 말 그대로 콜백 값이 callback에 담기는거야...? 바인딩 플러스에???
-        // callback은 말 그대로 인자값을 넣어주는 것 같은데,,, 잘 모르겠다. 
-        
+    get = callback =>{ 
         this.refMessages.on("child_added", snapshot => callback(this.parse(snapshot)));
     };
 
@@ -190,22 +202,10 @@ export default class FirebaseSDK{
 
         }   
     }
-    setUserInfo = (userId, name, bank, account) =>{
-        
-        let user_ref = this.refUser(userId);
-        console.log("user ref : " + user_ref);
-        user_ref.push({
-            name : name,
-            bank : bank,
-            account : account,
-            rating : 5, // rating / count해서 평점을 나타내기 위함.
-            count : 1,
-        })
-    }
 
     enrollToRoom = async (path) =>{
-        await Firebase.database().ref('Rooms/' + path + '/user_info').push({
-            id : this.refUid,
+        await Firebase.database().ref('Rooms/' + path + '/userId/' + this.refUid).push({
+            user : this.refUid
         });
     }
 
@@ -231,8 +231,7 @@ export default class FirebaseSDK{
                 
             })
 
-        })
-            
+        })     
     }
 }
 

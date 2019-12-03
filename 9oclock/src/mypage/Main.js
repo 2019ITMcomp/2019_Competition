@@ -36,17 +36,20 @@ export default class Mainpage extends Component{
         userRef.on('value', (dataSnapshot) => {
             let roomsFB = [];
             dataSnapshot.forEach( (child) => {
-                
                 let roomKey = child.val().roomKey;
                 let roomName = child.val().roomName;  
-                db.ref('Rooms/' + roomName + '/' + roomKey).on('value', (data) => {                    
-                                
-                    roomsFB.push({
-                        name : data.val().roomName,
-                        key : roomName + '/' + roomKey,
-                    });
-                    this.setState({ rooms : roomsFB});
-                })                
+                
+                if(!this.isEmpty(roomKey) && !this.isEmpty(roomName)){
+                    
+                    db.ref('Rooms/' + roomName + '/' + roomKey).on('value', (data) => {                    
+                        roomsFB.push({
+                            name : data.val().roomName,
+                            key : roomName + '/' + roomKey,
+                        });
+                                                    
+                        this.setState({ rooms : roomsFB});
+                    })                
+                }                            
             });                        
         });
     }
@@ -89,7 +92,7 @@ export default class Mainpage extends Component{
             
             firebase.enrollToRoom( (newRoomName + '/' + newRoomKey) )
             let test = await firebase.closeRoom( (newRoomName + '/' + newRoomKey) );
-            console.log("테스트 결과 : " + test);
+            
             firebase.enter(newRoomName, newRoomKey); 
             alert("새로운 방으로 이동합니다 !");
 
@@ -110,6 +113,20 @@ export default class Mainpage extends Component{
         )
     }
 
+    onPressMypageButton= () =>{
+
+        firebase.refUser(firebase.refUid).once('value', (data)=>{
+            
+            this.props.navigation.navigate("Mypagemain" , {
+                userName : data.val().name,
+                rating : data.val().rating,
+                count : data.val().count,
+            })    
+        })
+
+        
+    }
+
     render(){
         return(
 
@@ -118,7 +135,7 @@ export default class Mainpage extends Component{
           
         <View style={styles.titlecontainer}>
             <Text style={styles.title}>{this.state.title}</Text>
-            <TouchableOpacity onPress = {() => this.props.navigation.navigate("Mypagemain")}>
+            <TouchableOpacity onPress = {this.onPressMypageButton}>
                <View style={styles.userimg}>
                     <Image source = {require('./user.png')} style = {styles.image}/>
                 </View>
