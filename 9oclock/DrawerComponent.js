@@ -1,20 +1,55 @@
 import React, {Component} from 'react';
-import {Alert,SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-native';
+import {Alert, SafeAreaView, View, Image, Text, TouchableOpacity,StyleSheet} from 'react-native';
 import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
-import FirebaseSDK, { app } from './src/config';
 import Star from 'react-native-star-view';
-
-const Firebase = new FirebaseSDK();
+import FirebaseSDK, { app } from './src/config';
+const firebase = new FirebaseSDK();
 
 export default class DrawerComponent extends Component{
     constructor(props){
+      
         super(props);
 
-        
+        this.userId = [];
+        this.userInfo = [];
         this.state={
-           
+            userIds : [],
+            user2 : '',
+            user3 : '', 
+
+            userName_1 : "소현",
+            userRating_1 : "32",
+            count_1 : "7",
+            userName_2 : "의현",
+            userRating_2 : "14",
+            count_2 : "3",
+            userName_3 : "희진",
+            userRating_3 : "22",
+            count_3 : "6",          
         }
+        
+    }
+
+    setUserId = async (ids) =>{            
+      this.userId = ids;
+      let temp = [];
+      
+      for(let i = 0; i < ids.length; i++){
+        temp = await this.setUserInfo(ids[0]); 
+        this.userInfo.push(temp)
+      }
+      console.log(this.userInfo);
+      
+    };
+
+    setUserInfo = async (userId) =>{ 
+      return new Promise(function(resolve, rejects){
+        firebase.refUser(userId).on('value', (data)=>{                                     
+          resolve(data)
+        })                      
+      })      
+
     }
 
 
@@ -29,38 +64,49 @@ export default class DrawerComponent extends Component{
                 borderRadius: 60}}
               />
             </View>
+
             <View style={{marginTop:50,alignItems:'center',justifyContent:'center'}}>
-              <Text style={{fontSize:40,fontweight:20}}>
-              
+
+              <Text style={{fontSize:25,fontweight:"200",textAlign:"center"}}>
+              대화상대
               </Text>
             </View>
             <View>
-              <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
+              <Text style={{color:'rgba(87, 185, 158, 0.48)',textAlign:"center"}}>
               ───────────────
               </Text>
               </View>
-            <View style={{marginTop:5, marginBottom:5}}>
-              <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>   
-                
-                  <Text style={{color:'black', marginBottom:5}}>
-                    별1
-                  </Text>
-              </Text>
-              <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>
-                소현
-                  <Text style={{color:'black' , marginBottom:5}}>
-                  별점3
-                  </Text>
-              </Text> 
-              <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>
-                희진
-                  <Text style={{color:'black' , marginBottom:5}}>
-                    별3
-                  </Text>
-              </Text>
+            <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
+              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_1}</Text> 
+              <Star score={this.state.userRating_1/this.state.count_1} style={styles.starStyle} />
+              <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_1/this.state.count_1).toFixed(1)}</Text>
             </View>
+            <View>
+              <Text style={{color:'rgba(87, 185, 158, 0.48)',textAlign:"center"}}>
+              ───────────────
+              </Text>
+              </View>
+            <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
+              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_2}</Text> 
+              <Star score={this.state.userRating_1/this.state.count_1} style={styles.starStyle} />
+              <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_2/this.state.count_2).toFixed(1)}</Text>
+            </View>
+            <View>
+              <Text style={{color:'rgba(87, 185, 158, 0.48)',textAlign:"center"}}>
+              ───────────────
+              </Text>
+              </View>
+            <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
+              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_3}</Text> 
+              <Star score={this.state.userRating_3/this.state.count_3} style={styles.starStyle} />
+              <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_3/this.state.count_3).toFixed(1)}</Text>
+            </View>
+
+            
+
+            
             <View style={{marginBottom:30}}>
-            <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
+            <Text style={{color:'rgba(87, 185, 158, 0.48)',textAlign:"center"}}>
             ───────────────
             </Text>
             </View>
@@ -73,7 +119,7 @@ export default class DrawerComponent extends Component{
           </TouchableOpacity>
           </View>
           <View style={{marginTop:30}}>
-            <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
+            <Text style={{color:'rgba(87, 185, 158, 0.48)',textAlign:"center"}}>
             ───────────────
             </Text>
             </View>
@@ -99,3 +145,11 @@ export default class DrawerComponent extends Component{
         )
     }
 }
+
+const styles = StyleSheet.create({
+  starStyle : {
+    width: 100,
+    height: 20,
+    flex:2,
+  },
+});

@@ -2,11 +2,11 @@ import React from "react";
 import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView, Keyboard, Text} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 import FirebaseSDK from '../config';
-import {Header, Left, Right, Icon, Title,Body,Subtitle} from 'native-base';
-import { Tile } from "react-native-elements";
+import {Header, Left, Right, Icon} from 'native-base';
+import DrawerComponent from '../../DrawerComponent';
 
 const Firebase = new FirebaseSDK();
-
+const DC = new DrawerComponent();
 export default class ChatScreen extends React.Component {
 
 
@@ -57,7 +57,9 @@ export default class ChatScreen extends React.Component {
             let ids = [];
             data.forEach((child)=>{
                 ids.push(child.key);
-            });            
+            });
+            console.log(ids);
+            DC.setUserId(ids);            
             
         })
 

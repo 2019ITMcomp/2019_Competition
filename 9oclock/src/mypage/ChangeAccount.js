@@ -105,7 +105,7 @@ export default class ChangeAccount extends Component{
 
         Alert.alert(
         '',
-          '변경되었습니다. 사실은 안했지롱!',
+          '변경되었습니다.',
           [{
             text: 'OK', 
             onPress: ()=> console.log('OK Pressed')

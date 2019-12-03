@@ -1,5 +1,5 @@
 import React, {Component, } from 'react';
-import {Icon} from 'native-base';
+
 import {Alert,Button,SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} from 'react-native';
 import { createStackNavigator, HeaderStyleInterpolator } from 'react-navigation-stack';
 import {NavigationActions,createAppContainer } from 'react-navigation';
@@ -67,43 +67,10 @@ const AppContainer = createAppContainer(AppNavigator);
 
 
 export default class App extends Component  {
-  constructor(props){
-    super(props);
-    this.state={
-      username:'강의현',
-      rating:'  ★★★★(4.3)',
-      username2:'손희진',
-      rating2:'  ★★★★(4.5)',
-      username3:'원소현',
-      rating3:'  ★★★★(4.5)',
-      account:'농협 12345678',
-      isReal:'정말 나가시겠습니까?',
-      userIds : [],
-    };
-
-    console.log("ids : " + this.state.userIds);
-  }
-
-  setUserId = (ids) =>{
-    this.setState({
-      userIds : ids
-    })
-  }
-
 
   render(){ 
 
-
-
-    return <AppContainer screenProps={{
-      username:this.state.username,
-      username2:this.state.username2,
-      username3:this.state.username3,
-      rating:this.state.rating,
-      rating2:this.state.rating2,
-      rating3:this.state.rating3, 
-      account:this.state.account,
-      isReal:this.state.isReal}}/>;
+    return <AppContainer/>;
     //<ChangeAccount/>
 
     }
