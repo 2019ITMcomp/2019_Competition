@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import {Alert,View,Text, TouchableOpacity, StyleSheet,Platform, TextInput, Dimensions, Image, ScrollView} from "react-native";
 import { Rating, AirbnbRating } from 'react-native-ratings';
 import FirebaseSDK, { app } from "../config";
+import Star from 'react-native-star-view';
+
 
 const firebase = new FirebaseSDK();
 
@@ -40,18 +42,11 @@ export default class Mainpage extends Component{
             <View style = {styles.circlename}>
                 <Text style = {styles.username}>{this.state.userName}</Text>
             </View>
-            <Rating
-              type="custom"
-              fractions={1} // 소수 점에 맞춰
-              startingValue={this.state.userRating/this.state.count}
-              showReadOnlyText = {false}
-              readonly = {true}
-              showRating
-              imageSize={40}
-              ratingTextColor="black"
-              onFinishRating={this.ratingCompleted} 
-              style={{ paddingVertical: 10 }}
-            />
+
+            <View style={{alignItems:"center"}}>
+            <Star score={this.state.userRating/this.state.count} style={styles.starStyle} />
+            <Text style={{fontSize:18}}>별점: {(this.state.userRating/this.state.count).toFixed(1)} / 5</Text>
+            </View>
             
             </View>
             
@@ -127,37 +122,18 @@ export default class Mainpage extends Component{
       console.log('로그아웃');
       this.props.navigation.navigate("LoginPage");
     }
-    accountdrop(){
-      
-      Alert.alert(
-        '회원 탈퇴',
-        '정말로 탈퇴하시겠습니까?',
-        [{text: '탈퇴하기', onPress:() => this.props.navigation.navigate("AppInfo").bind(this)},
-          {text: '취소',
-           onPress: () => console.log('Cancel Pressed'),
-           style: 'cancel'},
-        ],
-        {cancelable: false},
-      );
-    }
-    toAD(){
-      
-    }
-    xbutton = () => {
-      //페이지 이동 , 일단은 누르는 버튼으로 만들어 놨음.
-      this.setState(prevState =>{ 
-        return{
-          trial : false,
-        }
-      }); 
-    }
     onPwChange=()=>{
       this.props.navigation.navigate("ChangePw")
     }    
 }
 
 const styles = StyleSheet.create({
-    
+    starStyle : {
+      width: 200,
+      height: 40,
+      marginTop:20,
+      marginBottom: 20,
+    },
     container: {
         flex: 1,
       },
@@ -176,6 +152,9 @@ const styles = StyleSheet.create({
         alignSelf : "flex-start",
         justifyContent:"space-between",
         
+      },
+      ratetext:{
+        fontSize:15,
       },
       subcontainer:{
         borderBottomColor:'#A9A9A9', 
@@ -240,10 +219,5 @@ const styles = StyleSheet.create({
       username : {
         fontSize : 30,        
       },
-      togglebtn:{
-        flex:1,
-        flexDirection:"row",
-        alignSelf:"center",
-        
-      }
+      
 });
