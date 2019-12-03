@@ -1,19 +1,4 @@
 import React, {Component} from 'react';
-<<<<<<< HEAD
-import {Alert,SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-native';
-import {DrawerItems} from 'react-navigation-drawer';
-import {Icon} from 'native-base';
-import FirebaseSDK, { app } from './src/config';
-const Firebase = new FirebaseSDK();
-
-export default class DrawerComponent extends Component{
-    constructor(props){
-        super(props);
-
-        this.state={
-            
-        }
-=======
 import {Alert, SafeAreaView, View, Image, Text, TouchableOpacity,StyleSheet} from 'react-native';
 import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
@@ -34,7 +19,6 @@ export default class DrawerComponent extends Component{
           count_3 : "6",
         };
               
->>>>>>> sohyun3
     }
     render(){
         const users=this.user;
@@ -48,13 +32,8 @@ export default class DrawerComponent extends Component{
             </View>
 
             <View style={{marginTop:50,alignItems:'center',justifyContent:'center'}}>
-<<<<<<< HEAD
-              <Text style={{fontSize:40,fontweight:20}}>
-              {users}
-=======
               <Text style={{fontSize:25,fontweight:"200",textAlign:"center"}}>
               대화상대
->>>>>>> sohyun3
               </Text>
             </View>
             <View>
@@ -62,14 +41,6 @@ export default class DrawerComponent extends Component{
               ───────────────
               </Text>
               </View>
-<<<<<<< HEAD
-            <View style={{marginTop:5, marginBottom:5}}>
-              <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>   
-                
-                  <Text style={{color:'black', marginBottom:5}}>
-                    별1
-                  </Text>
-=======
             <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
               <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_1}</Text> 
               <Star score={this.state.userRating_1/this.state.count_1} style={styles.starStyle} />
@@ -78,7 +49,6 @@ export default class DrawerComponent extends Component{
             <View>
               <Text style={{color:'rgba(87, 185, 158, 0.48)',textAlign:"center"}}>
               ───────────────
->>>>>>> sohyun3
               </Text>
               </View>
             <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
