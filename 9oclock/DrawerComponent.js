@@ -4,6 +4,8 @@ import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
 import Star from 'react-native-star-view';
 import FirebaseSDK, { app } from './src/config';
+
+
 const firebase = new FirebaseSDK();
 
 export default class DrawerComponent extends Component{
@@ -18,22 +20,29 @@ export default class DrawerComponent extends Component{
             user2 : '',
             user3 : '', 
 
-            userName_1 : "소현",
+            userName_1 : "원소현",
             userRating_1 : "32",
             count_1 : "7",
-            userName_2 : "의현",
+            userName_2 : "강의현",
             userRating_2 : "14",
             count_2 : "3",
-            userName_3 : "희진",
+            userName_3 : "손희진",
             userRating_3 : "22",
             count_3 : "6", 
             currentAccount: "3020525108671",
-            currentBank: "농협", 
+            currentBank: "농협",
+            ClipboardContent:null,
             //currentAccount: this.props.navigation.state.params.account,
             //currentBank : this.props.navigation.state.params.bank,        
         }
         
     }
+
+    readFromClipboard= async() =>{
+      await Clipboard.setString(this.state.currentBank +' '+this.state.currentAccount);
+      alert('계좌번호를 클립보드로 복사하였습니다.')
+    };
+
 
     setUserId = async (ids) =>{            
       this.userId = ids;
@@ -80,7 +89,7 @@ export default class DrawerComponent extends Component{
               </Text>
               </View>
             <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
-              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_1}</Text> 
+              <Text style={{fontSize:18,flex:2,marginLeft:15}}>{this.state.userName_1}</Text> 
               <Star score={this.state.userRating_1/this.state.count_1} style={styles.starStyle} />
               <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_1/this.state.count_1).toFixed(1)}</Text>
             </View>
@@ -90,7 +99,7 @@ export default class DrawerComponent extends Component{
               </Text>
               </View>
             <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
-              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_2}</Text> 
+              <Text style={{fontSize:18,flex:2,marginLeft:15}}>{this.state.userName_2}</Text> 
               <Star score={this.state.userRating_1/this.state.count_1} style={styles.starStyle} />
               <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_2/this.state.count_2).toFixed(1)}</Text>
             </View>
@@ -100,7 +109,7 @@ export default class DrawerComponent extends Component{
               </Text>
               </View>
             <View style={{marginTop:5, marginBottom:5, flexDirection:"row",marginHorizontal:10,}}>
-              <Text style={{fontSize:18,flex:1,marginLeft:15}}>{this.state.userName_3}</Text> 
+              <Text style={{fontSize:18,flex:2,marginLeft:15}}>{this.state.userName_3}</Text> 
               <Star score={this.state.userRating_3/this.state.count_3} style={styles.starStyle} />
               <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_3/this.state.count_3).toFixed(1)}</Text>
             </View>
@@ -114,8 +123,8 @@ export default class DrawerComponent extends Component{
             </Text>
             </View>
           <View style={{ alignItems:'center',justifyContent:'center'}}>
-          <TouchableOpacity onPress={()=> alert('계좌번호를 클립보드로 복사하였습니다.')}>
-          {/*displayName 다른걸로 설정*/}
+          <TouchableOpacity onPress={this.readFromClipboard}>
+          {/*'계좌번호를 클립보드로 복사하였습니다.'*/}
           <Text style={{fontSize:23,fontweight:15}}>
           내 계좌번호 가져오기
           </Text>
@@ -153,6 +162,6 @@ const styles = StyleSheet.create({
   starStyle : {
     width: 100,
     height: 20,
-    flex:2,
+    flex:3,
   },
 });

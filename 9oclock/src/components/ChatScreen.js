@@ -7,6 +7,7 @@ import DrawerComponent from '../../DrawerComponent';
 
 const Firebase = new FirebaseSDK();
 const DC = new DrawerComponent();
+
 export default class ChatScreen extends React.Component {
 
 
