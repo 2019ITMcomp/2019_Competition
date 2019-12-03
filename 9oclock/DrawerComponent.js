@@ -3,19 +3,25 @@ import {Alert,SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-nat
 import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
 import FirebaseSDK, { app } from './src/config';
+import Star from 'react-native-star-view';
+
 const Firebase = new FirebaseSDK();
 
 export default class DrawerComponent extends Component{
     constructor(props){
         super(props);
 
+        
         this.state={
-            
+           
         }
     }
-    render(){
-        const users=this.user;
 
+
+
+    render(){
+ 
+    
         return(
             <SafeAreaView style={{flex:1}}>
             <View style={{height:150, backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
@@ -25,7 +31,7 @@ export default class DrawerComponent extends Component{
             </View>
             <View style={{marginTop:50,alignItems:'center',justifyContent:'center'}}>
               <Text style={{fontSize:40,fontweight:20}}>
-              {users}
+              
               </Text>
             </View>
             <View>
@@ -43,7 +49,7 @@ export default class DrawerComponent extends Component{
               <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>
                 소현
                   <Text style={{color:'black' , marginBottom:5}}>
-                    별2
+                  별점3
                   </Text>
               </Text> 
               <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>
