@@ -4,7 +4,6 @@ import {Alert,Button,SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} 
 import { createStackNavigator, HeaderStyleInterpolator } from 'react-navigation-stack';
 import {NavigationActions,createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
-import Home from './src/screens/Home';
 import DrawerComponent from './DrawerComponent';
 
 

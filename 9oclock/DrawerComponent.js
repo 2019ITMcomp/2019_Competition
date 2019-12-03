@@ -1,13 +1,19 @@
 import React, {Component} from 'react';
-import {SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-native';
+import {Alert,SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-native';
 import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
 
 export default class DrawerComponent extends Component{
     constructor(props){
-        super(props)
+        super(props);
+
+        this.state={
+            user:'',
+        }
     }
     render(){
+        const users=this.user;
+
         return(
             <SafeAreaView style={{flex:1}}>
             <View style={{height:150, backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
@@ -17,7 +23,7 @@ export default class DrawerComponent extends Component{
             </View>
             <View style={{marginTop:50,alignItems:'center',justifyContent:'center'}}>
               <Text style={{fontSize:40,fontweight:20}}>
-              대화상대
+              {users}
               </Text>
             </View>
             <View>
@@ -27,7 +33,7 @@ export default class DrawerComponent extends Component{
               </View>
             <View style={{marginTop:5, marginBottom:5}}>
               <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>   
-                의현
+                
                   <Text style={{color:'black', marginBottom:5}}>
                     별1
                   </Text>
