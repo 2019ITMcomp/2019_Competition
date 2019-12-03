@@ -163,6 +163,8 @@ export default class App extends Component  {
       isReal:'정말 나가시겠습니까?',
       userIds : [],
     };
+
+    console.log("ids : " + this.state.userIds);
   }
 
   setUserId = (ids) =>{

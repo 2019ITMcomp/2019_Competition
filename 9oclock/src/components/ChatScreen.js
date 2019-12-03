@@ -3,10 +3,8 @@ import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView, Keyboard} from "
 import {GiftedChat} from "react-native-gifted-chat";
 import FirebaseSDK from '../config';
 import {Header, Left, Right, Icon} from 'native-base';
-import App from '../../App';
 
 const Firebase = new FirebaseSDK();
-// const temp = new App();
 
 export default class ChatScreen extends React.Component {
 
@@ -22,7 +20,7 @@ export default class ChatScreen extends React.Component {
             user : '',
             messages : [],
             roomKey : roomKey,
-            roomName : roomName,
+            roomName : roomName, //룸 네임 쓰는 부분을 빼버림... 삭제할까 생각.
         }
     }
 
@@ -30,7 +28,7 @@ export default class ChatScreen extends React.Component {
     get user(){ 
         return {
             _id: Firebase.refUid,
-            _name: Firebase.refUserName
+            name: Firebase.refUserName
         };
     }
 
@@ -53,13 +51,13 @@ export default class ChatScreen extends React.Component {
     }
 
     onPressMenu = () =>{
-        let ref = Firebase.refRoom_UserId(this.state.roomKey, this.state.roomName)
-        ref.on('value', (data)=>{
+        
+        Firebase.refRoom_UserId(this.state.roomKey.split('/')[1], this.state.roomKey.split('/')[0]).on('value', (data)=>{
             let ids = [];
             data.forEach((child)=>{
-                ids.push(child.key); //key들을 가지고 보내줘야함. 
-            })
-            // temp.setUserId(ids);
+                ids.push(child.key);
+            });            
+            
         })
 
 
