@@ -1,9 +1,10 @@
 import React, {Component, } from 'react';
 import {Icon} from 'native-base';
-import {Button,SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} from 'react-native';
+import {Alert,Button,SafeAreaView,View,Image,Text,Dimensions, TouchableOpacity} from 'react-native';
 import { createStackNavigator, HeaderStyleInterpolator } from 'react-navigation-stack';
 import {NavigationActions,createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
+import DrawerComponent from './DrawerComponent';
 
 
 import ChatScreen from './src/components/ChatScreen';
@@ -28,8 +29,8 @@ import FirebaseSDK from './src/config';
 
 const {width}=Dimensions.get('window');
 const out='방나가기    '
-const firebase = new FirebaseSDK();
-const CustomDrawerComponent =(props)=>(
+
+{/*const CustomDrawerComponent =(props)=>(
   <SafeAreaView style={{flex:1}}>
     <View style={{height:150, backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
       <Image source={require('./assets/icon.png')} style={{height:120, width:120,
@@ -83,7 +84,9 @@ const CustomDrawerComponent =(props)=>(
     ───────────────
     </Text>
     </View>
-  <TouchableOpacity onPress={()=>alert(props.screenProps.isReal)}>
+  <TouchableOpacity onPress={()=>Alert.alert('아홉시 오분전',props.screenProps.isReal,
+  [{text:'방 나가기',onPress:null},{text:'취소',onPress:null}],
+  {cancelable:false})}>
 
   <View style={{marginTop:90,alignItems:'center'}} >
   <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
@@ -100,14 +103,14 @@ const CustomDrawerComponent =(props)=>(
   <DrawerItems {...props}/>
   
   </SafeAreaView>
-)
+      )*/}
 
 
 
 const SideDrawerNavigator=createDrawerNavigator({
   ' ':{screen: ChatScreen},
 },{
-  contentComponent:CustomDrawerComponent,
+  contentComponent:DrawerComponent,
 drawerPosition : 'right',
 drawerWidth:width * 3/5,
 keyboardDismissMode:'none',
