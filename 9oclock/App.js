@@ -5,6 +5,7 @@ import { createStackNavigator, HeaderStyleInterpolator } from 'react-navigation-
 import {NavigationActions,createAppContainer } from 'react-navigation';
 import {createDrawerNavigator, DrawerItems} from "react-navigation-drawer";
 import Home from './src/screens/Home';
+import DrawerComponent from './DrawerComponent';
 
 
 import ChatScreen from './src/components/ChatScreen';
@@ -31,7 +32,8 @@ import FirebaseSDK, { app } from './src/config';
 
 const {width}=Dimensions.get('window');
 const out='방나가기    '
-const CustomDrawerComponent =(props)=>(
+
+{/*const CustomDrawerComponent =(props)=>(
   <SafeAreaView style={{flex:1}}>
     <View style={{height:150, backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
       <Image source={require('./assets/icon.png')} style={{height:120, width:120,
@@ -104,14 +106,14 @@ const CustomDrawerComponent =(props)=>(
   <DrawerItems {...props}/>
   
   </SafeAreaView>
-)
+      )*/}
 
 
 
 const SideDrawerNavigator=createDrawerNavigator({
   ' ':{screen: ChatScreen},
 },{
-  contentComponent:CustomDrawerComponent,
+  contentComponent:DrawerComponent,
 drawerPosition : 'right',
 drawerWidth:width * 3/5,
 keyboardDismissMode:'none',
