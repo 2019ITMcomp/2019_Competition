@@ -8,8 +8,6 @@ import DrawerComponent from './DrawerComponent';
 
 
 import ChatScreen from './src/components/ChatScreen';
-import Rooms from './src/screens/Rooms';
-
 import SignUpPage from './src/page/SignUp';
 import LoginPage from './src/page/Login';
 import SignUpSuccessPage from './src/page/SignUpSuccess';
@@ -25,88 +23,8 @@ import ChangeAccount from "./src/mypage/ChangeAccount";
 import AppMain from "./src/mypage/Main";
 import FirebaseSDK from './src/config';
 
-
-
 const {width}=Dimensions.get('window');
 const out='방나가기    '
-
-{/*const CustomDrawerComponent =(props)=>(
-  <SafeAreaView style={{flex:1}}>
-    <View style={{height:150, backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
-      <Image source={require('./assets/icon.png')} style={{height:120, width:120,
-        borderRadius: 60}}
-      />
-    </View>
-    <View style={{marginTop:50,alignItems:'center',justifyContent:'center'}}>
-      <Text style={{fontSize:40,fontweight:20}}>
-      대화상대
-      </Text>
-    </View>
-    <View>
-      <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
-      ───────────────
-      </Text>
-      </View>
-    <View style={{marginTop:5, marginBottom:5}}>
-      <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>   
-        {props.screenProps.username}
-          <Text style={{color:'black', marginBottom:5}}>
-            {props.screenProps.rating}
-          </Text>
-      </Text>
-      <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>
-        {props.screenProps.username2}
-          <Text style={{color:'black' , marginBottom:5}}>
-            {props.screenProps.rating2}
-          </Text>
-      </Text> 
-      <Text style={{marginLeft:10,fontSize:18, marginBottom:5}}>
-        {props.screenProps.username3}
-          <Text style={{color:'black' , marginBottom:5}}>
-            {props.screenProps.rating3}
-          </Text>
-      </Text>
-    </View>
-    <View style={{marginBottom:30}}>
-    <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
-    ───────────────
-    </Text>
-    </View>
-  <View style={{ alignItems:'center',justifyContent:'center'}}>
-  <TouchableOpacity onPress={()=>alert(props.screenProps.account)}>
-  <Text style={{fontSize:23,fontweight:15}}>
-  내 계좌번호 가져오기
-  </Text>
-  </TouchableOpacity>
-  </View>
-  <View style={{marginTop:30}}>
-    <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
-    ───────────────
-    </Text>
-    </View>
-  <TouchableOpacity onPress={()=>Alert.alert('아홉시 오분전',props.screenProps.isReal,
-  [{text:'방 나가기',onPress:null},{text:'취소',onPress:null}],
-  {cancelable:false})}>
-
-  <View style={{marginTop:90,alignItems:'center'}} >
-  <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
-    ───────────────
-    </Text>
-    <Text style={{fontSize:25}}>
-      {out} <Icon name="arrow-forward"></Icon>
-    </Text>
-    <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
-    ───────────────
-    </Text>
-  </View>
-  </TouchableOpacity>
-  <DrawerItems {...props}/>
-  
-  </SafeAreaView>
-      )*/}
-
-
-
 const SideDrawerNavigator=createDrawerNavigator({
   ' ':{screen: ChatScreen},
 },{
@@ -122,19 +40,15 @@ contentOptions:{
 
 const AppNavigator = createStackNavigator(
   {
-    Rooms,
     ChatScreen:{
       screen:SideDrawerNavigator
     },
-
-    //아래 희진
     SignUpPage,
     LoginPage,
     SignUpSuccessPage,
     IdFindPage,
     PwFindPage,
     EmailValidationPage,
-    //아래 소현
     Mypagemain,
     ChangePw,
     AppInfo,
