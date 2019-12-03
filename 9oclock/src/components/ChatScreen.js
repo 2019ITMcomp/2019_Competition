@@ -22,6 +22,7 @@ export default class ChatScreen extends React.Component {
             messages : [],
             roomKey : roomKey,
             roomName : roomName, //룸 네임 쓰는 부분을 빼버림... 삭제할까 생각.
+            
         }
     }
 
