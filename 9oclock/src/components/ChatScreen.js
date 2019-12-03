@@ -70,6 +70,9 @@ export default class ChatScreen extends React.Component {
         messages={this.state.messages} 
         onSend={Firebase.send} 
         user={this.user} 
+        showUserAvatar = {true}
+        showAvatarForEveryMessage = {true}
+        renderUsernameOnMessage = {true}
         />;
 
         if(Platform.OS === 'android'){
