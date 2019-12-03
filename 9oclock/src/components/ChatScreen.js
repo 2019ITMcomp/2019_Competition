@@ -1,8 +1,9 @@
 import React from "react";
-import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView, Keyboard} from "react-native";
+import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView, Keyboard, Text} from "react-native";
 import {GiftedChat} from "react-native-gifted-chat";
 import FirebaseSDK from '../config';
-import {Header, Left, Right, Icon} from 'native-base';
+import {Header, Left, Right, Icon, Title,Body,Subtitle} from 'native-base';
+import { Tile } from "react-native-elements";
 
 const Firebase = new FirebaseSDK();
 
@@ -74,6 +75,7 @@ export default class ChatScreen extends React.Component {
         showAvatarForEveryMessage = {true}
         renderUsernameOnMessage = {true}
         />;
+        const roomNames=this.state.roomName
 
         if(Platform.OS === 'android'){
             return(
@@ -92,11 +94,14 @@ export default class ChatScreen extends React.Component {
         }
 
         return <SafeAreaView style={styles.container}>
-        <Header style={{backgroundColor:'white'}}>
-        <Left>
+        <Header style={{ marginTop: -20, paddingTop:10, height: 65}}>
+        
+        <Left style={{ flex:1, paddingTop:-10, paddingBottom:-10}}>
         <Icon name='arrow-round-back' onPress={()=> this.props.navigation.navigate('AppMain')}/>
         </Left>
-        <Right>
+        <Body style={{flex:4, paddingTop:-10, paddingBottom:-10}}>
+        <Title>{roomNames}</Title></Body>
+        <Right style={{ flex:1, paddingTop:-10, paddingBottom:-10}}>
         <Icon name="menu" onPress={this.onPressMenu}/>
         </Right>
             </Header>
@@ -106,7 +111,7 @@ export default class ChatScreen extends React.Component {
 const styles=StyleSheet.create({
     container:{
         flex:1,
-        backgroundColor:'#fff',
+        
         
 
     }
