@@ -183,7 +183,7 @@ export default class SignUpPage extends Component {
       try{
         const user ={
             name : this.state.name,
-            email : this.state.email,
+            email : this.state.email+"@seoultech.ac.kr",
             password : this.state.password,
             bank: this.state.bank,
             account: this.state.account,
