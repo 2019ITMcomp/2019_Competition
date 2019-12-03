@@ -2,8 +2,15 @@
   "devToolsPort": 19002,
   "expoServerPort": 19000,
   "packagerPort": 19001,
+<<<<<<< HEAD
   "packagerPid": 55759,
   "expoServerNgrokUrl": "https://33-z3r.anonymous.9oclock.exp.direct",
   "packagerNgrokUrl": "https://packager.33-z3r.anonymous.9oclock.exp.direct",
   "ngrokPid": 55783
+=======
+  "packagerPid": 18212,
+  "expoServerNgrokUrl": "https://zi-my7.anonymous.9oclock.exp.direct",
+  "packagerNgrokUrl": "https://packager.zi-my7.anonymous.9oclock.exp.direct",
+  "ngrokPid": 7256
+>>>>>>> c51e7b31e18af059f850aee3f621ca7c94cd3b43
 }
