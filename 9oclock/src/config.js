@@ -94,7 +94,7 @@ export default class FirebaseSDK{
     }
     
 
-    get refUser(userId){
+    refUser(userId){
         return Firebase.database().ref('Users/' + userId + '/_info');
     }
 

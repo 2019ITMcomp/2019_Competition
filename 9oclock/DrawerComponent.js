@@ -56,7 +56,6 @@ export default class DrawerComponent extends Component{
 
     render(){
  
-    
         return(
             <SafeAreaView style={{flex:1}}>
             <View style={{height:150, backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
@@ -123,9 +122,9 @@ export default class DrawerComponent extends Component{
             ───────────────
             </Text>
             </View>
-          <TouchableOpacity onPress={()=>Alert.alert('아홉시 오분전','진짜로 나가게?',
-          [{text:'방 나가기',onPress:null},{text:'취소',onPress:null}],
-          {cancelable:false})}>
+          <TouchableOpacity onPress={()=>Alert.alert('아홉시 오분전','진짜 나가시겠습니까?'),
+          [{text:'방 나가기',onPress:null} , {text:'취소',onPress:null}],
+          {cancelable:false}}>
         
           <View style={{marginTop:90,alignItems:'center'}} >
           <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
