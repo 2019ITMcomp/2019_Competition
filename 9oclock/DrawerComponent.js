@@ -3,18 +3,44 @@ import {Alert,SafeAreaView, View, Image, Text, TouchableOpacity} from 'react-nat
 import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
 import FirebaseSDK, { app } from './src/config';
-const Firebase = new FirebaseSDK();
+const firebase = new FirebaseSDK();
 
 export default class DrawerComponent extends Component{
     constructor(props){
         super(props);
 
+        this.userId = [];
+        this.userInfo = [];
         this.state={
-            
+            userIds : [],
+            user2 : '',
+            user3 : '',            
         }
+        
     }
-    render(){
-        const users=this.user;
+
+    setUserId = async (ids) =>{            
+      this.userId = ids;
+      let temp = [];
+      
+      for(let i = 0; i < ids.length; i++){
+        temp = await this.setUserInfo(ids[0]); 
+        this.userInfo.push(temp)
+      }
+      console.log(this.userInfo);
+      
+    };
+
+    setUserInfo = async (userId) =>{ 
+      return new Promise(function(resolve, rejects){
+        firebase.refUser(userId).on('value', (data)=>{                                     
+          resolve(data)
+        })                      
+      })      
+    }
+
+
+    render(){        
 
         return(
             <SafeAreaView style={{flex:1}}>
@@ -25,7 +51,7 @@ export default class DrawerComponent extends Component{
             </View>
             <View style={{marginTop:50,alignItems:'center',justifyContent:'center'}}>
               <Text style={{fontSize:40,fontweight:20}}>
-              {users}
+              
               </Text>
             </View>
             <View>

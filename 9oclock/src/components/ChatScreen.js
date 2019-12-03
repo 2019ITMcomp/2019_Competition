@@ -3,9 +3,10 @@ import {StyleSheet,Platform,KeyboardAvoidingView, SafeAreaView, Keyboard} from "
 import {GiftedChat} from "react-native-gifted-chat";
 import FirebaseSDK from '../config';
 import {Header, Left, Right, Icon} from 'native-base';
+import DrawerComponent from '../../DrawerComponent';
 
 const Firebase = new FirebaseSDK();
-
+const DC = new DrawerComponent();
 export default class ChatScreen extends React.Component {
 
 
@@ -56,7 +57,9 @@ export default class ChatScreen extends React.Component {
             let ids = [];
             data.forEach((child)=>{
                 ids.push(child.key);
-            });            
+            });
+            console.log(ids);
+            DC.setUserId(ids);            
             
         })
 
