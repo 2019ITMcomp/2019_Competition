@@ -6,6 +6,7 @@ import Star from 'react-native-star-view';
 import FirebaseSDK, { app } from './src/config';
 
 
+
 const firebase = new FirebaseSDK();
 
 export default class DrawerComponent extends Component{
@@ -65,6 +66,11 @@ export default class DrawerComponent extends Component{
 
     }
 
+    outRoom=()=>{
+      Alert.alert('참여자의 별점을 매겨주세요',
+        '여기다 넣으면됨'
+      );
+    }
 
 
     render(){
@@ -135,9 +141,9 @@ export default class DrawerComponent extends Component{
             ───────────────
             </Text>
             </View>
-          <TouchableOpacity onPress={()=>Alert.alert('아홉시 오분전','진짜 나가시겠습니까?'),
-          [{text:'방 나가기',onPress:null} , {text:'취소',onPress:null}],
-          {cancelable:false}}>
+          <TouchableOpacity onPress={()=>Alert.alert('아홉시 오분전','진짜 나가시겠습니까?',
+          [{text:'방 나가기',onPress:this.outRoom} , {text:'취소',onPress:null}],
+          {cancelable:false})}>
         
           <View style={{marginTop:90,alignItems:'center'}} >
           <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
