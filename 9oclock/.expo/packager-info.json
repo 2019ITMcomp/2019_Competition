@@ -1,9 +1,9 @@
 {
   "devToolsPort": 19002,
   "expoServerPort": 19000,
-  "packagerPort": 19001,
-  "packagerPid": 17672,
-  "expoServerNgrokUrl": "https://8k-z8h.anonymous.9oclock.exp.direct",
-  "packagerNgrokUrl": "https://packager.8k-z8h.anonymous.9oclock.exp.direct",
-  "ngrokPid": 20928
+  "packagerPort": 19014,
+  "packagerPid": 90189,
+  "expoServerNgrokUrl": "https://z4-7ax.anonymous.9oclock.exp.direct",
+  "packagerNgrokUrl": "https://packager.z4-7ax.anonymous.9oclock.exp.direct",
+  "ngrokPid": 90209
 }

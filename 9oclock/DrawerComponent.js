@@ -1,14 +1,15 @@
 import React, {Component} from 'react';
-import {Alert, Clipboard, SafeAreaView, View, Image, Text, TouchableOpacity,StyleSheet} from 'react-native';
+import {Alert, Clipboard, Dimensions, SafeAreaView, View, Image, Text, TouchableOpacity,StyleSheet} from 'react-native';
 import {DrawerItems} from 'react-navigation-drawer';
 import {Icon} from 'native-base';
 import Star from 'react-native-star-view';
 import FirebaseSDK, { app } from './src/config';
-
-
-
+import { Button } from 'react-native-elements';
+import Dialog from "react-native-dialog";
+import DialogManager, {ScaleAnimation, DialogContent }from 'react-native-dialog-component';
+import { Rating} from 'react-native-ratings';
 const firebase = new FirebaseSDK();
-
+const { height, width } = Dimensions.get("window");
 export default class DrawerComponent extends Component{
     constructor(props){
       
@@ -34,7 +35,8 @@ export default class DrawerComponent extends Component{
             currentBank: "농협",
             ClipboardContent:null,
             //currentAccount: this.props.navigation.state.params.account,
-            //currentBank : this.props.navigation.state.params.bank,        
+            //currentBank : this.props.navigation.state.params.bank,
+            dialogVisible : false,        
         }
         
     }
@@ -43,7 +45,7 @@ export default class DrawerComponent extends Component{
       await Clipboard.setString(this.state.currentBank +' '+this.state.currentAccount);
       alert('계좌번호를 클립보드로 복사하였습니다.')
     };
-
+    
 
     setUserId = async (ids) =>{            
       this.userId = ids;
@@ -67,14 +69,70 @@ export default class DrawerComponent extends Component{
     }
 
     outRoom=()=>{
-      Alert.alert('참여자의 별점을 매겨주세요',
-        '여기다 넣으면됨'
-      );
+      // const rating = <Star score={this.state.userRating_1/this.state.count_1} style={styles.starStyle} />;
+      // Alert.alert('참여자의 별점을 매겨주세요',
+      // {rating}
+      // );
+      //this.dialogComponent.show();
+      //this.setState({ dialogVisible: true });
+      DialogManager.show({
+        //animationDuration: 200,
+        //ScaleAnimation: new ScaleAnimation(),
+        textAlign:'center',
+        children: (
+          <DialogContent contentStyle={styles.dialogStyle}>
+            <View>
+              <View >
+                <Text style={styles.text}>
+                  동승자 별점을 매겨주세요!{"\n"}
+                </Text>
+                <Text style={styles.text}>{this.state.userName_1}</Text>
+                <Rating
+                  type="custom"
+                  fractions={1} // 소수 점에 맞춰
+                  startingValue={4.6}
+                  showRating
+                  imageSize={20}
+                  ratingTextColor="black"
+                  onFinishRating={this.ratingCompleted} 
+                  style={{ paddingVertical: 10, paddingHorizontal: 15,}}
+                />
+                <Text style={styles.text}>{this.state.userName_2}</Text>
+                <Rating
+                  type="custom"
+                  fractions={1} // 소수 점에 맞춰
+                  startingValue={4.6}
+                  showRating
+                  imageSize={20}
+                  ratingTextColor="black"
+                  onFinishRating={this.ratingCompleted} 
+                  style={{ paddingVertical: 10, paddingHorizontal: 15,}}
+                />
+                <View style={{flexDirection:"row", paddingLeft:30}}>
+                  <Button buttonStyle={styles.button} onPress={this.exitRoom.bind()} title='확인' ></Button>
+                  <Button buttonStyle={styles.button} onPress={this.backToRoom.bind()} title='취소' ></Button>
+                </View>
+              </View>
+            </View>
+          </DialogContent>
+        ),
+      }, () => {
+        console.log('hi');
+      });
+
     }
-
-
+    backToRoom=()=>{
+      console.log('취소');
+      DialogManager.dismiss();
+    }
+    exitRoom=()=>{
+      console.log('확인 클릭');
+      this.props.navigation.navigate("AppMain");
+      DialogManager.dismiss();
+    }
+    
     render(){
- 
+        
         return(
             <SafeAreaView style={{flex:1}}>
             <View style={{height:150, backgroundColor:'#fff',alignItems:'center', justifyContent:'center'}}>
@@ -119,10 +177,6 @@ export default class DrawerComponent extends Component{
               <Star score={this.state.userRating_3/this.state.count_3} style={styles.starStyle} />
               <Text style={{fontSize:18,marginLeft:15,flex:1}}>{(this.state.userRating_3/this.state.count_3).toFixed(1)}</Text>
             </View>
-
-            
-
-            
             <View style={{marginBottom:30}}>
             <Text style={{color:'rgba(87, 185, 158, 0.48)',textAlign:"center"}}>
             ───────────────
@@ -155,6 +209,8 @@ export default class DrawerComponent extends Component{
             <Text style={{color:'rgba(87, 185, 158, 0.48)'}}>
             ───────────────
             </Text>
+            
+            
           </View>
           </TouchableOpacity>
           <DrawerItems {...this.props}/>
@@ -169,5 +225,26 @@ const styles = StyleSheet.create({
     width: 100,
     height: 20,
     flex:3,
+  },
+  dialogStyle:{
+    width: width-40,
+    height: 350,
+    alignContent: 'center',
+    alignItems: 'center',
+    //backgroundColor:'red',
+    marginLeft: 25,
+    
+  },
+  text:{
+    textAlign: 'center',
+    fontSize:20,
+  },
+  button:{
+    backgroundColor: '#C0C0C0',
+    borderRadius: 5, 
+    height:45, 
+    marginLeft:7, 
+    width:70,
+    marginTop:5
   },
 });
